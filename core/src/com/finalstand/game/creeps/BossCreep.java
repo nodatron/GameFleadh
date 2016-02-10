@@ -1,6 +1,7 @@
 package com.finalstand.game.creeps;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
 /**
@@ -8,8 +9,8 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class BossCreep extends Creep {
 
-    public BasicCreep(float x, float y, String textureFilename) {
-        texture = new Texture(textureFilename);
+    public BossCreep(float x, float y) {
+        texture = new Texture("BossCreep.png");
         position = new Vector2(x, y);
     }
 
@@ -17,7 +18,7 @@ public class BossCreep extends Creep {
 
     }
 
-    public void render() {
+    public void render(SpriteBatch batch) {
 
     }
 

@@ -10,18 +10,18 @@ import com.badlogic.gdx.math.Vector2;
  */
 public abstract class Creep {
 
-    private Texture texture;
-    private Sprite sprite;
-    private SpriteBatch batch;
+    protected Texture texture;
+//    protected Sprite sprite;
+    protected SpriteBatch batch;
 
-    private Vector2 position;
+    protected Vector2 position;
 
-    private int health;
-    private int armour;
-    private boolean status;
+    protected int health;
+    protected int armour;
+    protected boolean[] status;
 
     abstract void update();
-    abstract void render();
+    abstract void render(SpriteBatch batch);
     abstract void dispose();
 
 }
