@@ -5,6 +5,9 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.finalstand.game.FinalStand;
@@ -17,13 +20,24 @@ public class PlayState implements Screen {
     private OrthographicCamera gameCam;
     private Viewport viewport;
     private FinalStand game;
-    Texture texture;
+
+    private TmxMapLoader mapLoader;
+    private TiledMap map;
+    private OrthogonalTiledMapRenderer renderer;
+
+//    Texture texture;
 
     public PlayState(FinalStand game) {
         this.game = game;
-        texture = new Texture("background.jpg");
+//        texture = new Texture("background.jpg");
         gameCam = new OrthographicCamera();
-        viewport = new FitViewport(1280, 720, gameCam);
+        viewport = new FitViewport(game.V_WIDTH, game.V_HEIGHT, gameCam);
+
+        mapLoader = new TmxMapLoader();
+        map = mapLoader.load("map1b.tmx");
+        renderer = new OrthogonalTiledMapRenderer(map);
+
+        gameCam.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
     }
 
     @Override
@@ -33,12 +47,15 @@ public class PlayState implements Screen {
 
     @Override
     public void render(float delta) {
+        update(delta);
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        game.batch.setProjectionMatrix(gameCam.combined);
-        game.batch.begin();
-        game.batch.draw(texture, 0, 0);
-        game.batch.end();
+
+        renderer.render();
+//        game.batch.setProjectionMatrix(gameCam.combined);
+//        game.batch.begin();
+//        game.batch.draw(texture, 0, 0);
+//        game.batch.end();
     }
 
     @Override
@@ -65,4 +82,16 @@ public class PlayState implements Screen {
     public void dispose() {
 
     }
+
+    public void update(float deltaTime) {
+        handleInput();
+        gameCam.update();
+        renderer.setView(gameCam);
+    }
+
+    public void handleInput() {
+
+    }
+
+
 }
