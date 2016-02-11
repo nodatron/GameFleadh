@@ -3,20 +3,20 @@ package com.finalstand.game.towers;
 /**
  * Created by Keith on 09/02/2016.
  */
-public class PiercingTower {
+public class PiercingTower extends Tower{
     //fields
 
-    PiercingTower(float x, float y)
+    public PiercingTower(float x, float y)
     {
         super(x, y);
     }
 
-    update()
+    public void update()
     {
 
     }
 
-    render()
+    public void render()
     {
 
     }

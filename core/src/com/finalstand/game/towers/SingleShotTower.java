@@ -1,22 +1,27 @@
 package com.finalstand.game.towers;
 
+import com.badlogic.gdx.graphics.Texture;
+
 /**
  * Created by Keith on 09/02/2016.
  */
-public class SingleShotTower {
-    //fields
+public class SingleShotTower extends Tower{
 
-    SingleShotTower(float x, float y)
+    public SingleShotTower(float x, float y)
     {
         super(x, y);
+
+        level1 = new Texture("singleshot_level1.png");
+        level2 = new Texture("singleshot_level2.png");
+        level3 = new Texture("singleshot_level3.png");
     }
 
-    update()
+    public void update()
     {
 
     }
 
-    render()
+    public void render()
     {
 
     }
