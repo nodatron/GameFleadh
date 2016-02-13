@@ -10,8 +10,8 @@ import com.finalstand.game.states.PlayState;
 
 public class FinalStand extends Game {
 
-	public static final int V_WIDTH = 608;
-	public static final int V_HEIGHT = 208;
+	public static final int V_WIDTH = 800;
+	public static final int V_HEIGHT = 400;
 
 	public SpriteBatch batch;
 	
