@@ -1,10 +1,13 @@
 package com.finalstand.game.towers;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+
 /**
  * Created by Keith on 09/02/2016.
  */
 public class PiercingTower extends Tower{
-    //fields
 
     public PiercingTower(float x, float y)
     {
@@ -16,8 +19,11 @@ public class PiercingTower extends Tower{
 
     }
 
-    public void render()
-    {
+    public Texture getCurrentTexture() {
+        return currentTexture;
+    }
 
+    public Vector2 getPosition() {
+        return position;
     }
 }
