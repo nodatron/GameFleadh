@@ -10,6 +10,9 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class SingleShotTower extends Tower{
 
+    private float towerAngle;
+    private Vector2 bulletPos;
+
     public SingleShotTower(float x, float y)
     {
         super(x, y);
@@ -19,6 +22,8 @@ public class SingleShotTower extends Tower{
         level2 = new Texture("singleshot_level2.png");
         level3 = new Texture("singleshot_level3.png");
         currentTexture = level1;
+
+        bulletPos = new Vector2(x, y);
     }
 
     public void update()
