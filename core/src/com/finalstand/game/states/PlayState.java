@@ -49,10 +49,10 @@ public class PlayState implements Screen {
         this.game = game;
 //        texture = new Texture("background.jpg");
         gameCam = new OrthographicCamera();
-        viewport = new FitViewport(game.V_WIDTH, game.V_HEIGHT, gameCam);
+        viewport = new FitViewport(FinalStand.V_WIDTH / FinalStand.PPM, FinalStand.V_HEIGHT / FinalStand.PPM, gameCam);
         mapLoader = new TmxMapLoader();
         map = mapLoader.load("map1c.tmx");
-        renderer = new OrthogonalTiledMapRenderer(map);
+        renderer = new OrthogonalTiledMapRenderer(map, 1 / FinalStand.PPM);
 
         gameCam.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
 
@@ -68,27 +68,27 @@ public class PlayState implements Screen {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
             bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set(rect.getX() + rect.getWidth() / 2, rect.getY() + rect.getHeight() / 2);
+            bdef.position.set((rect.getX() + rect.getWidth() / 2) / FinalStand.PPM, (rect.getY() + rect.getHeight() / 2) / FinalStand.PPM);
 
             body = world.createBody(bdef);
 
-            shape.setAsBox(rect.getWidth() / 2, rect.getHeight() / 2);
+            shape.setAsBox((rect.getWidth() / 2) / FinalStand.PPM, (rect.getHeight() / 2) / FinalStand.PPM);
             fdef.shape = shape;
             body.createFixture(fdef);
         }
 
-        for(MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)) {
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-
-            bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set(rect.getX() + rect.getWidth() / 2, rect.getY() + rect.getHeight() / 2);
-
-            body = world.createBody(bdef);
-
-            shape.setAsBox(rect.getWidth() / 2, rect.getHeight() / 2);
-            fdef.shape = shape;
-            body.createFixture(fdef);
-        }
+//        for(MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)) {
+//            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+//
+//            bdef.type = BodyDef.BodyType.StaticBody;
+//            bdef.position.set(rect.getX() + rect.getWidth() / 2, rect.getY() + rect.getHeight() / 2);
+//
+//            body = world.createBody(bdef);
+//
+//            shape.setAsBox(rect.getWidth() / 2, rect.getHeight() / 2);
+//            fdef.shape = shape;
+//            body.createFixture(fdef);
+//        }
 
         player = new Creep(world);
     }
@@ -144,6 +144,7 @@ public class PlayState implements Screen {
         world.step(1/60f, 6, 2);
 
         gameCam.update();
+        player.update();
         renderer.setView(gameCam);
     }
 
