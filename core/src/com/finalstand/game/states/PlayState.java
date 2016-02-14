@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.finalstand.game.FinalStand;
 import com.finalstand.game.towers.AOETower;
 import com.finalstand.game.towers.DOTTower;
+import com.finalstand.game.towers.LaserTower;
 import com.finalstand.game.towers.SingleShotTower;
 import com.finalstand.game.towers.Tower;
 
@@ -38,7 +39,8 @@ public class PlayState implements Screen {
         towers = new ArrayList<Tower>();
         towers.add(new SingleShotTower(0,0));
         towers.add(new AOETower(game.V_WIDTH / 6, 0));
-        towers.add(new DOTTower(game.V_WIDTH / 3, 0));
+        //towers.add(new DOTTower(game.V_WIDTH / 3, 0));
+        towers.add(new LaserTower(game.V_WIDTH / 3, 0));
     }
 
     @Override
