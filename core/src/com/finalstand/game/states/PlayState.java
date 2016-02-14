@@ -24,6 +24,7 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.finalstand.game.FinalStand;
 import com.finalstand.game.creeps.Creep;
+import com.finalstand.game.tools.B2WorldCreator;
 
 /**
  * Created by Niall PC on 10/02/2016.
@@ -59,36 +60,7 @@ public class PlayState implements Screen {
         world = new World(new Vector2(0, 0), true);
         b2dr = new Box2DDebugRenderer();
 
-        BodyDef bdef = new BodyDef();
-        PolygonShape shape = new PolygonShape();
-        FixtureDef fdef = new FixtureDef();
-        Body body;
-
-        for(MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)) {
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-
-            bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set((rect.getX() + rect.getWidth() / 2) / FinalStand.PPM, (rect.getY() + rect.getHeight() / 2) / FinalStand.PPM);
-
-            body = world.createBody(bdef);
-
-            shape.setAsBox((rect.getWidth() / 2) / FinalStand.PPM, (rect.getHeight() / 2) / FinalStand.PPM);
-            fdef.shape = shape;
-            body.createFixture(fdef);
-        }
-
-//        for(MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)) {
-//            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-//
-//            bdef.type = BodyDef.BodyType.StaticBody;
-//            bdef.position.set(rect.getX() + rect.getWidth() / 2, rect.getY() + rect.getHeight() / 2);
-//
-//            body = world.createBody(bdef);
-//
-//            shape.setAsBox(rect.getWidth() / 2, rect.getHeight() / 2);
-//            fdef.shape = shape;
-//            body.createFixture(fdef);
-//        }
+        new B2WorldCreator(world, map);
 
         player = new Creep(world);
     }
@@ -135,13 +107,16 @@ public class PlayState implements Screen {
 
     @Override
     public void dispose() {
-
+        map.dispose();
+        renderer.dispose();
+        world.dispose();
+        b2dr.dispose();
     }
 
     public void update(float deltaTime) {
         handleInput();
 
-        world.step(1/60f, 6, 2);
+        world.step(1 / 60f, 6, 2);
 
         gameCam.update();
         player.update();
