@@ -13,7 +13,6 @@ public class DOTTower extends Tower{
     {
         super(x, y);
 
-        level = 1;
         level1 = new Texture("dot_level1.png");
         level2 = new Texture("dot_level2.png");
         level3 = new Texture("dot_level3.png");
@@ -31,5 +30,21 @@ public class DOTTower extends Tower{
 
     public Vector2 getPosition() {
         return position;
+    }
+
+    @Override
+    public void upgrade() {
+        if(level < 3)
+        {
+            level++;
+        }
+        if(level == 2)
+        {
+            currentTexture = level2;
+        }
+        if(level == 3)
+        {
+            currentTexture = level3;
+        }
     }
 }

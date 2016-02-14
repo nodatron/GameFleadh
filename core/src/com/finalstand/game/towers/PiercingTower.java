@@ -26,4 +26,20 @@ public class PiercingTower extends Tower{
     public Vector2 getPosition() {
         return position;
     }
+
+    @Override
+    public void upgrade() {
+        if(level < 3)
+        {
+            level++;
+        }
+        if(level == 2)
+        {
+            currentTexture = level2;
+        }
+        if(level == 3)
+        {
+            currentTexture = level3;
+        }
+    }
 }

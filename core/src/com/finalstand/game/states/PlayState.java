@@ -36,9 +36,9 @@ public class PlayState implements Screen {
         viewport = new FitViewport(game.V_WIDTH, game.V_HEIGHT, gameCam);
 
         towers = new ArrayList<Tower>();
-        towers.add(new SingleShotTower(gameCam.viewportWidth, gameCam.viewportHeight));
-        //towers.add(new AOETower(gameCam.viewportWidth, gameCam.viewportHeight));
-        //towers.add(new DOTTower(gameCam.viewportWidth, gameCam.viewportHeight));
+        towers.add(new SingleShotTower(0,0));
+        towers.add(new AOETower(game.V_WIDTH / 6, 0));
+        towers.add(new DOTTower(game.V_WIDTH / 3, 0));
     }
 
     @Override
@@ -55,9 +55,16 @@ public class PlayState implements Screen {
         game.batch.draw(texture, 0, 0);
         for(Tower tower: towers)
         {
-            game.batch.draw(tower.getCurrentTexture(), tower.getPosition().x, tower.getPosition().y, gameCam.viewportWidth / 4, gameCam.viewportHeight / 4);
+            game.batch.draw(tower.getCurrentTexture(), tower.getPosition().x, tower.getPosition().y, gameCam.viewportWidth / 6, gameCam.viewportHeight / 2);
         }
         game.batch.end();
+        if(Gdx.input.justTouched())
+        {
+            for(Tower tower : towers)
+            {
+                tower.upgrade();
+            }
+        }
     }
 
     @Override

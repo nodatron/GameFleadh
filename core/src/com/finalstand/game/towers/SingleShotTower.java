@@ -14,7 +14,7 @@ public class SingleShotTower extends Tower{
     {
         super(x, y);
 //        bounds = new Rectangle(x, y, level1.getWidth(), level1.getHeight());
-        level = 1;
+
         level1 = new Texture("singleshot_level1.png");
         level2 = new Texture("singleshot_level2.png");
         level3 = new Texture("singleshot_level3.png");
@@ -23,15 +23,7 @@ public class SingleShotTower extends Tower{
 
     public void update()
     {
-        if(level == 2 && currentTexture != level2)
-        {
-            currentTexture = level2;
-        }
 
-        if(Gdx.input.justTouched())
-        {
-            level = 2;
-        }
     }
 
     public Texture getCurrentTexture() {
@@ -44,5 +36,21 @@ public class SingleShotTower extends Tower{
 
     public Rectangle getBounds() {
         return bounds;
+    }
+
+    @Override
+    public void upgrade() {
+        if(level < 3)
+        {
+            level++;
+        }
+        if(level == 2)
+        {
+            currentTexture = level2;
+        }
+        if(level == 3)
+        {
+            currentTexture = level3;
+        }
     }
 }

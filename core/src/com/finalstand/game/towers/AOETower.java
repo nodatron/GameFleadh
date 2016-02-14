@@ -13,10 +13,10 @@ public class AOETower extends Tower{
     {
         super(x, y);
 
-        level = 1;
         level1 = new Texture("aoe_level1.png");
         level2 = new Texture("aoe_level2.png");
         level3 = new Texture("aoe_level3.png");
+        currentTexture = level1;
     }
 
     public void update()
@@ -30,5 +30,21 @@ public class AOETower extends Tower{
 
     public Vector2 getPosition() {
         return position;
+    }
+
+    @Override
+    public void upgrade() {
+        if(level < 3)
+        {
+            level++;
+        }
+        if(level == 2)
+        {
+            currentTexture = level2;
+        }
+        if(level == 3)
+        {
+            currentTexture = level3;
+        }
     }
 }

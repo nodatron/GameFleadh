@@ -27,4 +27,5 @@ public abstract class Tower {
     public abstract void update();
     public abstract Texture getCurrentTexture();
     public abstract Vector2 getPosition();
+    public abstract void upgrade();
 }
