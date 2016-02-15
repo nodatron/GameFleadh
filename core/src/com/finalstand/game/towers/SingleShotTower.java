@@ -26,36 +26,13 @@ public class SingleShotTower extends Tower{
         bulletPos = new Vector2(x, y);
     }
 
+    @Override
     public void update()
     {
 
     }
 
-    public Texture getCurrentTexture() {
-        return currentTexture;
-    }
-
-    public Vector2 getPosition() {
-        return position;
-    }
-
     public Rectangle getBounds() {
         return bounds;
-    }
-
-    @Override
-    public void upgrade() {
-        if(level < 3)
-        {
-            level++;
-        }
-        if(level == 2)
-        {
-            currentTexture = level2;
-        }
-        if(level == 3)
-        {
-            currentTexture = level3;
-        }
     }
 }

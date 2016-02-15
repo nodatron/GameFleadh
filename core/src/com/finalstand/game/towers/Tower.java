@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 /**
  * Created by Keith on 09/02/2016.
  */
-public abstract class Tower {
+public class Tower {
     protected Vector2 position;
     protected Rectangle bounds;
 
@@ -24,8 +24,22 @@ public abstract class Tower {
         level = 1;
     }
 
-    public abstract void update();
-    public abstract Texture getCurrentTexture();
-    public abstract Vector2 getPosition();
-    public abstract void upgrade();
+    public void update(){}
+    public Texture getCurrentTexture(){return currentTexture;}
+    public Vector2 getPosition(){return position;}
+    public void upgrade()
+    {
+        if(level < 3)
+        {
+            level++;
+        }
+        if(level == 2)
+        {
+            currentTexture = level2;
+        }
+        if(level == 3)
+        {
+            currentTexture = level3;
+        }
+    }
 }
