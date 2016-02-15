@@ -10,6 +10,7 @@ import com.finalstand.game.states.PlayState;
 
 public class FinalStand extends Game {
 
+	//height and width of the gamecamera
 	public static final int V_WIDTH = 800;
 	public static final int V_HEIGHT = 400;
 	//pixels per metre needed because of box2d scaling
