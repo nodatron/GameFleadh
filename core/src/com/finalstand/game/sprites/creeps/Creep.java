@@ -1,5 +1,6 @@
 package com.finalstand.game.sprites.creeps;
 
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -31,7 +32,7 @@ public class Creep extends Sprite{
 
     public Creep(World world) {
         this.world = world;
-        defineCreep();
+
 //        texture = new Texture("BasicCreep.png");
 //        sprite = new Sprite(texture);
     }
@@ -42,7 +43,7 @@ public class Creep extends Sprite{
     public void defineCreep() {
         BodyDef bdef = new BodyDef();
         // this is temporary
-        bdef.position.set(10 / FinalStand.PPM, 355 / FinalStand.PPM);
+        bdef.position.set(getPosition().x / FinalStand.PPM, getPosition().y / FinalStand.PPM);
         bdef.type = BodyDef.BodyType.DynamicBody;
 
         b2Body = world.createBody(bdef);
@@ -55,13 +56,19 @@ public class Creep extends Sprite{
         b2Body.createFixture(fdef);
     }
 
+    public Vector2 getPosition() {
+        return position;
+    }
+
     public void update() {
         //speeds will be heald by variables
         //this.b2body.getLinearVelocity().x/.y - gets the speed the object is moving at
         // This moves the creep in positive x direction
         this.b2Body.applyLinearImpulse(new Vector2(0.2f, 0), this.b2Body.getWorldCenter(), true);
+        sprite.setScale(64 / FinalStand.PPM);
     }
-    void render(SpriteBatch batch) {
+
+    public void render(SpriteBatch batch) {
 
     }
     void dispose() {

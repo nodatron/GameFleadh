@@ -63,7 +63,7 @@ public class PlayState implements Screen {
 
         new B2WorldCreator(world, map);
 
-        player = new Creep(world);
+        player = new BasicCreep(10, 355, world);
 
         towers = new ArrayList<Tower>();
         towers.add(new SingleShotTower(0,0));
@@ -93,12 +93,14 @@ public class PlayState implements Screen {
 //        game.batch.begin();
 //        game.batch.draw(texture, 0, 0);
 //        game.batch.end();
-        game.batch.setProjectionMatrix(gameCam.combined);
+//        game.batch.setProjectionMatrix(gameCam.combined);
         game.batch.begin();
-        for(Tower tower: towers)
-        {
-            game.batch.draw(tower.getCurrentTexture(), tower.getPosition().x, tower.getPosition().y, gameCam.viewportWidth / 6, gameCam.viewportHeight / 2);
-        }
+        player.render(game.batch);
+//        player.sprite.draw(batch);
+//        for(Tower tower: towers)
+//        {
+//            game.batch.draw(tower.getCurrentTexture(), tower.getPosition().x, tower.getPosition().y, gameCam.viewportWidth / 6, gameCam.viewportHeight / 2);
+//        }
         game.batch.end();
         if(Gdx.input.justTouched())
         {
