@@ -3,6 +3,8 @@ package com.finalstand.game.ui;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
+import com.finalstand.game.states.PlayState;
 
 /**
  * Created by Keith on 16/02/2016.
@@ -28,6 +30,7 @@ public class UI {
     private float boundsHeight;
     private float boundsWidth;
 
+    private OptionTexture optionTexture;
 
     public UI(float x, float y, float w, float h)
     {
@@ -57,16 +60,16 @@ public class UI {
 
     public void update()
     {
-        if(Gdx.input.justTouched()) {
-            optionClicked(Gdx.input.getX(), Gdx.input.getY());
-        }
+        /*if(Gdx.input.justTouched()) {
+            optionClicked(PlayState.getWorldMousePos());
+        }*/
     }
 
-    public void optionClicked(float x, float y)
+    public void optionClicked(Vector3 mousePos)
     {
         for(int counter = 0; counter < NUM_OF_BOUNDS; counter++)
         {
-            if(x < boundsWidth * (counter + 1) && x > boundsWidth * counter && y >= position.y && y <= position.y + boundsHeight)
+            if(mousePos.x < boundsWidth * (counter + 1) && mousePos.x > boundsWidth * counter && mousePos.y >= position.y && mousePos.y <= position.y + boundsHeight)
             {
                 optionPicked(counter);
             }
@@ -77,7 +80,10 @@ public class UI {
     {
         switch(optionNum)
         {
-            case 0: {}
+            case 0: {optionTexture = new OptionTexture(option1Texture, getTextureWidth(), getTextureHeight()); break;}
+            case 1: {optionTexture = new OptionTexture(option2Texture, getTextureWidth(), getTextureHeight()); break;}
+            case 2: {optionTexture = new OptionTexture(option3Texture, getTextureWidth(), getTextureHeight()); break;}
+            case 3: {optionTexture = new OptionTexture(option4Texture, getTextureWidth(), getTextureHeight()); break;}
         }
     }
 
@@ -144,5 +150,9 @@ public class UI {
 
     public float getTextureHeight() {
         return textureHeight;
+    }
+
+    public OptionTexture getOptionTexture() {
+        return optionTexture;
     }
 }
