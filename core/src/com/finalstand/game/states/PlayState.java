@@ -21,6 +21,8 @@ import com.finalstand.game.FinalStand;
 import com.finalstand.game.sprites.creeps.*;
 import com.finalstand.game.sprites.towers.*;
 import com.finalstand.game.tools.B2WorldCreator;
+import com.finalstand.game.ui.UI;
+
 import java.util.ArrayList;
 
 
@@ -49,6 +51,8 @@ public class PlayState implements Screen {
     private ArrayList<Tower> towers;
     Texture texture;
 
+    private UI ui;
+
     public PlayState(FinalStand game) {
         this.game = game;
         texture = new Texture("background.jpg");
@@ -75,6 +79,8 @@ public class PlayState implements Screen {
         towers.add(new AOETower((FinalStand.V_WIDTH / 6) / FinalStand.PPM, 0));
         towers.add(new DOTTower((FinalStand.V_WIDTH / 3) / FinalStand.PPM, 0));
         towers.add(new LaserTower((FinalStand.V_WIDTH / 2) / FinalStand.PPM, 0));
+
+        ui = new UI(0, 0, 8, 1);
     }
 
     @Override
@@ -101,10 +107,17 @@ public class PlayState implements Screen {
         game.batch.setProjectionMatrix(gameCam.combined);
         game.batch.begin();
 
-        for(Tower tower: towers)
+        /*for(Tower tower: towers)
         {
             game.batch.draw(tower.getCurrentTexture(), tower.getPosition().x, tower.getPosition().y, tower.getCurrentTexture().getWidth() / FinalStand.PPM, tower.getCurrentTexture().getHeight() / FinalStand.PPM);
-        }
+        }*/
+
+        game.batch.draw(ui.getBackground(), ui.getPosition().x, ui.getPosition().y, ui.getWidth(), ui.getHeight());
+        game.batch.draw(ui.getOption1Texture(), ui.getOption1Pos().x, ui.getOption1Pos().y, ui.getTextureWidth(), ui.getTextureHeight());
+        game.batch.draw(ui.getOption2Texture(), ui.getOption2Pos().x, ui.getOption2Pos().y, ui.getTextureWidth(), ui.getTextureHeight());
+        game.batch.draw(ui.getOption3Texture(), ui.getOption3Pos().x, ui.getOption3Pos().y, ui.getTextureWidth(), ui.getTextureHeight());
+        game.batch.draw(ui.getOption4Texture(), ui.getOption4Pos().x, ui.getOption4Pos().y, ui.getTextureWidth(), ui.getTextureHeight());
+
         game.batch.end();
         if(Gdx.input.justTouched())
         {
@@ -145,7 +158,7 @@ public class PlayState implements Screen {
         gameCam.update();
 
 
-        //dispose o resources that are not used anymore
+        //dispose of resources that are not used anymore
         map.dispose();
         renderer.dispose();
         world.dispose();
