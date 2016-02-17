@@ -30,8 +30,6 @@ public class UI {
     private float boundsHeight;
     private float boundsWidth;
 
-    private OptionTexture optionTexture;
-
     public UI(float x, float y, float w, float h)
     {
         position = new Vector2(x, y);
@@ -78,12 +76,13 @@ public class UI {
 
     public void optionPicked(int optionNum)
     {
+        PlayState.optionChosen = true;
         switch(optionNum)
         {
-            case 0: {optionTexture = new OptionTexture(option1Texture, getTextureWidth(), getTextureHeight()); break;}
-            case 1: {optionTexture = new OptionTexture(option2Texture, getTextureWidth(), getTextureHeight()); break;}
-            case 2: {optionTexture = new OptionTexture(option3Texture, getTextureWidth(), getTextureHeight()); break;}
-            case 3: {optionTexture = new OptionTexture(option4Texture, getTextureWidth(), getTextureHeight()); break;}
+            case 0: {PlayState.optionTexture.setTexture(option1Texture); break;}
+            case 1: {PlayState.optionTexture.setTexture(option2Texture); break;}
+            case 2: {PlayState.optionTexture.setTexture(option3Texture); break;}
+            case 3: {PlayState.optionTexture.setTexture(option4Texture); break;}
         }
     }
 
@@ -150,9 +149,5 @@ public class UI {
 
     public float getTextureHeight() {
         return textureHeight;
-    }
-
-    public OptionTexture getOptionTexture() {
-        return optionTexture;
     }
 }

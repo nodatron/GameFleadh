@@ -17,13 +17,11 @@ public class OptionTexture {
     private float textureWidth;
     private float textureHeight;
 
-    public OptionTexture(Texture texture, float w, float h)
+    public OptionTexture(float w, float h)
     {
-        this.texture = texture;
         textureWidth = w;
         textureHeight = h;
         position = new Vector3(0, 0, 0);
-        PlayState.optionPicked = true;
     }
 
     public void update()
@@ -31,6 +29,12 @@ public class OptionTexture {
         position = PlayState.getWorldMousePos();
         position.x -= textureWidth / 2;
         position.y -= textureHeight / 2;
+
+        if(Gdx.input.justTouched())
+        {
+            PlayState.optionChosen = false;
+
+        }
     }
 
     public Texture getTexture() {
@@ -39,5 +43,9 @@ public class OptionTexture {
 
     public Vector3 getPosition() {
         return position;
+    }
+
+    public void setTexture(Texture texture) {
+        this.texture = texture;
     }
 }

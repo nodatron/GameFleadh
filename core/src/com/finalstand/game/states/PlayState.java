@@ -54,7 +54,8 @@ public class PlayState implements Screen {
     Texture texture;
 
     private UI ui;
-    public static boolean optionPicked;
+    public static OptionTexture optionTexture;
+    public static boolean optionChosen;
 
     public PlayState(FinalStand game) {
         this.game = game;
@@ -84,7 +85,8 @@ public class PlayState implements Screen {
         towers.add(new LaserTower((FinalStand.V_WIDTH / 2) / FinalStand.PPM, 0));
 
         ui = new UI(0, 0, 8, 1);
-        optionPicked = false;
+        optionTexture = new OptionTexture(ui.getTextureWidth(), ui.getTextureHeight());
+        optionChosen = false;
     }
 
     @Override
@@ -122,10 +124,10 @@ public class PlayState implements Screen {
         game.batch.draw(ui.getOption3Texture(), ui.getOption3Pos().x, ui.getOption3Pos().y, ui.getTextureWidth(), ui.getTextureHeight());
         game.batch.draw(ui.getOption4Texture(), ui.getOption4Pos().x, ui.getOption4Pos().y, ui.getTextureWidth(), ui.getTextureHeight());
 
-        if(optionPicked == true)
+        if(optionChosen == true)
         {
-            game.batch.draw(ui.getOptionTexture().getTexture(), ui.getOptionTexture().getPosition().x, ui.getOptionTexture().getPosition().y, ui.getTextureWidth(), ui.getTextureHeight());
-            ui.getOptionTexture().update();
+            optionTexture.update();
+            game.batch.draw(optionTexture.getTexture(), optionTexture.getPosition().x, optionTexture.getPosition().y, ui.getTextureWidth(), ui.getTextureHeight());
         }
         game.batch.end();
 
