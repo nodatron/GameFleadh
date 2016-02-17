@@ -63,7 +63,7 @@ public class PlayState implements Screen {
 
         new B2WorldCreator(world, map);
 
-        player = new BasicCreep(10, 355, world);
+        player = new BasicCreep(10, 360, world);
 
         towers = new ArrayList<Tower>();
         towers.add(new SingleShotTower(0,0));
@@ -94,6 +94,7 @@ public class PlayState implements Screen {
 //        game.batch.draw(texture, 0, 0);
 //        game.batch.end();
 //        game.batch.setProjectionMatrix(gameCam.combined);
+        game.batch.setProjectionMatrix(gameCam.combined);
         game.batch.begin();
         player.render(game.batch);
 //        player.sprite.draw(batch);

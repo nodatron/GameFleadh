@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.finalstand.game.FinalStand;
 
 /**
@@ -29,6 +30,8 @@ public class Creep extends Sprite{
 
     protected World world;
     protected Body b2Body;
+
+    protected Array<Body> bodies = new Array<Body>();
 
     public Creep(World world) {
         this.world = world;
@@ -54,6 +57,10 @@ public class Creep extends Sprite{
 
         fdef.shape = shape;
         b2Body.createFixture(fdef);
+
+        // sprite to the body
+        sprite.setSize(64 / FinalStand.PPM, 64/ FinalStand.PPM);
+        b2Body.setUserData(sprite);
     }
 
     public Vector2 getPosition() {
@@ -64,12 +71,20 @@ public class Creep extends Sprite{
         //speeds will be heald by variables
         //this.b2body.getLinearVelocity().x/.y - gets the speed the object is moving at
         // This moves the creep in positive x direction
-        this.b2Body.applyLinearImpulse(new Vector2(0.2f, 0), this.b2Body.getWorldCenter(), true);
-        sprite.setScale(64 / FinalStand.PPM);
+        this.b2Body.applyLinearImpulse(new Vector2(0.2f / FinalStand.PPM, 0), this.b2Body.getWorldCenter(), true);
+//        sprite.setPosition(b2Body.getPosition().x, b2Body.getPosition().y);
+//        sprite.translate(0.4f , 0);
     }
 
     public void render(SpriteBatch batch) {
-
+        world.getBodies(bodies);
+        for(Body body : bodies) {
+            if(body.getUserData() != null && body.getUserData() instanceof Sprite) {
+                Sprite ssprite = (Sprite) body.getUserData();
+                ssprite.setPosition(body.getPosition().x , body.getPosition().y);
+                ssprite.draw(batch);
+            }
+        }
     }
     void dispose() {
 
