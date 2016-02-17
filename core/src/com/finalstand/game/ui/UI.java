@@ -77,6 +77,8 @@ public class UI {
     public void optionPicked(int optionNum)
     {
         PlayState.optionChosen = true;
+        PlayState.optionTexture.setTowerOption(optionNum);
+
         switch(optionNum)
         {
             case 0: {PlayState.optionTexture.setTexture(option1Texture); break;}

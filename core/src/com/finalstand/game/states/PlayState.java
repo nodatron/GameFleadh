@@ -50,7 +50,7 @@ public class PlayState implements Screen {
 
     private Creep player;
 
-    private ArrayList<Tower> towers;
+    public static ArrayList<Tower> towers;
     Texture texture;
 
     private UI ui;
@@ -79,10 +79,10 @@ public class PlayState implements Screen {
         player = new Creep(world);
 
         towers = new ArrayList<Tower>();
-        towers.add(new SingleShotTower(0,0));
+        /*towers.add(new SingleShotTower(0,0));
         towers.add(new AOETower((FinalStand.V_WIDTH / 6) / FinalStand.PPM, 0));
         towers.add(new DOTTower((FinalStand.V_WIDTH / 3) / FinalStand.PPM, 0));
-        towers.add(new LaserTower((FinalStand.V_WIDTH / 2) / FinalStand.PPM, 0));
+        towers.add(new LaserTower((FinalStand.V_WIDTH / 2) / FinalStand.PPM, 0));*/
 
         ui = new UI(0, 0, 8, 1);
         optionTexture = new OptionTexture(ui.getTextureWidth(), ui.getTextureHeight());
@@ -113,10 +113,10 @@ public class PlayState implements Screen {
         game.batch.setProjectionMatrix(gameCam.combined);
         game.batch.begin();
 
-        /*for(Tower tower: towers)
+        for(Tower tower: towers)
         {
             game.batch.draw(tower.getCurrentTexture(), tower.getPosition().x, tower.getPosition().y, tower.getCurrentTexture().getWidth() / FinalStand.PPM, tower.getCurrentTexture().getHeight() / FinalStand.PPM);
-        }*/
+        }
 
         game.batch.draw(ui.getBackground(), ui.getPosition().x, ui.getPosition().y, ui.getWidth(), ui.getHeight());
         game.batch.draw(ui.getOption1Texture(), ui.getOption1Pos().x, ui.getOption1Pos().y, ui.getTextureWidth(), ui.getTextureHeight());
@@ -133,11 +133,6 @@ public class PlayState implements Screen {
 
         if(Gdx.input.justTouched())
         {
-            for(Tower tower : towers)
-            {
-                tower.upgrade();
-            }
-
             ui.optionClicked(getWorldMousePos());
         }
     }

@@ -16,7 +16,7 @@ public class Tower {
     protected Texture level1;
     protected Texture level2;
     protected Texture level3;
-    protected Texture currentTexture;
+    protected static Texture currentTexture;
 
     public Tower(float x, float y)
     {
@@ -25,7 +25,7 @@ public class Tower {
     }
 
     public void update(){}
-    public Texture getCurrentTexture(){return currentTexture;}
+    public static Texture getCurrentTexture(){return currentTexture;}
     public Vector2 getPosition(){return position;}
     public void upgrade()
     {
