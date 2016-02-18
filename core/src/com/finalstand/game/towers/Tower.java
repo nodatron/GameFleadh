@@ -1,9 +1,12 @@
 package com.finalstand.game.towers;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
+import com.finalstand.game.states.PlayState;
 
 /**
  * Created by Keith on 09/02/2016.
@@ -24,7 +27,9 @@ public class Tower {
         level = 1;
     }
 
-    public void update(){}
+    public void update(){
+
+    }
     public static Texture getCurrentTexture(){return currentTexture;}
     public Vector2 getPosition(){return position;}
     public void upgrade()

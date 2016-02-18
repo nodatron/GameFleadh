@@ -53,7 +53,7 @@ public class PlayState implements Screen {
     public static ArrayList<Tower> towers;
     Texture texture;
 
-    private UI ui;
+    public static UI ui;
     public static OptionTexture optionTexture;
     public static boolean optionChosen;
 
@@ -115,6 +115,7 @@ public class PlayState implements Screen {
 
         for(Tower tower: towers)
         {
+            tower.checkPressed();
             game.batch.draw(tower.getCurrentTexture(), tower.getPosition().x, tower.getPosition().y, tower.getCurrentTexture().getWidth() / FinalStand.PPM, tower.getCurrentTexture().getHeight() / FinalStand.PPM);
         }
 
