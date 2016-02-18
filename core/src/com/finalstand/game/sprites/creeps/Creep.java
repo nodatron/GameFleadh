@@ -57,6 +57,10 @@ public class Creep extends Sprite{
         CircleShape shape = new CircleShape();
         shape.setRadius(5 / FinalStand.PPM);
 
+        //setting what a creep can collide with and what bit it is
+        fdef.filter.categoryBits = FinalStand.CREEP_BIT;
+        fdef.filter.maskBits = FinalStand.DEFAULT | FinalStand.ROADBOUNDS_BIT |
+                               FinalStand.PROJECTILE_BIT | FinalStand.TRAP_BIT | FinalStand.BASE_BIT;
         fdef.shape = shape;
         b2Body.createFixture(fdef);
 

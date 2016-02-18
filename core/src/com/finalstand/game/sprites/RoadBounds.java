@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.World;
+import com.finalstand.game.FinalStand;
 
 /**
  * Created by Niall on 2/15/2016.
@@ -12,11 +13,13 @@ public class RoadBounds extends InteractiveTileObject{
     public RoadBounds(World world, TiledMap map, Rectangle bounds) {
         super(world, map, bounds);
         fixture.setUserData(this);
+        setCategoryFilter(FinalStand.ROADBOUNDS_BIT);
     }
 
     @Override
     public void onRightHit() {
         Gdx.app.log("Collision", "Right Road Bounds");
+//        setCategoryFilter(FinalStand.TOUCHING_BIT);
     }
 
     @Override
