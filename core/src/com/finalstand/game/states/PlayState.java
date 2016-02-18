@@ -42,8 +42,12 @@ public class PlayState implements Screen {
 
     private Creep player;
 
+    private ArrayList<Creep> creeps;
+
     private ArrayList<Tower> towers;
 //    Texture texture;
+
+    private int elapsed;
 
     public PlayState(FinalStand game) {
         this.game = game;
@@ -68,11 +72,15 @@ public class PlayState implements Screen {
 
         player = new BasicCreep(10, 360, world);
 
+        creeps = new ArrayList<Creep>();
+
         towers = new ArrayList<Tower>();
         towers.add(new SingleShotTower(0,0));
         towers.add(new AOETower((FinalStand.V_WIDTH / 6) / FinalStand.PPM, 0));
         //towers.add(new DOTTower(game.V_WIDTH / 3, 0));
         towers.add(new LaserTower((FinalStand.V_WIDTH / 3) / FinalStand.PPM, 0));
+
+        elapsed = 0;
     }
 
     @Override
@@ -146,13 +154,28 @@ public class PlayState implements Screen {
         world.step(1 / 60f, 6, 2);
 
         gameCam.update();
+
+        for(Creep c : creeps) {
+            c.update();
+        }
+
+        if(elapsed > 100) {
+            spawnCreep();
+            elapsed = 0;
+        }
+
         player.update();
         renderer.setView(gameCam);
+        elapsed ++;
     }
 
     public void handleInput() {
 
     }
 
+    public void spawnCreep() {
+        Creep creep = new BasicCreep(10, 360, world);
+        creeps.add(creep);
+    }
 
 }

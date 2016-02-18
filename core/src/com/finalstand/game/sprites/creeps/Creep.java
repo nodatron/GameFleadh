@@ -106,6 +106,19 @@ public class Creep extends Sprite{
         // This moves the creep in positive x direction
         this.b2Body.applyLinearImpulse(new Vector2(0.2f / FinalStand.PPM, 0), this.b2Body.getWorldCenter(), true);
 
+        if(movement[0]) {
+            // go right
+            this.b2Body.applyLinearImpulse(new Vector2(0.2f / FinalStand.PPM, 0), this.b2Body.getWorldCenter(), true);
+        } else if(movement[1]) {
+            // go left
+            this.b2Body.applyLinearImpulse(new Vector2(-0.2f / FinalStand.PPM, 0), this.b2Body.getWorldCenter(), true);
+        } else if(movement[2]) {
+            // go up
+            this.b2Body.applyLinearImpulse(new Vector2(0, 0.2f / FinalStand.PPM), this.b2Body.getWorldCenter(), true);
+        } else {
+            //go down
+            this.b2Body.applyLinearImpulse(new Vector2(0, -0.2f / FinalStand.PPM), this.b2Body.getWorldCenter(), true);
+        }
 
     }
 
