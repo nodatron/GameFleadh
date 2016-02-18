@@ -24,6 +24,7 @@ public class Creep extends Sprite{
     protected SpriteBatch batch;
 
     protected Vector2 position;
+    public boolean[] movement;
 
     protected int health;
     protected int armour;
@@ -88,10 +89,10 @@ public class Creep extends Sprite{
         sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
         b2Body.setUserData(sprite);
 
-//        rightBound.dispose();
-//        leftBound.dispose();
-//        topBound.dispose();
-//        bottomBound.dispose();
+        rightBound.dispose();
+        leftBound.dispose();
+        topBound.dispose();
+        bottomBound.dispose();
 
     }
 
@@ -100,10 +101,12 @@ public class Creep extends Sprite{
     }
 
     public void update() {
-        //speeds will be heald by variables
+        //speeds will be held by variables
         //this.b2body.getLinearVelocity().x/.y - gets the speed the object is moving at
         // This moves the creep in positive x direction
         this.b2Body.applyLinearImpulse(new Vector2(0.2f / FinalStand.PPM, 0), this.b2Body.getWorldCenter(), true);
+
+
     }
 
     public void render(SpriteBatch batch) {
@@ -112,10 +115,17 @@ public class Creep extends Sprite{
             if(body.getUserData() != null && body.getUserData() instanceof Sprite) {
                 Sprite ssprite = (Sprite) body.getUserData();
                 ssprite.setPosition(body.getPosition().x - ssprite.getWidth() / 2, body.getPosition().y - ssprite.getHeight() / 2);
-//                ssprite.draw(batch);
+                ssprite.draw(batch);
             }
         }
     }
+
+    public  void setMovement() {
+        for(boolean b : movement) {
+            b = false;
+        }
+    }
+
     void dispose() {
 
     }

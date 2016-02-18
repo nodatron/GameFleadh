@@ -22,6 +22,8 @@ public class BasicCreep extends Creep {
         sprite = new Sprite(texture);
 
         defineCreep();
+        movement = new boolean[8];
+        setMovement();
 
         health = 100;
         armour = 10;

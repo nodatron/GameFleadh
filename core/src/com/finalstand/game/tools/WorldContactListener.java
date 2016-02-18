@@ -73,7 +73,60 @@ public class WorldContactListener implements ContactListener {
 
     @Override
     public void endContact(Contact contact) {
-        Gdx.app.log("Begin Contact", "");
+//        Gdx.app.log("End Contact", "");
+        Fixture fixA = contact.getFixtureA();
+        Fixture fixB = contact.getFixtureB();
+
+        if(fixA.getUserData() == "RightBound" || fixB.getUserData() == "RightBound") {
+            //Figures out which one of the fixtures is RightBound
+            Fixture rightBound = fixA.getUserData() == "RightBound" ? fixA : fixB;
+            Fixture object = rightBound == fixA ? fixB : fixA;
+
+            // if the other fixture is an instance of InteractiveTileObject we want to do release detection
+            if(object.getUserData() instanceof InteractiveTileObject) {
+                ((InteractiveTileObject) object.getUserData()).onRightRelease();
+            }
+
+        }
+
+        // checks if one of the fixtures is LeftBound
+        if(fixA.getUserData() == "LeftBound" || fixB.getUserData() == "LeftBound") {
+            //Figures out which one of the fixtures is LeftBound
+            Fixture leftBound = fixA.getUserData() == "LeftBound" ? fixA : fixB;
+            Fixture object = leftBound == fixA ? fixB : fixA;
+
+            // if the other fixture is an instance of InteractiveTileObject we want to do release detection
+            if(object.getUserData() instanceof InteractiveTileObject) {
+                ((InteractiveTileObject) object.getUserData()).onLeftRelease();
+            }
+
+        }
+
+        // checks if one of the fixtures is TopBound
+        if(fixA.getUserData() == "TopBound" || fixB.getUserData() == "TopBound") {
+            //Figures out which one of the fixtures is TopBound
+            Fixture topBound = fixA.getUserData() == "TopBound" ? fixA : fixB;
+            Fixture object = topBound == fixA ? fixB : fixA;
+
+            // if the other fixture is an instance of InteractiveTileObject we want to do release detection
+            if(object.getUserData() instanceof InteractiveTileObject) {
+                ((InteractiveTileObject) object.getUserData()).onTopRelease();
+            }
+
+        }
+
+        // checks if one of the fixtures is BottomBound
+        if(fixA.getUserData() == "BottomBound" || fixB.getUserData() == "BottomBound") {
+            //Figures out which one of the fixtures is BottomBound
+            Fixture botBound = fixA.getUserData() == "BottomBound" ? fixA : fixB;
+            Fixture object = botBound == fixA ? fixB : fixA;
+
+            // if the other fixture is an instance of InteractiveTileObject we want to do release detection
+            if(object.getUserData() instanceof InteractiveTileObject) {
+                ((InteractiveTileObject) object.getUserData()).onBottomRelease();
+            }
+
+        }
     }
 
     @Override

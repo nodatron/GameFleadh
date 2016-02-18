@@ -33,4 +33,24 @@ public class RoadBounds extends InteractiveTileObject{
     public void onBottomHit() {
         Gdx.app.log("Collision", "Bottom Road Bounds");
     }
+
+    @Override
+    public void onRightRelease() {
+        Gdx.app.log("Release", "Bottom Road Bounds");
+    }
+
+    @Override
+    public void onLeftRelease() {
+        Gdx.app.log("Release", "Bottom Road Bounds");
+    }
+
+    @Override
+    public void onTopRelease() {
+        Gdx.app.log("Release", "Bottom Road Bounds");
+    }
+
+    @Override
+    public void onBottomRelease() {
+        Gdx.app.log("Release", "Bottom Road Bounds");
+    }
 }

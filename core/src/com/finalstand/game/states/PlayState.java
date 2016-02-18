@@ -92,11 +92,7 @@ public class PlayState implements Screen {
 
         //renders the debug lines for box2d
         b2dr.render(world, gameCam.combined);
-//        game.batch.setProjectionMatrix(gameCam.combined);
-//        game.batch.begin();
-//        game.batch.draw(texture, 0, 0);
-//        game.batch.end();
-//        game.batch.setProjectionMatrix(gameCam.combined);
+
         game.batch.setProjectionMatrix(gameCam.combined);
         game.batch.begin();
         player.render(game.batch);
@@ -106,13 +102,13 @@ public class PlayState implements Screen {
 //            game.batch.draw(tower.getCurrentTexture(), tower.getPosition().x, tower.getPosition().y, gameCam.viewportWidth / 6, gameCam.viewportHeight / 2);
 //        }
         game.batch.end();
-        if(Gdx.input.justTouched())
-        {
-            for(Tower tower : towers)
-            {
-                tower.upgrade();
-            }
-        }
+//        if(Gdx.input.justTouched())
+//        {
+//            for(Tower tower : towers)
+//            {
+//                tower.upgrade();
+//            }
+//        }
     }
 
     @Override

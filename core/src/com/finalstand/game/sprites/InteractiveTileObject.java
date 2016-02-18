@@ -48,4 +48,8 @@ public abstract class InteractiveTileObject {
     public abstract void onLeftHit();
     public abstract void onTopHit();
     public abstract void onBottomHit();
+    public abstract void onRightRelease();
+    public abstract void onLeftRelease();
+    public abstract void onTopRelease();
+    public abstract void onBottomRelease();
 }
