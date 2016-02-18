@@ -44,7 +44,7 @@ public class BasicCreep extends Creep {
 //    }
 
     public void dispose() {
-
+        sprite.getTexture().dispose();
     }
 
 }

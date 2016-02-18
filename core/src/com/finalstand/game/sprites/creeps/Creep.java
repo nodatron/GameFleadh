@@ -59,7 +59,8 @@ public class Creep extends Sprite{
         b2Body.createFixture(fdef);
 
         // sprite to the body
-        sprite.setSize(64 / FinalStand.PPM, 64/ FinalStand.PPM);
+        sprite.setSize(16 / FinalStand.PPM, 16/ FinalStand.PPM);
+        sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
         b2Body.setUserData(sprite);
     }
 
@@ -72,8 +73,6 @@ public class Creep extends Sprite{
         //this.b2body.getLinearVelocity().x/.y - gets the speed the object is moving at
         // This moves the creep in positive x direction
         this.b2Body.applyLinearImpulse(new Vector2(0.2f / FinalStand.PPM, 0), this.b2Body.getWorldCenter(), true);
-//        sprite.setPosition(b2Body.getPosition().x, b2Body.getPosition().y);
-//        sprite.translate(0.4f , 0);
     }
 
     public void render(SpriteBatch batch) {
@@ -81,7 +80,7 @@ public class Creep extends Sprite{
         for(Body body : bodies) {
             if(body.getUserData() != null && body.getUserData() instanceof Sprite) {
                 Sprite ssprite = (Sprite) body.getUserData();
-                ssprite.setPosition(body.getPosition().x , body.getPosition().y);
+                ssprite.setPosition(body.getPosition().x  - ssprite.getWidth() / 2 , body.getPosition().y - ssprite.getHeight() / 2);
                 ssprite.draw(batch);
             }
         }
