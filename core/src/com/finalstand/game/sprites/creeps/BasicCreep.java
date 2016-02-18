@@ -20,28 +20,14 @@ public class BasicCreep extends Creep {
         position = new Vector2(x, y);
         texture = new Texture("creeps/BasicCreep.png");
         sprite = new Sprite(texture);
-//        ball.setOrigin(ball.getWidth()/2,ball.getHeight()/2);
-//        sprite.setOrigin((getWidth() / 2) / FinalStand.PPM, (getHeight() / 2) / FinalStand.PPM);
+
         defineCreep();
-//        sprite.setSize(64, 64);
-//        sprite.setCenter(getPosition().x, getPosition().y);
-//        sprite.setPosition(0.0f, 0.0f);
 
         health = 100;
         armour = 10;
         status = new boolean[5];
 
     }
-
-//    public void update() {
-//
-//    }
-
-//    public void render(SpriteBatch batch) {
-//       batch.begin();
-//        sprite.draw(batch);
-//        batch.end();
-//    }
 
     public void dispose() {
         sprite.getTexture().dispose();

@@ -1,5 +1,6 @@
 package com.finalstand.game.sprites;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.World;
@@ -10,5 +11,26 @@ import com.badlogic.gdx.physics.box2d.World;
 public class RoadBounds extends InteractiveTileObject{
     public RoadBounds(World world, TiledMap map, Rectangle bounds) {
         super(world, map, bounds);
+        fixture.setUserData(this);
+    }
+
+    @Override
+    public void onRightHit() {
+        Gdx.app.log("Collision", "Right Road Bounds");
+    }
+
+    @Override
+    public void onLeftHit() {
+        Gdx.app.log("Collision", "Left Road Bounds");
+    }
+
+    @Override
+    public void onTopHit() {
+        Gdx.app.log("Collision", "Top Road Bounds");
+    }
+
+    @Override
+    public void onBottomHit() {
+        Gdx.app.log("Collision", "Bottom Road Bounds");
     }
 }

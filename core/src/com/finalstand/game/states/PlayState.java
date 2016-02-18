@@ -16,6 +16,7 @@ import com.finalstand.game.FinalStand;
 import com.finalstand.game.sprites.creeps.*;
 import com.finalstand.game.sprites.towers.*;
 import com.finalstand.game.tools.B2WorldCreator;
+import com.finalstand.game.tools.WorldContactListener;
 
 import java.util.ArrayList;
 
@@ -62,6 +63,8 @@ public class PlayState implements Screen {
         b2dr = new Box2DDebugRenderer();
 
         new B2WorldCreator(world, map);
+
+        world.setContactListener(new WorldContactListener());
 
         player = new BasicCreep(10, 360, world);
 

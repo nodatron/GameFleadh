@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
@@ -53,15 +54,45 @@ public class Creep extends Sprite{
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(5/ FinalStand.PPM);
+        shape.setRadius(5 / FinalStand.PPM);
 
         fdef.shape = shape;
         b2Body.createFixture(fdef);
 
+        EdgeShape rightBound = new EdgeShape();
+        rightBound.set(new Vector2(8 / FinalStand.PPM, 3 / FinalStand.PPM), new Vector2(8 / FinalStand.PPM, - 3 / FinalStand.PPM));
+        fdef.shape = rightBound;
+        fdef.isSensor = true;
+        b2Body.createFixture(fdef).setUserData("RightBound");
+
+        EdgeShape leftBound = new EdgeShape();
+        leftBound.set(new Vector2(-8 / FinalStand.PPM, 3 / FinalStand.PPM), new Vector2(-8 / FinalStand.PPM, - 3 / FinalStand.PPM));
+        fdef.shape = leftBound;
+        fdef.isSensor = true;
+        b2Body.createFixture(fdef).setUserData("LeftBound");
+
+        EdgeShape topBound = new EdgeShape();
+        topBound.set(new Vector2(3 / FinalStand.PPM, 8 / FinalStand.PPM), new Vector2(- 3 / FinalStand.PPM, 8 / FinalStand.PPM));
+        fdef.shape = topBound;
+        fdef.isSensor = true;
+        b2Body.createFixture(fdef).setUserData("TopBound");
+
+        EdgeShape bottomBound = new EdgeShape();
+        bottomBound.set(new Vector2(3 / FinalStand.PPM, - 8 / FinalStand.PPM), new Vector2(- 3 / FinalStand.PPM, -8 / FinalStand.PPM));
+        fdef.shape = bottomBound;
+        fdef.isSensor = true;
+        b2Body.createFixture(fdef).setUserData("BottomBound");
+
         // sprite to the body
-        sprite.setSize(16 / FinalStand.PPM, 16/ FinalStand.PPM);
+        sprite.setSize(16 / FinalStand.PPM, 16 / FinalStand.PPM);
         sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
         b2Body.setUserData(sprite);
+
+//        rightBound.dispose();
+//        leftBound.dispose();
+//        topBound.dispose();
+//        bottomBound.dispose();
+
     }
 
     public Vector2 getPosition() {
@@ -80,8 +111,8 @@ public class Creep extends Sprite{
         for(Body body : bodies) {
             if(body.getUserData() != null && body.getUserData() instanceof Sprite) {
                 Sprite ssprite = (Sprite) body.getUserData();
-                ssprite.setPosition(body.getPosition().x  - ssprite.getWidth() / 2 , body.getPosition().y - ssprite.getHeight() / 2);
-                ssprite.draw(batch);
+                ssprite.setPosition(body.getPosition().x - ssprite.getWidth() / 2, body.getPosition().y - ssprite.getHeight() / 2);
+//                ssprite.draw(batch);
             }
         }
     }
