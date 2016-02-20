@@ -6,9 +6,11 @@ package com.finalstand.game.states;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -57,6 +59,7 @@ public class PlayState implements Screen {
     public static Button upgradeButton;
     public static Button sellButton;
     public static boolean displayButtons;
+    BitmapFont font;
     Texture texture;
 
     public static UI ui;
@@ -86,9 +89,11 @@ public class PlayState implements Screen {
 
         towers = new ArrayList<Tower>();
         displayButtons = false;
+        font = new BitmapFont();
+        font.setColor(Color.RED);
 
         ui = new UI(0, 0, 8, 1);
-        optionTexture = new OptionTexture(ui.getTextureWidth(), ui.getTextureHeight());
+        optionTexture = new OptionTexture(ui.getTextureWidth(), ui.getTextureHeight(), world);
         optionChosen = false;
     }
 
@@ -113,11 +118,11 @@ public class PlayState implements Screen {
         game.batch.begin();
 
         checkTowerPressed();
-        for(Tower tower: towers)
+        /*for(Tower tower: towers)
         {
             //tower.checkPressed();
             game.batch.draw(tower.getCurrentTexture(), tower.getPosition().x, tower.getPosition().y, tower.getCurrentTexture().getWidth() / FinalStand.PPM, tower.getCurrentTexture().getHeight() / FinalStand.PPM);
-        }
+        }*/
 
         //render UI
         game.batch.draw(ui.getBackground(), ui.getPosition().x, ui.getPosition().y, ui.getWidth(), ui.getHeight());
@@ -134,6 +139,7 @@ public class PlayState implements Screen {
                     upgradeButton.getWidth(), upgradeButton.getHeight());
             game.batch.draw(sellButton.getButtonTexture(), sellButton.getPosition().x, sellButton.getPosition().y,
                     sellButton.getWidth(), sellButton.getHeight());
+            font.draw(game.batch, upgradeButton.getButtonText(), upgradeButton.getPosition().x, upgradeButton.getPosition().y);
         }
 
         if(optionChosen == true)

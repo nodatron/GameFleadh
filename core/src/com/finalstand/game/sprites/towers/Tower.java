@@ -6,6 +6,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.World;
 import com.finalstand.game.FinalStand;
 import com.finalstand.game.buttons.SellButton;
 import com.finalstand.game.buttons.UpgradeButton;
@@ -24,10 +29,17 @@ public class Tower {
     protected Texture level3;
     protected Texture currentTexture;
 
-    public Tower(float x, float y)
+    protected Body b2Body;
+    protected World world;
+
+    public Tower(float x, float y, World world)
     {
         position = new Vector2(x, y);
         level = 1;
+
+        this.world = world;
+
+        defineTower();
     }
 
     public void update(){}
@@ -60,6 +72,21 @@ public class Tower {
             }
         }
     }*/
+
+    public void defineTower() {
+        BodyDef bdef = new BodyDef();
+        bdef.position.set(position.x, position.y);
+        bdef.type = BodyDef.BodyType.StaticBody;
+
+        b2Body = world.createBody(bdef);
+
+        FixtureDef fdef = new FixtureDef();
+        CircleShape shape = new CircleShape();
+        shape.setRadius(8 / FinalStand.PPM);
+
+        fdef.shape = shape;
+        b2Body.createFixture(fdef);
+    }
 
     public void TowerOptions()
     {

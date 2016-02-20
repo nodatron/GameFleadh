@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.box2d.World;
 import com.finalstand.game.states.PlayState;
 import com.finalstand.game.towers.AOETower;
 import com.finalstand.game.towers.DOTTower;
@@ -24,11 +25,14 @@ public class OptionTexture {
 
     private int towerOption;
 
-    public OptionTexture(float w, float h)
+    private World world;
+
+    public OptionTexture(float w, float h, World world)
     {
         textureWidth = w;
         textureHeight = h;
         position = new Vector3(0, 0, 0);
+        this.world = world;
     }
 
     public void update()
@@ -46,25 +50,25 @@ public class OptionTexture {
                 case 0: {
                     //position.x -= SingleShotTower.getCurrentTexture().getWidth() / 2;
                     //position.y -= SingleShotTower.getCurrentTexture().getHeight() / 2;
-                    PlayState.towers.add(new com.finalstand.game.sprites.towers.SingleShotTower(position.x, position.y));
+                    PlayState.towers.add(new com.finalstand.game.sprites.towers.SingleShotTower(position.x, position.y, world));
                     break;
                 }
                 case 1: {
                     //position.x -= AOETower.getCurrentTexture().getWidth() / 2;
                     //position.y -= AOETower.getCurrentTexture().getHeight() / 2;
-                    PlayState.towers.add(new com.finalstand.game.sprites.towers.AOETower(position.x, position.y));
+                    PlayState.towers.add(new com.finalstand.game.sprites.towers.AOETower(position.x, position.y, world));
                     break;
                 }
                 case 2: {
                     //position.x -= DOTTower.getCurrentTexture().getWidth() / 2;
                     //position.y -= DOTTower.getCurrentTexture().getHeight() / 2;
-                    PlayState.towers.add(new com.finalstand.game.sprites.towers.DOTTower(position.x, position.y));
+                    PlayState.towers.add(new com.finalstand.game.sprites.towers.DOTTower(position.x, position.y, world));
                     break;
                 }
                 case 3: {
                     //position.x -= LaserTower.getCurrentTexture().getWidth() / 2;
                     //position.y -= LaserTower.getCurrentTexture().getHeight() / 2;
-                    PlayState.towers.add(new com.finalstand.game.sprites.towers.LaserTower(position.x, position.y));
+                    PlayState.towers.add(new com.finalstand.game.sprites.towers.LaserTower(position.x, position.y, world));
                     break;
                 }
             }
