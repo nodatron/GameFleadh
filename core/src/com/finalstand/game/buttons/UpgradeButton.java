@@ -22,6 +22,7 @@ public class UpgradeButton extends Button{
         this.cost = cost;
     }
 
+    @Override
     public void update()
     {
         if(Gdx.input.justTouched())

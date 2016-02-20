@@ -18,6 +18,7 @@ public class SellButton extends Button {
         this.sellPrice = sellPrice;
     }
 
+    @Override
     public void update()
     {
         if(Gdx.input.justTouched())

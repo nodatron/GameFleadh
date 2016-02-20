@@ -20,12 +20,33 @@ public class Button {
 
     public Button(float x, float y, float w, float h, String text, String texture, Tower tower)
     {
-        position.x = x;
-        position.y = y;
+        position = new Vector2(x, y);
         width = w;
         height = h;
         buttonText = new String(text);
         buttonTexture = new Texture(texture);
         this.tower = tower;
     }
+
+    public Vector2 getPosition() {
+        return position;
+    }
+
+    public Texture getButtonTexture() {
+        return buttonTexture;
+    }
+
+    public float getWidth() {
+        return width;
+    }
+
+    public float getHeight() {
+        return height;
+    }
+
+    public String getButtonText() {
+        return buttonText;
+    }
+
+    public void update(){};
 }

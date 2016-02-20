@@ -7,6 +7,8 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.finalstand.game.FinalStand;
+import com.finalstand.game.buttons.SellButton;
+import com.finalstand.game.buttons.UpgradeButton;
 import com.finalstand.game.states.PlayState;
 
 /**
@@ -46,7 +48,7 @@ public class Tower {
             currentTexture = level3;
         }
     }
-    public void checkPressed()
+    /*public void checkPressed()
     {
         if(Gdx.input.justTouched())
         {
@@ -57,10 +59,12 @@ public class Tower {
                 TowerOptions();
             }
         }
-    }
+    }*/
 
     public void TowerOptions()
     {
-
+        PlayState.upgradeButton = new UpgradeButton(100, this);
+        PlayState.sellButton = new SellButton(200, this);
+        PlayState.displayButtons = true;
     }
 }

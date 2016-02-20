@@ -19,6 +19,9 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.finalstand.game.FinalStand;
+import com.finalstand.game.buttons.Button;
+import com.finalstand.game.buttons.SellButton;
+import com.finalstand.game.buttons.UpgradeButton;
 import com.finalstand.game.sprites.creeps.*;
 import com.finalstand.game.sprites.towers.*;
 import com.finalstand.game.tools.B2WorldCreator;
@@ -51,6 +54,9 @@ public class PlayState implements Screen {
     private Creep player;
 
     public static ArrayList<Tower> towers;
+    public static Button upgradeButton;
+    public static Button sellButton;
+    public static boolean displayButtons;
     Texture texture;
 
     public static UI ui;
@@ -79,10 +85,7 @@ public class PlayState implements Screen {
         player = new Creep(world);
 
         towers = new ArrayList<Tower>();
-        /*towers.add(new SingleShotTower(0,0));
-        towers.add(new AOETower((FinalStand.V_WIDTH / 6) / FinalStand.PPM, 0));
-        towers.add(new DOTTower((FinalStand.V_WIDTH / 3) / FinalStand.PPM, 0));
-        towers.add(new LaserTower((FinalStand.V_WIDTH / 2) / FinalStand.PPM, 0));*/
+        displayButtons = false;
 
         ui = new UI(0, 0, 8, 1);
         optionTexture = new OptionTexture(ui.getTextureWidth(), ui.getTextureHeight());
@@ -106,24 +109,32 @@ public class PlayState implements Screen {
 
         //renders the debug lines for box2d
         b2dr.render(world, gameCam.combined);
-//        game.batch.setProjectionMatrix(gameCam.combined);
-//        game.batch.begin();
-//        game.batch.draw(texture, 0, 0);
-//        game.batch.end();
         game.batch.setProjectionMatrix(gameCam.combined);
         game.batch.begin();
 
+        checkTowerPressed();
         for(Tower tower: towers)
         {
-            tower.checkPressed();
+            //tower.checkPressed();
             game.batch.draw(tower.getCurrentTexture(), tower.getPosition().x, tower.getPosition().y, tower.getCurrentTexture().getWidth() / FinalStand.PPM, tower.getCurrentTexture().getHeight() / FinalStand.PPM);
         }
 
+        //render UI
         game.batch.draw(ui.getBackground(), ui.getPosition().x, ui.getPosition().y, ui.getWidth(), ui.getHeight());
         game.batch.draw(ui.getOption1Texture(), ui.getOption1Pos().x, ui.getOption1Pos().y, ui.getTextureWidth(), ui.getTextureHeight());
         game.batch.draw(ui.getOption2Texture(), ui.getOption2Pos().x, ui.getOption2Pos().y, ui.getTextureWidth(), ui.getTextureHeight());
         game.batch.draw(ui.getOption3Texture(), ui.getOption3Pos().x, ui.getOption3Pos().y, ui.getTextureWidth(), ui.getTextureHeight());
         game.batch.draw(ui.getOption4Texture(), ui.getOption4Pos().x, ui.getOption4Pos().y, ui.getTextureWidth(), ui.getTextureHeight());
+
+        if(displayButtons == true)
+        {
+            upgradeButton.update();
+            sellButton.update();
+            game.batch.draw(upgradeButton.getButtonTexture(), upgradeButton.getPosition().x, upgradeButton.getPosition().y,
+                    upgradeButton.getWidth(), upgradeButton.getHeight());
+            game.batch.draw(sellButton.getButtonTexture(), sellButton.getPosition().x, sellButton.getPosition().y,
+                    sellButton.getWidth(), sellButton.getHeight());
+        }
 
         if(optionChosen == true)
         {
@@ -191,5 +202,26 @@ public class PlayState implements Screen {
 
     public static Vector3 getWorldMousePos() {
         return gameCam.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+    }
+
+    public void checkTowerPressed()
+    {
+        if(Gdx.input.justTouched())
+        {
+            boolean towerPressed = false;
+            Vector3 mouse = PlayState.getWorldMousePos();
+            for(Tower tower : towers) {
+                if (mouse.x > tower.getPosition().x && mouse.x < tower.getPosition().x + (tower.getCurrentTexture().getWidth() / FinalStand.PPM) &&
+                    mouse.y > tower.getPosition().y && mouse.y < tower.getPosition().y + (tower.getCurrentTexture().getHeight() / FinalStand.PPM))
+                {
+                    tower.TowerOptions();
+                    towerPressed = true;
+                }
+            }
+            if(!towerPressed)
+            {
+                displayButtons = false;
+            }
+        }
     }
 }
