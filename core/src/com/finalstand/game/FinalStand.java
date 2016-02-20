@@ -1,13 +1,8 @@
 package com.finalstand.game;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.finalstand.game.states.GameStateManager;
-import com.finalstand.game.states.PlayState;
+import com.finalstand.game.Screens.MenuScreen;
 
 public class FinalStand extends Game {
 
@@ -16,8 +11,6 @@ public class FinalStand extends Game {
 	public static final int V_HEIGHT = 400;
 	//pixels per metre needed because of box2d scaling
 	public static final float PPM = 100;
-
-	public GameStateManager gsm;
 
 	public SpriteBatch batch;
 
@@ -34,7 +27,8 @@ public class FinalStand extends Game {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		setScreen(new PlayState(this, gsm));
+
+		setScreen(new MenuScreen(this));
 	}
 
 	@Override

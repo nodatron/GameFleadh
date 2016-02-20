@@ -1,10 +1,10 @@
-package com.finalstand.game.states;
+package com.finalstand.game.Screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -14,18 +14,21 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.finalstand.game.FinalStand;
-import com.finalstand.game.sprites.creeps.*;
-import com.finalstand.game.sprites.towers.*;
+import com.finalstand.game.sprites.creeps.BasicCreep;
+import com.finalstand.game.sprites.creeps.Creep;
+import com.finalstand.game.sprites.towers.AOETower;
+import com.finalstand.game.sprites.towers.LaserTower;
+import com.finalstand.game.sprites.towers.SingleShotTower;
+import com.finalstand.game.sprites.towers.Tower;
 import com.finalstand.game.tools.B2WorldCreator;
 import com.finalstand.game.tools.WorldContactListener;
 
 import java.util.ArrayList;
 
 /**
- * Created by Niall PC on 10/02/2016.
+ * Created by Niall PC on 20/02/2016.
  */
-public class PlayState extends State implements Screen {
-
+public class PlayScreen implements Screen {
     private World world;
     private Box2DDebugRenderer b2dr;
 
@@ -50,10 +53,13 @@ public class PlayState extends State implements Screen {
 
     private int elapsed;
 
-    public PlayState(FinalStand game, GameStateManager gsm) {
-        super(gsm);
+    public PlayScreen(FinalStand game){
         this.game = game;
-//        texture = new Texture("background.jpg");
+    }
+
+    @Override
+    public void show() {
+//      texture = new Texture("background.jpg");
         gameCam = new OrthographicCamera();
         viewport = new FitViewport(FinalStand.V_WIDTH / FinalStand.PPM, FinalStand.V_HEIGHT / FinalStand.PPM, gameCam);
 
@@ -86,13 +92,8 @@ public class PlayState extends State implements Screen {
     }
 
     @Override
-    public void show() {
-
-    }
-
-    @Override
     public void render(float delta) {
-        update(delta);
+        update();
         // Clearing the screen
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -138,7 +139,7 @@ public class PlayState extends State implements Screen {
 
     @Override
     public void hide() {
-
+        dispose();
     }
 
     @Override
@@ -150,7 +151,7 @@ public class PlayState extends State implements Screen {
         b2dr.dispose();
     }
 
-    public void update(float deltaTime) {
+    public void update() {
         handleInput();
 
         world.step(1 / 60f, 6, 2);
@@ -171,20 +172,13 @@ public class PlayState extends State implements Screen {
         elapsed ++;
     }
 
-    @Override
-    public void render(SpriteBatch sb) {
-
-    }
-
-
-
     public void handleInput() {
-
+        if(Gdx.input.isKeyPressed(Input.Keys.M))
+            game.setScreen(new MenuScreen(game));
     }
 
     public void spawnCreep() {
         Creep creep = new BasicCreep(10, 360, world);
         creeps.add(creep);
     }
-
 }
