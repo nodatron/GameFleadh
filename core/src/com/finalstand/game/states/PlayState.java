@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -23,7 +24,7 @@ import java.util.ArrayList;
 /**
  * Created by Niall PC on 10/02/2016.
  */
-public class PlayState implements Screen {
+public class PlayState extends State implements Screen {
 
     private World world;
     private Box2DDebugRenderer b2dr;
@@ -49,7 +50,8 @@ public class PlayState implements Screen {
 
     private int elapsed;
 
-    public PlayState(FinalStand game) {
+    public PlayState(FinalStand game, GameStateManager gsm) {
+        super(gsm);
         this.game = game;
 //        texture = new Texture("background.jpg");
         gameCam = new OrthographicCamera();
@@ -168,6 +170,13 @@ public class PlayState implements Screen {
         renderer.setView(gameCam);
         elapsed ++;
     }
+
+    @Override
+    public void render(SpriteBatch sb) {
+
+    }
+
+
 
     public void handleInput() {
 
