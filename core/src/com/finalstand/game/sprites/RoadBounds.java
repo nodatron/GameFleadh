@@ -5,6 +5,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.World;
 import com.finalstand.game.FinalStand;
+import com.finalstand.game.sprites.creeps.Creep;
 
 /**
  * Created by Niall on 2/15/2016.
@@ -17,43 +18,50 @@ public class RoadBounds extends InteractiveTileObject{
     }
 
     @Override
-    public void onRightHit() {
+    public void onRightHit(Creep creep) {
         Gdx.app.log("Collision", "Right Road Bounds");
-//        setCategoryFilter(FinalStand.TOUCHING_BIT);
+        creep.unsetMovement(0);
     }
 
     @Override
-    public void onLeftHit() {
+    public void onLeftHit(Creep creep) {
         Gdx.app.log("Collision", "Left Road Bounds");
+        creep.unsetMovement(1);
     }
 
     @Override
-    public void onTopHit() {
+    public void onTopHit(Creep creep) {
         Gdx.app.log("Collision", "Top Road Bounds");
+        creep.unsetMovement(2);
     }
 
     @Override
-    public void onBottomHit() {
+    public void onBottomHit(Creep creep) {
         Gdx.app.log("Collision", "Bottom Road Bounds");
+        creep.unsetMovement(3);
     }
 
     @Override
-    public void onRightRelease() {
+    public void onRightRelease(Creep creep) {
         Gdx.app.log("Release", "Bottom Road Bounds");
+        creep.setMovement(0);
     }
 
     @Override
-    public void onLeftRelease() {
+    public void onLeftRelease(Creep creep) {
         Gdx.app.log("Release", "Bottom Road Bounds");
+        creep.setMovement(1);
     }
 
     @Override
-    public void onTopRelease() {
+    public void onTopRelease(Creep creep) {
         Gdx.app.log("Release", "Bottom Road Bounds");
+        creep.setMovement(2);
     }
 
     @Override
-    public void onBottomRelease() {
+    public void onBottomRelease(Creep creep) {
         Gdx.app.log("Release", "Bottom Road Bounds");
+        creep.setMovement(3);
     }
 }

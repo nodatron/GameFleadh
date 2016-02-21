@@ -1,6 +1,5 @@
 package com.finalstand.game.sprites.creeps;
 
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -24,7 +23,6 @@ public class Creep extends Sprite{
     protected SpriteBatch batch;
 
     protected Vector2 position;
-    public boolean[] movement;
 
     protected int health;
     protected int armour;
@@ -35,9 +33,12 @@ public class Creep extends Sprite{
 
     protected Array<Body> bodies = new Array<Body>();
 
+    protected boolean[] movement;
+
     public Creep(World world) {
         this.world = world;
-
+        movement = new boolean[4];
+        movement[0] = true;
 //        texture = new Texture("BasicCreep.png");
 //        sprite = new Sprite(texture);
     }
@@ -55,7 +56,7 @@ public class Creep extends Sprite{
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(5 / FinalStand.PPM);
+        shape.setRadius(7 / FinalStand.PPM);
 
         //setting what a creep can collide with and what bit it is
         fdef.filter.categoryBits = FinalStand.CREEP_BIT;
@@ -66,27 +67,31 @@ public class Creep extends Sprite{
 
         EdgeShape rightBound = new EdgeShape();
         rightBound.set(new Vector2(8 / FinalStand.PPM, 3 / FinalStand.PPM), new Vector2(8 / FinalStand.PPM, - 3 / FinalStand.PPM));
+        fdef.filter.categoryBits = FinalStand.RIGHT_BOUND_BIT;
         fdef.shape = rightBound;
         fdef.isSensor = true;
-        b2Body.createFixture(fdef).setUserData("RightBound");
+        b2Body.createFixture(fdef).setUserData(this);
 
         EdgeShape leftBound = new EdgeShape();
         leftBound.set(new Vector2(-8 / FinalStand.PPM, 3 / FinalStand.PPM), new Vector2(-8 / FinalStand.PPM, - 3 / FinalStand.PPM));
+        fdef.filter.categoryBits = FinalStand.LEFT_BOUND_BIT;
         fdef.shape = leftBound;
         fdef.isSensor = true;
-        b2Body.createFixture(fdef).setUserData("LeftBound");
+        b2Body.createFixture(fdef).setUserData(this);
 
         EdgeShape topBound = new EdgeShape();
         topBound.set(new Vector2(3 / FinalStand.PPM, 8 / FinalStand.PPM), new Vector2(- 3 / FinalStand.PPM, 8 / FinalStand.PPM));
+        fdef.filter.categoryBits = FinalStand.TOP_BOUND_BIT;
         fdef.shape = topBound;
         fdef.isSensor = true;
-        b2Body.createFixture(fdef).setUserData("TopBound");
+        b2Body.createFixture(fdef).setUserData(this);
 
         EdgeShape bottomBound = new EdgeShape();
         bottomBound.set(new Vector2(3 / FinalStand.PPM, - 8 / FinalStand.PPM), new Vector2(- 3 / FinalStand.PPM, -8 / FinalStand.PPM));
+        fdef.filter.categoryBits = FinalStand.BOT_BOUND_BIT;
         fdef.shape = bottomBound;
         fdef.isSensor = true;
-        b2Body.createFixture(fdef).setUserData("BottomBound");
+        b2Body.createFixture(fdef).setUserData(this);
 
         // sprite to the body
         sprite.setSize(16 / FinalStand.PPM, 16 / FinalStand.PPM);
@@ -108,7 +113,7 @@ public class Creep extends Sprite{
         //speeds will be held by variables
         //this.b2body.getLinearVelocity().x/.y - gets the speed the object is moving at
         // This moves the creep in positive x direction
-        this.b2Body.applyLinearImpulse(new Vector2(0.2f / FinalStand.PPM, 0), this.b2Body.getWorldCenter(), true);
+//        this.b2Body.applyLinearImpulse(new Vector2(0.2f / FinalStand.PPM, 0), this.b2Body.getWorldCenter(), true);
 
         if(movement[0]) {
             // go right
@@ -137,10 +142,12 @@ public class Creep extends Sprite{
         }
     }
 
-    public  void setMovement() {
-        for(boolean b : movement) {
-            b = false;
-        }
+    public void setMovement(int index) {
+        movement[index] = true;
+    }
+
+    public void unsetMovement(int index) {
+        movement[index] = false;
     }
 
     void dispose() {

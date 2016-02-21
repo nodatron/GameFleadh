@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.finalstand.game.FinalStand;
+import com.finalstand.game.sprites.creeps.Creep;
 
 /**
  * Created by Niall on 2/15/2016.
@@ -45,14 +46,14 @@ public abstract class InteractiveTileObject {
         fixture = body.createFixture(fdef);
     }
 
-    public abstract void onRightHit();
-    public abstract void onLeftHit();
-    public abstract void onTopHit();
-    public abstract void onBottomHit();
-    public abstract void onRightRelease();
-    public abstract void onLeftRelease();
-    public abstract void onTopRelease();
-    public abstract void onBottomRelease();
+    public abstract void onRightHit(Creep creep);
+    public abstract void onLeftHit(Creep creep);
+    public abstract void onTopHit(Creep creep);
+    public abstract void onBottomHit(Creep creep);
+    public abstract void onRightRelease(Creep creep);
+    public abstract void onLeftRelease(Creep creep);
+    public abstract void onTopRelease(Creep creep);
+    public abstract void onBottomRelease(Creep creep);
 
     public void setCategoryFilter(short filterBit) {
         Filter filter = new Filter();
