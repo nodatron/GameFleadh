@@ -11,6 +11,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.finalstand.game.FinalStand;
@@ -21,6 +22,7 @@ import com.finalstand.game.sprites.towers.LaserTower;
 import com.finalstand.game.sprites.towers.SingleShotTower;
 import com.finalstand.game.sprites.towers.Tower;
 import com.finalstand.game.tools.B2WorldCreator;
+import com.finalstand.game.tools.Waypoint;
 import com.finalstand.game.tools.WorldContactListener;
 
 import java.util.ArrayList;
@@ -51,6 +53,8 @@ public class PlayScreen implements Screen {
     private ArrayList<Tower> towers;
 //    Texture texture;
 
+    public static Array<Waypoint> waypoints;
+
     private int elapsed;
 
     public PlayScreen(FinalStand game){
@@ -73,6 +77,8 @@ public class PlayScreen implements Screen {
 
         world = new World(new Vector2(0, 0), true);
         b2dr = new Box2DDebugRenderer();
+
+        waypoints = new Array<Waypoint>();
 
         new B2WorldCreator(world, map);
 

@@ -22,7 +22,8 @@ public class FinalStand extends Game {
 	public static final short PROJECTILE_BIT = 16;
 	public static final short TRAP_BIT = 32;
 	public static final short BASE_BIT = 64;
-	public static final short TOUCHING_BIT = 128;
+	public static final short WAYPOINT_BIT = 128;
+	public static final short TOUCHING_BIT = 256;
 
 	@Override
 	public void create () {
