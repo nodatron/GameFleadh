@@ -14,7 +14,7 @@ public class SellButton extends Button {
     public SellButton(float sellPrice, Tower tower)
     {
         super((PlayState.ui.getWidth() / 8) * 7, PlayState.ui.getHeight(), PlayState.ui.getWidth() / 8,
-                PlayState.ui.getHeight() / 2, "Upgrade: " + sellPrice, "background.jpg", tower);
+                PlayState.ui.getHeight() / 2, "Upgrade: " + sellPrice, tower);
         this.sellPrice = sellPrice;
     }
 

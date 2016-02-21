@@ -18,7 +18,7 @@ public class UpgradeButton extends Button{
     public UpgradeButton(float cost, Tower tower)
     {
         super((PlayState.ui.getWidth() / 4) * 3, PlayState.ui.getHeight(), PlayState.ui.getWidth() / 8,
-                PlayState.ui.getHeight() / 2, "Upgrade: " + cost, "background.jpg", tower);
+                PlayState.ui.getHeight() / 2, "Upgrade: " + cost, tower);
         this.cost = cost;
     }
 

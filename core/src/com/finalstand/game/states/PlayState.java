@@ -18,6 +18,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextArea;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.finalstand.game.FinalStand;
@@ -59,7 +61,8 @@ public class PlayState implements Screen {
     public static Button upgradeButton;
     public static Button sellButton;
     public static boolean displayButtons;
-    BitmapFont font;
+    //BitmapFont font;
+    //private TextArea buttonText;
     Texture texture;
 
     public static UI ui;
@@ -89,8 +92,10 @@ public class PlayState implements Screen {
 
         towers = new ArrayList<Tower>();
         displayButtons = false;
-        font = new BitmapFont();
+        /*font = new BitmapFont();
         font.setColor(Color.RED);
+        Skin skin = new Skin();
+        buttonText = new TextArea(upgradeButton.getButtonText(), skin);*/
 
         ui = new UI(0, 0, 8, 1);
         optionTexture = new OptionTexture(ui.getTextureWidth(), ui.getTextureHeight(), world);
@@ -117,12 +122,11 @@ public class PlayState implements Screen {
         game.batch.setProjectionMatrix(gameCam.combined);
         game.batch.begin();
 
-        checkTowerPressed();
-        /*for(Tower tower: towers)
+        for(Tower tower: towers)
         {
             //tower.checkPressed();
             game.batch.draw(tower.getCurrentTexture(), tower.getPosition().x, tower.getPosition().y, tower.getCurrentTexture().getWidth() / FinalStand.PPM, tower.getCurrentTexture().getHeight() / FinalStand.PPM);
-        }*/
+        }
 
         //render UI
         game.batch.draw(ui.getBackground(), ui.getPosition().x, ui.getPosition().y, ui.getWidth(), ui.getHeight());
@@ -135,12 +139,15 @@ public class PlayState implements Screen {
         {
             upgradeButton.update();
             sellButton.update();
-            game.batch.draw(upgradeButton.getButtonTexture(), upgradeButton.getPosition().x, upgradeButton.getPosition().y,
+            /*game.batch.draw(upgradeButton.getButtonTexture(), upgradeButton.getPosition().x, upgradeButton.getPosition().y,
                     upgradeButton.getWidth(), upgradeButton.getHeight());
             game.batch.draw(sellButton.getButtonTexture(), sellButton.getPosition().x, sellButton.getPosition().y,
-                    sellButton.getWidth(), sellButton.getHeight());
-            font.draw(game.batch, upgradeButton.getButtonText(), upgradeButton.getPosition().x, upgradeButton.getPosition().y);
+                    sellButton.getWidth(), sellButton.getHeight());*/
+            upgradeButton.getButtonSprite().draw(game.batch);
+            sellButton.getButtonSprite().draw(game.batch);
+            //font.draw(game.batch, upgradeButton.getButtonText(), upgradeButton.getPosition().x, upgradeButton.getPosition().y);
         }
+        checkTowerPressed();
 
         if(optionChosen == true)
         {
