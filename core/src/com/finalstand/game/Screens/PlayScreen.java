@@ -17,6 +17,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.finalstand.game.FinalStand;
 import com.finalstand.game.sprites.creeps.BasicCreep;
 import com.finalstand.game.sprites.creeps.Creep;
+import com.finalstand.game.sprites.creeps.HeavyCreep;
+import com.finalstand.game.sprites.creeps.MediumCreep;
 import com.finalstand.game.sprites.towers.AOETower;
 import com.finalstand.game.sprites.towers.LaserTower;
 import com.finalstand.game.sprites.towers.SingleShotTower;
@@ -48,14 +50,20 @@ public class PlayScreen implements Screen {
 
     private Creep player;
 
-    private ArrayList<Creep> creeps;
+    private Array<Creep> creeps;
+    private Array<Creep> spawnableCreeps;
+    private boolean keepSpawning;
+    private int creepsSpawned;
+    private int elapsed;
+
+
 
     private ArrayList<Tower> towers;
 //    Texture texture;
 
     public static Array<Waypoint> waypoints;
 
-    private int elapsed;
+
 
     public PlayScreen(FinalStand game){
         this.game = game;
@@ -87,7 +95,12 @@ public class PlayScreen implements Screen {
 
         player = new BasicCreep(10, 360, world);
 
-        creeps = new ArrayList<Creep>();
+        creeps = new Array<Creep>();
+        creeps = randomCreeps(5);
+        spawnableCreeps = new Array<Creep>();
+        spawnableCreeps.add(creeps.get(0));
+        creepsSpawned = 0;
+        keepSpawning = true;
 
         towers = new ArrayList<Tower>();
         towers.add(new SingleShotTower(0,0));
@@ -165,17 +178,27 @@ public class PlayScreen implements Screen {
 
         gameCam.update();
 
-        for(Creep c : creeps) {
+        for(Creep c : spawnableCreeps) {
             c.update();
         }
 
-        if(elapsed > 100) {
-            spawnCreep();
-            elapsed = 0;
+        if(keepSpawning) {
+            System.out.println("in keep spawning");
+            if(elapsed > 100) {
+                spawnNewCreep();
+                elapsed = 0;
+            }
         }
+
+//        if(elapsed > 100) {
+//            spawnCreep();
+//            elapsed = 0;
+//        }
 
         player.update();
         renderer.setView(gameCam);
+
+
         elapsed ++;
     }
 
@@ -187,5 +210,55 @@ public class PlayScreen implements Screen {
     public void spawnCreep() {
         Creep creep = new BasicCreep(10, 360, world);
         creeps.add(creep);
+    }
+
+    public void spawnNewCreep() {
+        System.out.println("New creep spawned");
+        if(creepsSpawned == creeps.size) {
+            keepSpawning = false;
+            return;
+        }
+        spawnableCreeps.add(creeps.get(creepsSpawned));
+        creepsSpawned++;
+    }
+
+    public Array<Creep> randomCreeps(float challengeRating) {
+        Array<Creep> levelCreeps = new Array<Creep>();
+        int randomNumber = 0;
+        float currentChallengeRating = 0;
+
+        while(currentChallengeRating < challengeRating) {
+            randomNumber = randomWithinRange(0, 100);
+            if(challengeRating - currentChallengeRating > 1) {
+                if(randomNumber <= 55) {
+                    levelCreeps.add(new BasicCreep(10, 360, world));
+                    currentChallengeRating += 0.25f;
+                } else if(randomNumber <= 85 && randomNumber > 55) {
+                    levelCreeps.add(new MediumCreep(10, 360, world));
+                    currentChallengeRating += 0.75f;
+                } else {
+                    levelCreeps.add(new HeavyCreep(10, 360, world));
+                    currentChallengeRating += 1.0f;
+                }
+            } else if(challengeRating - currentChallengeRating >= 0.75) {
+                if(randomNumber <= 65) {
+                    levelCreeps.add(new BasicCreep(10, 360, world));
+                    currentChallengeRating += 0.25f;
+                } else if(randomNumber > 65) {
+                    levelCreeps.add(new MediumCreep(10, 360, world));
+                    currentChallengeRating += 0.75f;
+                }
+            } else {
+                levelCreeps.add(new BasicCreep(10, 360, world));
+                currentChallengeRating += 0.25f;
+            }
+        }
+
+        return levelCreeps;
+    }
+
+    public int randomWithinRange(int min, int max) {
+        int range = Math.abs(max - min) + 1;
+        return (int)(Math.random() * range) + min;
     }
 }

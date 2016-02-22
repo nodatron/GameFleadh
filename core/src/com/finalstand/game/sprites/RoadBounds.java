@@ -19,49 +19,49 @@ public class RoadBounds extends InteractiveTileObject{
 
     @Override
     public void onRightHit(Creep creep) {
-        Gdx.app.log("Collision", "Right Road Bounds");
+//        Gdx.app.log("Collision", "Right Road Bounds");
 //        creep.unsetMovement(0);
     }
 
     @Override
     public void onLeftHit(Creep creep) {
-        Gdx.app.log("Collision", "Left Road Bounds");
+//        Gdx.app.log("Collision", "Left Road Bounds");
 //        creep.unsetMovement(1);
     }
 
     @Override
     public void onTopHit(Creep creep) {
-        Gdx.app.log("Collision", "Top Road Bounds");
+//        Gdx.app.log("Collision", "Top Road Bounds");
 //        creep.unsetMovement(2);
     }
 
     @Override
     public void onBottomHit(Creep creep) {
-        Gdx.app.log("Collision", "Bottom Road Bounds");
+//        Gdx.app.log("Collision", "Bottom Road Bounds");
 //        creep.unsetMovement(3);
     }
 
     @Override
     public void onRightRelease(Creep creep) {
-        Gdx.app.log("Release", "Bottom Road Bounds");
+//        Gdx.app.log("Release", "Bottom Road Bounds");
 
     }
 
     @Override
     public void onLeftRelease(Creep creep) {
-        Gdx.app.log("Release", "Bottom Road Bounds");
+//        Gdx.app.log("Release", "Bottom Road Bounds");
 
     }
 
     @Override
     public void onTopRelease(Creep creep) {
-        Gdx.app.log("Release", "Bottom Road Bounds");
+//        Gdx.app.log("Release", "Bottom Road Bounds");
 
     }
 
     @Override
     public void onBottomRelease(Creep creep) {
-        Gdx.app.log("Release", "Bottom Road Bounds");
+//        Gdx.app.log("Release", "Bottom Road Bounds");
 
     }
 }
