@@ -32,11 +32,27 @@ public class WorldContactListener implements ContactListener {
                 }
             } break;
 
+            case FinalStand.RIGHT_BOUND_BIT | FinalStand.WAYPOINT_BIT: {
+                if(fixA.getFilterData().categoryBits == FinalStand.RIGHT_BOUND_BIT) {
+                    ((Waypoint) fixB.getUserData()).onRightHit((Creep) fixA.getUserData());
+                } else {
+                    ((Waypoint) fixA.getUserData()).onRightHit((Creep) fixB.getUserData());
+                }
+            } break;
+
             case FinalStand.LEFT_BOUND_BIT | FinalStand.ROADBOUNDS_BIT: {
                 if(fixA.getFilterData().categoryBits == FinalStand.LEFT_BOUND_BIT) {
                     ((RoadBounds) fixB.getUserData()).onLeftHit((Creep) fixA.getUserData());
                 } else {
                     ((RoadBounds) fixA.getUserData()).onLeftHit((Creep) fixB.getUserData());
+                }
+            } break;
+
+            case FinalStand.LEFT_BOUND_BIT | FinalStand.WAYPOINT_BIT: {
+                if(fixA.getFilterData().categoryBits == FinalStand.LEFT_BOUND_BIT) {
+                    ((Waypoint) fixB.getUserData()).onLeftHit((Creep) fixA.getUserData());
+                } else {
+                    ((Waypoint) fixA.getUserData()).onLeftHit((Creep) fixB.getUserData());
                 }
             } break;
 
@@ -48,11 +64,27 @@ public class WorldContactListener implements ContactListener {
                 }
             } break;
 
+            case FinalStand.TOP_BOUND_BIT | FinalStand.WAYPOINT_BIT: {
+                if(fixA.getFilterData().categoryBits == FinalStand.TOP_BOUND_BIT) {
+                    ((Waypoint) fixB.getUserData()).onTopHit((Creep) fixA.getUserData());
+                } else {
+                    ((Waypoint) fixA.getUserData()).onTopHit((Creep) fixB.getUserData());
+                }
+            } break;
+
             case FinalStand.BOT_BOUND_BIT | FinalStand.ROADBOUNDS_BIT: {
                 if(fixA.getFilterData().categoryBits == FinalStand.BOT_BOUND_BIT) {
                     ((RoadBounds) fixB.getUserData()).onBottomHit((Creep) fixA.getUserData());
                 } else {
                     ((RoadBounds) fixA.getUserData()).onBottomHit((Creep) fixB.getUserData());
+                }
+            } break;
+
+            case FinalStand.BOT_BOUND_BIT | FinalStand.WAYPOINT_BIT: {
+                if(fixA.getFilterData().categoryBits == FinalStand.BOT_BOUND_BIT) {
+                    ((Waypoint) fixB.getUserData()).onBottomHit((Creep) fixA.getUserData());
+                } else {
+                    ((Waypoint) fixA.getUserData()).onBottomHit((Creep) fixB.getUserData());
                 }
             } break;
         }
@@ -120,33 +152,33 @@ public class WorldContactListener implements ContactListener {
         switch (catDef) {
             case FinalStand.RIGHT_BOUND_BIT | FinalStand.ROADBOUNDS_BIT: {
                 if(fixA.getFilterData().categoryBits == FinalStand.RIGHT_BOUND_BIT) {
-                    ((RoadBounds) fixB.getUserData()).onRightHit((Creep) fixA.getUserData());
+                    ((RoadBounds) fixB.getUserData()).onRightRelease((Creep) fixA.getUserData());
                 } else {
-                    ((RoadBounds) fixA.getUserData()).onRightHit((Creep) fixB.getUserData());
+                    ((RoadBounds) fixA.getUserData()).onRightRelease((Creep) fixB.getUserData());
                 }
             } break;
 
             case FinalStand.LEFT_BOUND_BIT | FinalStand.ROADBOUNDS_BIT: {
                 if(fixA.getFilterData().categoryBits == FinalStand.LEFT_BOUND_BIT) {
-                    ((RoadBounds) fixB.getUserData()).onLeftHit((Creep) fixA.getUserData());
+                    ((RoadBounds) fixB.getUserData()).onLeftRelease((Creep) fixA.getUserData());
                 } else {
-                    ((RoadBounds) fixA.getUserData()).onLeftHit((Creep) fixB.getUserData());
+                    ((RoadBounds) fixA.getUserData()).onLeftRelease((Creep) fixB.getUserData());
                 }
             } break;
 
             case FinalStand.TOP_BOUND_BIT | FinalStand.ROADBOUNDS_BIT: {
                 if(fixA.getFilterData().categoryBits == FinalStand.TOP_BOUND_BIT) {
-                    ((RoadBounds) fixB.getUserData()).onTopHit((Creep) fixA.getUserData());
+                    ((RoadBounds) fixB.getUserData()).onTopRelease((Creep) fixA.getUserData());
                 } else {
-                    ((RoadBounds) fixA.getUserData()).onTopHit((Creep) fixB.getUserData());
+                    ((RoadBounds) fixA.getUserData()).onTopRelease((Creep) fixB.getUserData());
                 }
             } break;
 
             case FinalStand.BOT_BOUND_BIT | FinalStand.ROADBOUNDS_BIT: {
                 if(fixA.getFilterData().categoryBits == FinalStand.BOT_BOUND_BIT) {
-                    ((RoadBounds) fixB.getUserData()).onBottomHit((Creep) fixA.getUserData());
+                    ((RoadBounds) fixB.getUserData()).onBottomRelease((Creep) fixA.getUserData());
                 } else {
-                    ((RoadBounds) fixA.getUserData()).onBottomHit((Creep) fixB.getUserData());
+                    ((RoadBounds) fixA.getUserData()).onBottomRelease((Creep) fixB.getUserData());
                 }
             } break;
         }

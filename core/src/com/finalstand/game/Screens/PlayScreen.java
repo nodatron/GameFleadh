@@ -80,6 +80,7 @@ public class PlayScreen implements Screen {
 
         waypoints = new Array<Waypoint>();
 
+
         new B2WorldCreator(world, map);
 
         world.setContactListener(new WorldContactListener());

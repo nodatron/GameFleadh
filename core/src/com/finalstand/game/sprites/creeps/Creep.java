@@ -12,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.finalstand.game.FinalStand;
+import com.finalstand.game.tools.Waypoint;
 
 /**
  * Created by Niall on 09/02/2016.
@@ -35,10 +36,22 @@ public class Creep extends Sprite{
 
     protected boolean[] movement;
 
+    protected short timeElapsed;
+    protected boolean setDirection;
+    protected Vector2 direction;
+
+    protected Array<String> dir;
+    protected int waypointHit;
+
     public Creep(World world) {
         this.world = world;
         movement = new boolean[4];
         movement[0] = true;
+        setDirection = false;
+        direction = new Vector2(0.2f / FinalStand.PPM, 0);
+        timeElapsed = 0;
+        dir = Waypoint.readWaypoints("map1.txt");
+        waypointHit = 0;
 //        texture = new Texture("BasicCreep.png");
 //        sprite = new Sprite(texture);
     }
@@ -114,21 +127,28 @@ public class Creep extends Sprite{
         //this.b2body.getLinearVelocity().x/.y - gets the speed the object is moving at
         // This moves the creep in positive x direction
 //        this.b2Body.applyLinearImpulse(new Vector2(0.2f / FinalStand.PPM, 0), this.b2Body.getWorldCenter(), true);
+//        if(timeElapsed > 100) {
+//            setDirection = true;
+//        }
 
+        checkDir();
+
+        //set the way to go
         if(movement[0]) {
             // go right
-            this.b2Body.applyLinearImpulse(new Vector2(0.2f / FinalStand.PPM, 0), this.b2Body.getWorldCenter(), true);
+            direction = new Vector2(0.2f / FinalStand.PPM, 0);
         } else if(movement[1]) {
             // go left
-            this.b2Body.applyLinearImpulse(new Vector2(-0.2f / FinalStand.PPM, 0), this.b2Body.getWorldCenter(), true);
+            direction = new Vector2(- 0.2f / FinalStand.PPM, 0);
         } else if(movement[2]) {
             // go up
-            this.b2Body.applyLinearImpulse(new Vector2(0, 0.2f / FinalStand.PPM), this.b2Body.getWorldCenter(), true);
-        } else {
+            direction = new Vector2(0, 0.2f / FinalStand.PPM);
+        } else if(movement[3]){
             //go down
-            this.b2Body.applyLinearImpulse(new Vector2(0, -0.2f / FinalStand.PPM), this.b2Body.getWorldCenter(), true);
+            direction = new Vector2(0, - 0.2f / FinalStand.PPM);
         }
-
+        this.b2Body.applyLinearImpulse(direction, this.b2Body.getWorldCenter(), true);
+//        timeElapsed++;
     }
 
     public void render(SpriteBatch batch) {
@@ -148,6 +168,38 @@ public class Creep extends Sprite{
 
     public void unsetMovement(int index) {
         movement[index] = false;
+    }
+
+    public void setSetDirection(boolean value) {
+        setDirection = value;
+    }
+
+    public void setWaypointHit() { waypointHit++; }
+
+    public int getWaypointHit() { return waypointHit; }
+
+    public void checkDir() {
+        if(dir.get(getWaypointHit()).equals("right")) {
+            setMovement(0);
+            unsetMovement(1);
+            unsetMovement(2);
+            unsetMovement(3);
+        } else if(dir.get(getWaypointHit()).equals("left")) {
+            setMovement(1);
+            unsetMovement(0);
+            unsetMovement(2);
+            unsetMovement(3);
+        } else if(dir.get(getWaypointHit()).equals("up")) {
+            setMovement(2);
+            unsetMovement(1);
+            unsetMovement(0);
+            unsetMovement(3);
+        } else if(dir.get(getWaypointHit()).equals("down")) {
+            setMovement(3);
+            unsetMovement(1);
+            unsetMovement(2);
+            unsetMovement(0);
+        }
     }
 
     void dispose() {
