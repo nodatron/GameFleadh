@@ -202,6 +202,15 @@ public class Creep extends Sprite{
         }
     }
 
+
+    public void reachedEnd(int index) {
+        if(getWaypointHit() == dir.size + 1) {
+            //creep has reached the base of the player
+
+        }
+    }
+
+
     void dispose() {
 
     }

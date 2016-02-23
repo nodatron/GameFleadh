@@ -15,6 +15,8 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.finalstand.game.FinalStand;
+import com.finalstand.game.player.Hud;
+import com.finalstand.game.player.Player;
 import com.finalstand.game.sprites.creeps.BasicCreep;
 import com.finalstand.game.sprites.creeps.Creep;
 import com.finalstand.game.sprites.creeps.HeavyCreep;
@@ -48,7 +50,7 @@ public class PlayScreen implements Screen {
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
 
-    private Creep player;
+//    private Creep player;
 
     private Array<Creep> creeps;
     private Array<Creep> spawnableCreeps;
@@ -56,7 +58,7 @@ public class PlayScreen implements Screen {
     private int creepsSpawned;
     private int elapsed;
 
-
+    private Hud hud;
 
     private ArrayList<Tower> towers;
 //    Texture texture;
@@ -93,7 +95,7 @@ public class PlayScreen implements Screen {
 
         world.setContactListener(new WorldContactListener());
 
-        player = new BasicCreep(10, 360, world);
+//        player = new BasicCreep(10, 360, world);
 
         creeps = new Array<Creep>();
         creeps = randomCreeps(5);
@@ -108,15 +110,19 @@ public class PlayScreen implements Screen {
         //towers.add(new DOTTower(game.V_WIDTH / 3, 0));
         towers.add(new LaserTower((FinalStand.V_WIDTH / 3) / FinalStand.PPM, 0));
 
+        hud = new Hud(game.batch);
+
         elapsed = 0;
     }
 
     @Override
     public void render(float delta) {
-        update();
+
         // Clearing the screen
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+
 
         //renders the map
         renderer.render();
@@ -124,9 +130,12 @@ public class PlayScreen implements Screen {
         //renders the debug lines for box2d
         b2dr.render(world, gameCam.combined);
 
+
+
         game.batch.setProjectionMatrix(gameCam.combined);
         game.batch.begin();
-        player.render(game.batch);
+        update();
+//        player.render(game.batch);
 //        player.sprite.draw(batch);
 //        for(Tower tower: towers)
 //        {
@@ -140,6 +149,9 @@ public class PlayScreen implements Screen {
 //                tower.upgrade();
 //            }
 //        }
+
+        game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
+        hud.stage.draw();
     }
 
     @Override
@@ -180,22 +192,15 @@ public class PlayScreen implements Screen {
 
         for(Creep c : spawnableCreeps) {
             c.update();
+            c.render(game.batch);
         }
 
-        if(keepSpawning) {
-            System.out.println("in keep spawning");
-            if(elapsed > 100) {
-                spawnNewCreep();
-                elapsed = 0;
-            }
+        if(keepSpawning && elapsed > 100) {
+            spawnNewCreep();
+            elapsed = 0;
         }
 
-//        if(elapsed > 100) {
-//            spawnCreep();
-//            elapsed = 0;
-//        }
-
-        player.update();
+//        player.update();
         renderer.setView(gameCam);
 
 
@@ -213,7 +218,6 @@ public class PlayScreen implements Screen {
     }
 
     public void spawnNewCreep() {
-        System.out.println("New creep spawned");
         if(creepsSpawned == creeps.size) {
             keepSpawning = false;
             return;
@@ -261,4 +265,6 @@ public class PlayScreen implements Screen {
         int range = Math.abs(max - min) + 1;
         return (int)(Math.random() * range) + min;
     }
+
+
 }
