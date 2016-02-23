@@ -136,18 +136,19 @@ public class Creep extends Sprite{
         //set the way to go
         if(movement[0]) {
             // go right
-            direction = new Vector2(0.2f / FinalStand.PPM, 0);
+            direction = new Vector2(100f / FinalStand.PPM, 0);
         } else if(movement[1]) {
             // go left
-            direction = new Vector2(- 0.2f / FinalStand.PPM, 0);
+            direction = new Vector2(- 100f / FinalStand.PPM, 0);
         } else if(movement[2]) {
             // go up
-            direction = new Vector2(0, 0.2f / FinalStand.PPM);
+            direction = new Vector2(0, 100f / FinalStand.PPM);
         } else if(movement[3]){
             //go down
-            direction = new Vector2(0, - 0.2f / FinalStand.PPM);
+            direction = new Vector2(0, - 100f / FinalStand.PPM);
         }
-        this.b2Body.applyLinearImpulse(direction, this.b2Body.getWorldCenter(), true);
+//        this.b2Body.applyLinearImpulse(direction, this.b2Body.getWorldCenter(), true);
+        this.b2Body.setLinearVelocity(direction);
 //        timeElapsed++;
     }
 

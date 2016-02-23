@@ -1,4 +1,4 @@
-package com.finalstand.game.player;
+package com.finalstand.game.hud;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
