@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.finalstand.game.sprites.towers.Tower;
-import com.finalstand.game.states.PlayState;
+import com.finalstand.game.Screens.PlayScreen;
 
 /**
  * Created by Keith on 18/02/2016.
@@ -40,6 +40,12 @@ public class Button {
         buttonSprite.setPosition(x, y);
         buttonSprite.setSize(width, height);
 
+        /*font = new BitmapFont();
+        skin = new Skin();
+        atlas = new TextureAtlas();
+        style = new TextButton.TextButtonStyle();
+        style.font = font;
+        button = new TextButton(text, style);*/
         this.tower = tower;
     }
 

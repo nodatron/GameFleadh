@@ -1,0 +1,12 @@
+package com.finalstand.game.traps;
+
+/**
+ * Created by Carl on 16/02/2016.
+ */
+public class Mine extends Trap
+{
+    Mine(float x, float y)
+    {
+        super(x, y);
+    }
+}

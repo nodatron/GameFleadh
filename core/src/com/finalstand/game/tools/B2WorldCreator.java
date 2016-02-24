@@ -30,9 +30,10 @@ public class B2WorldCreator {
             new RoadBounds(world, map, rect);
         }
 
-//        for(MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)) {
-//            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-//
+        for(MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)) {
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+
+            new Waypoint(world, map, rect);
 //            bdef.type = BodyDef.BodyType.StaticBody;
 //            bdef.position.set(rect.getX() + rect.getWidth() / 2, rect.getY() + rect.getHeight() / 2);
 //
@@ -41,6 +42,6 @@ public class B2WorldCreator {
 //            shape.setAsBox(rect.getWidth() / 2, rect.getHeight() / 2);
 //            fdef.shape = shape;
 //            body.createFixture(fdef);
-//        }
+        }
     }
 }

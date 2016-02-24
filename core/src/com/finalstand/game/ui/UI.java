@@ -4,7 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.finalstand.game.states.PlayState;
+import com.finalstand.game.Screens.PlayScreen;
+import com.finalstand.game.Screens.PlayScreen;
 
 /**
  * Created by Keith on 16/02/2016.
@@ -76,15 +77,15 @@ public class UI {
 
     public void optionPicked(int optionNum)
     {
-        PlayState.optionChosen = true;
-        PlayState.optionTexture.setTowerOption(optionNum);
+        PlayScreen.optionChosen = true;
+        PlayScreen.optionTexture.setTowerOption(optionNum);
 
         switch(optionNum)
         {
-            case 0: {PlayState.optionTexture.setTexture(option1Texture); break;}
-            case 1: {PlayState.optionTexture.setTexture(option2Texture); break;}
-            case 2: {PlayState.optionTexture.setTexture(option3Texture); break;}
-            case 3: {PlayState.optionTexture.setTexture(option4Texture); break;}
+            case 0: {PlayScreen.optionTexture.setTexture(option1Texture); break;}
+            case 1: {PlayScreen.optionTexture.setTexture(option2Texture); break;}
+            case 2: {PlayScreen.optionTexture.setTexture(option3Texture); break;}
+            case 3: {PlayScreen.optionTexture.setTexture(option4Texture); break;}
         }
     }
 

@@ -12,10 +12,11 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.finalstand.game.FinalStand;
+import com.finalstand.game.Screens.PlayScreen;
 import com.finalstand.game.buttons.SellButton;
 import com.finalstand.game.buttons.UpgradeButton;
-import com.finalstand.game.sprites.projectiles.*;
-import com.finalstand.game.states.PlayState;
+import com.finalstand.game.sprites.projectiles.Projectile;
+import com.finalstand.game.Screens.PlayScreen;
 
 /**
  * Created by Keith on 09/02/2016.
@@ -23,8 +24,6 @@ import com.finalstand.game.states.PlayState;
 public class Tower {
     protected Vector2 position;
     protected Rectangle bounds;
-    protected Vector2 shootPos;
-    protected float towerAngle;
 
     protected int level;
     protected Texture level1;
@@ -34,6 +33,9 @@ public class Tower {
 
     protected Body b2Body;
     protected World world;
+
+    protected Vector2 projectilePos;
+    protected float towerAngle;
 
     public Tower(float x, float y, World world)
     {
@@ -47,17 +49,7 @@ public class Tower {
 
     public void update(){}
     public Texture getCurrentTexture(){return currentTexture;}
-    public static Vector2 getTextureSize()
-    {
-        return new Vector2(64 / FinalStand.PPM, 64 / FinalStand.PPM);
-    }
     public Vector2 getPosition(){return position;}
-
-    public void createProjectile()
-    {
-        Projectile p = new Projectile(shootPos.x, shootPos.y, towerAngle, level);
-    }
-
     public void upgrade()
     {
         if(level < 3)
@@ -84,24 +76,21 @@ public class Tower {
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
         shape.setRadius(8 / FinalStand.PPM);
-
+        fdef.filter.categoryBits = FinalStand.TOWER_BIT;
+        fdef.filter.maskBits = FinalStand.DEFAULT | FinalStand.ROADBOUNDS_BIT;
         fdef.shape = shape;
         b2Body.createFixture(fdef);
     }
 
-    public void destroyTowerBody()
+    public void createProjectile()
     {
-        world.destroyBody(b2Body);
+        Projectile p = new Projectile(projectilePos.x, projectilePos.y, towerAngle, level);
     }
 
     public void TowerOptions()
     {
-        PlayState.upgradeButton = new UpgradeButton(100, this);
-        PlayState.sellButton = new SellButton(200, this);
-        PlayState.displayButtons = true;
-    }
-
-    public Body getB2Body() {
-        return b2Body;
+        PlayScreen.upgradeButton = new UpgradeButton(100, this);
+        PlayScreen.sellButton = new SellButton(200, this);
+        PlayScreen.displayButtons = true;
     }
 }
