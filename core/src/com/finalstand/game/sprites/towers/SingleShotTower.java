@@ -5,14 +5,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.finalstand.game.sprites.projectiles.*;
+import com.finalstand.game.states.PlayState;
 
 /**
  * Created by Keith on 09/02/2016.
  */
 public class SingleShotTower extends Tower{
-
-    private float towerAngle;
-    private Vector2 bulletPos;
 
     public SingleShotTower(float x, float y, World world)
     {
@@ -24,13 +23,20 @@ public class SingleShotTower extends Tower{
         level3 = new Texture("towers/singleshot_level3.png");
         currentTexture = level1;
 
-        bulletPos = new Vector2(x, y);
+        shootPos = new Vector2(x, y);
     }
 
     @Override
     public void update()
     {
 
+    }
+
+    @Override
+    public void createProjectile()
+    {
+        Projectile p = new Bullet(shootPos.x, shootPos.y, towerAngle, level);
+        PlayState.projectiles.add(p);
     }
 
     public Rectangle getBounds() {

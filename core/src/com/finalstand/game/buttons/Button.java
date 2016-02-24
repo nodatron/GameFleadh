@@ -40,12 +40,6 @@ public class Button {
         buttonSprite.setPosition(x, y);
         buttonSprite.setSize(width, height);
 
-        /*font = new BitmapFont();
-        skin = new Skin();
-        atlas = new TextureAtlas();
-        style = new TextButton.TextButtonStyle();
-        style.font = font;
-        button = new TextButton(text, style);*/
         this.tower = tower;
     }
 

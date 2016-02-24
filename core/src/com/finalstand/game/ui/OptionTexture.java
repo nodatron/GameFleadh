@@ -6,11 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.World;
 import com.finalstand.game.states.PlayState;
-import com.finalstand.game.towers.AOETower;
-import com.finalstand.game.towers.DOTTower;
-import com.finalstand.game.towers.LaserTower;
-import com.finalstand.game.towers.SingleShotTower;
-import com.finalstand.game.towers.Tower;
+import com.finalstand.game.sprites.towers.*;
 
 import javax.xml.soap.Text;
 
@@ -48,9 +44,9 @@ public class OptionTexture {
 
             switch (towerOption) {
                 case 0: {
-                    //position.x -= SingleShotTower.getCurrentTexture().getWidth() / 2;
-                    //position.y -= SingleShotTower.getCurrentTexture().getHeight() / 2;
-                    PlayState.towers.add(new com.finalstand.game.sprites.towers.SingleShotTower(position.x, position.y, world));
+                    PlayState.towers.add(new com.finalstand.game.sprites.towers.SingleShotTower(position.x - (SingleShotTower.getTextureSize().x / 2),
+                                                                                                position.y - (SingleShotTower.getTextureSize().y / 2),
+                                                                                                world));
                     break;
                 }
                 case 1: {

@@ -2,6 +2,7 @@ package com.finalstand.game.buttons;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.finalstand.game.sprites.towers.Tower;
 import com.finalstand.game.states.PlayState;
 
@@ -28,6 +29,7 @@ public class SellButton extends Button {
                     mouse.y > position.y && mouse.y < position.y + height)
             {
                 PlayState.towers.remove(tower);
+                tower.destroyTowerBody();
             }
         }
     }

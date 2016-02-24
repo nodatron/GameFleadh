@@ -26,6 +26,7 @@ import com.finalstand.game.FinalStand;
 import com.finalstand.game.buttons.Button;
 import com.finalstand.game.buttons.SellButton;
 import com.finalstand.game.buttons.UpgradeButton;
+import com.finalstand.game.sprites.projectiles.*;
 import com.finalstand.game.sprites.creeps.*;
 import com.finalstand.game.sprites.towers.*;
 import com.finalstand.game.tools.B2WorldCreator;
@@ -65,6 +66,8 @@ public class PlayState implements Screen {
     //private TextArea buttonText;
     Texture texture;
 
+    public static ArrayList<Projectile> projectiles;
+
     public static UI ui;
     public static OptionTexture optionTexture;
     public static boolean optionChosen;
@@ -92,10 +95,8 @@ public class PlayState implements Screen {
 
         towers = new ArrayList<Tower>();
         displayButtons = false;
-        /*font = new BitmapFont();
-        font.setColor(Color.RED);
-        Skin skin = new Skin();
-        buttonText = new TextArea(upgradeButton.getButtonText(), skin);*/
+
+        projectiles = new ArrayList<Projectile>();
 
         ui = new UI(0, 0, 8, 1);
         optionTexture = new OptionTexture(ui.getTextureWidth(), ui.getTextureHeight(), world);
@@ -126,6 +127,13 @@ public class PlayState implements Screen {
         {
             //tower.checkPressed();
             game.batch.draw(tower.getCurrentTexture(), tower.getPosition().x, tower.getPosition().y, tower.getCurrentTexture().getWidth() / FinalStand.PPM, tower.getCurrentTexture().getHeight() / FinalStand.PPM);
+        }
+
+        for(Projectile projectile : projectiles)
+        {
+            game.batch.draw(projectile.getTexture(), projectile.getPosition().x, projectile.getPosition().y,
+                            projectile.getTexture().getWidth() / FinalStand.PPM,
+                            projectile.getTexture().getHeight() / FinalStand.PPM);
         }
 
         //render UI

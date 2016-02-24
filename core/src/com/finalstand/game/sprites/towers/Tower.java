@@ -14,6 +14,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.finalstand.game.FinalStand;
 import com.finalstand.game.buttons.SellButton;
 import com.finalstand.game.buttons.UpgradeButton;
+import com.finalstand.game.sprites.projectiles.*;
 import com.finalstand.game.states.PlayState;
 
 /**
@@ -22,6 +23,8 @@ import com.finalstand.game.states.PlayState;
 public class Tower {
     protected Vector2 position;
     protected Rectangle bounds;
+    protected Vector2 shootPos;
+    protected float towerAngle;
 
     protected int level;
     protected Texture level1;
@@ -44,7 +47,17 @@ public class Tower {
 
     public void update(){}
     public Texture getCurrentTexture(){return currentTexture;}
+    public static Vector2 getTextureSize()
+    {
+        return new Vector2(64 / FinalStand.PPM, 64 / FinalStand.PPM);
+    }
     public Vector2 getPosition(){return position;}
+
+    public void createProjectile()
+    {
+        Projectile p = new Projectile(shootPos.x, shootPos.y, towerAngle, level);
+    }
+
     public void upgrade()
     {
         if(level < 3)
@@ -60,18 +73,6 @@ public class Tower {
             currentTexture = level3;
         }
     }
-    /*public void checkPressed()
-    {
-        if(Gdx.input.justTouched())
-        {
-            Vector3 mouse = PlayState.getWorldMousePos();
-            if(mouse.x > getPosition().x && mouse.x < getPosition().x + (getCurrentTexture().getWidth() / FinalStand.PPM) &&
-                    mouse.y > getPosition().y && mouse.y < getPosition().y + (getCurrentTexture().getHeight() / FinalStand.PPM))
-            {
-                TowerOptions();
-            }
-        }
-    }*/
 
     public void defineTower() {
         BodyDef bdef = new BodyDef();
@@ -88,10 +89,19 @@ public class Tower {
         b2Body.createFixture(fdef);
     }
 
+    public void destroyTowerBody()
+    {
+        world.destroyBody(b2Body);
+    }
+
     public void TowerOptions()
     {
         PlayState.upgradeButton = new UpgradeButton(100, this);
         PlayState.sellButton = new SellButton(200, this);
         PlayState.displayButtons = true;
+    }
+
+    public Body getB2Body() {
+        return b2Body;
     }
 }
