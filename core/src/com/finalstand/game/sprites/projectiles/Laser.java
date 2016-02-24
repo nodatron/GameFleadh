@@ -1,4 +1,4 @@
-package com.finalstand.game.projectiles;
+package com.finalstand.game.sprites.projectiles;
 
 /**
  * Created by Keith on 14/02/2016.

@@ -8,7 +8,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.finalstand.game.sprites.towers.Tower;
-import com.finalstand.game.states.PlayState;
 
 /**
  * Created by Keith on 18/02/2016.

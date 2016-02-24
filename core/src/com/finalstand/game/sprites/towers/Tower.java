@@ -15,7 +15,7 @@ import com.finalstand.game.FinalStand;
 import com.finalstand.game.Screens.PlayScreen;
 import com.finalstand.game.buttons.SellButton;
 import com.finalstand.game.buttons.UpgradeButton;
-import com.finalstand.game.states.PlayState;
+
 
 /**
  * Created by Keith on 09/02/2016.
@@ -84,6 +84,9 @@ public class Tower {
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
         shape.setRadius(8 / FinalStand.PPM);
+
+        fdef.filter.categoryBits = FinalStand.TOWER_BIT;
+        fdef.filter.maskBits = FinalStand.DEFAULT | FinalStand.ROADBOUNDS_BIT;
 
         fdef.shape = shape;
         b2Body.createFixture(fdef);

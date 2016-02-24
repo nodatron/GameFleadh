@@ -6,12 +6,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.World;
 import com.finalstand.game.Screens.PlayScreen;
-import com.finalstand.game.states.PlayState;
-import com.finalstand.game.towers.AOETower;
-import com.finalstand.game.towers.DOTTower;
-import com.finalstand.game.towers.LaserTower;
-import com.finalstand.game.towers.SingleShotTower;
-import com.finalstand.game.towers.Tower;
 
 import javax.xml.soap.Text;
 

@@ -22,18 +22,21 @@ public class MenuScreen implements Screen {
     private Viewport viewport;
 
     private FinalStand game;
+    private Screen play;
 
-    public MenuScreen(FinalStand game){
+    public MenuScreen(FinalStand game, Screen play){
         this.game = game;
+        this.play = play;
+        gameCam = new OrthographicCamera();
+        background = new Texture("traps/oil.png");
+        backgroundPos = new Vector2(0, 0);
+        viewport = new FitViewport(FinalStand.V_WIDTH / FinalStand.PPM, FinalStand.V_HEIGHT / FinalStand.PPM, gameCam);
+        gameCam.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
     }
 
     @Override
     public void show() {
-        gameCam = new OrthographicCamera();
-        background = new Texture("badlogic.jpg");
-        backgroundPos = new Vector2(0, 0);
-        viewport = new FitViewport(FinalStand.V_WIDTH / FinalStand.PPM, FinalStand.V_HEIGHT / FinalStand.PPM, gameCam);
-        gameCam.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
+
     }
 
     public Vector2 getBackgroundPos() {
@@ -41,7 +44,6 @@ public class MenuScreen implements Screen {
     }
 
     public Texture getBackground() {
-
         return background;
     }
 
@@ -88,7 +90,9 @@ public class MenuScreen implements Screen {
     }
 
     public void handleInput() {
-        if(Gdx.input.isKeyPressed(Input.Keys.P))
-            game.setScreen(new PlayScreen(game));
+        if (Gdx.input.isKeyPressed(Input.Keys.P)) {
+            game.setScreen(play);
+            dispose();
+        }
     }
 }

@@ -80,11 +80,7 @@ public class PlayScreen implements Screen {
 
     public PlayScreen(FinalStand game){
         this.game = game;
-    }
-
-    @Override
-    public void show() {
-//      texture = new Texture("background.jpg");
+        //      texture = new Texture("background.jpg");
         gameCam = new OrthographicCamera();
         viewport = new FitViewport(FinalStand.V_WIDTH / FinalStand.PPM, FinalStand.V_HEIGHT / FinalStand.PPM, gameCam);
 
@@ -96,14 +92,11 @@ public class PlayScreen implements Screen {
         gameCam.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
 
 
-        world = new World(new Vector2(0, 0), true);
-        b2dr = new Box2DDebugRenderer();
-
         waypoints = new Array<Waypoint>();
 
-
+        world = new World(new Vector2(0, 0), true);
+        b2dr = new Box2DDebugRenderer();
         new B2WorldCreator(world, map);
-
         world.setContactListener(new WorldContactListener());
 
 //        player = new BasicCreep(10, 360, world);
@@ -133,6 +126,13 @@ public class PlayScreen implements Screen {
     }
 
     @Override
+    public void show() {
+        mapLoader = new TmxMapLoader();
+        map = mapLoader.load("map1c.tmx");
+        renderer = new OrthogonalTiledMapRenderer(map, 1 / FinalStand.PPM);
+    }
+
+    @Override
     public void render(float delta) {
 
         // Clearing the screen
@@ -152,6 +152,27 @@ public class PlayScreen implements Screen {
         game.batch.setProjectionMatrix(gameCam.combined);
         game.batch.begin();
         update();
+        handleInput();
+
+        world.step(1 / 60f, 6, 2);
+
+        gameCam.update();
+
+        for(Creep c : spawnableCreeps) {
+            c.update();
+            c.render(game.batch);
+        }
+
+        if(keepSpawning && elapsed > 100) {
+            spawnNewCreep();
+            elapsed = 0;
+        }
+
+//        player.update();
+        renderer.setView(gameCam);
+
+
+        elapsed ++;
 //        player.render(game.batch);
 //        player.sprite.draw(batch);
 //        for(Tower tower: towers)
@@ -234,39 +255,21 @@ public class PlayScreen implements Screen {
     @Override
     public void dispose() {
         //dispose o resources that are not used anymore
+//        world.dispose();
         map.dispose();
-        renderer.dispose();
-        world.dispose();
-        b2dr.dispose();
+//        b2dr.dispose();
+//        renderer.disppose();
     }
 
     public void update() {
-        handleInput();
 
-        world.step(1 / 60f, 6, 2);
-
-        gameCam.update();
-
-        for(Creep c : spawnableCreeps) {
-            c.update();
-            c.render(game.batch);
-        }
-
-        if(keepSpawning && elapsed > 100) {
-            spawnNewCreep();
-            elapsed = 0;
-        }
-
-//        player.update();
-        renderer.setView(gameCam);
-
-
-        elapsed ++;
     }
 
     public void handleInput() {
-        if(Gdx.input.isKeyPressed(Input.Keys.M))
-            game.setScreen(new MenuScreen(game));
+        if(Gdx.input.isKeyPressed(Input.Keys.M)) {
+            game.setScreen(new MenuScreen(game, this));
+//            dispose();
+        }
     }
 
     public void spawnCreep() {

@@ -1,4 +1,4 @@
-package com.finalstand.game.projectiles;
+package com.finalstand.game.sprites.projectiles;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
