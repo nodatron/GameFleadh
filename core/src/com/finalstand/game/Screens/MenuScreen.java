@@ -24,11 +24,14 @@ public class MenuScreen implements Screen {
     private FinalStand game;
     private Screen play;
 
+    private static boolean exitButtonPressed;
+
+
     public MenuScreen(FinalStand game, Screen play){
         this.game = game;
         this.play = play;
         gameCam = new OrthographicCamera();
-        background = new Texture("traps/oil.png");
+        background = new Texture("screens/menu.png");
         backgroundPos = new Vector2(0, 0);
         viewport = new FitViewport(FinalStand.V_WIDTH / FinalStand.PPM, FinalStand.V_HEIGHT / FinalStand.PPM, gameCam);
         gameCam.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
@@ -55,7 +58,7 @@ public class MenuScreen implements Screen {
 
         game.batch.setProjectionMatrix(gameCam.combined);
         game.batch.begin();
-        game.batch.draw(getBackground(), getBackgroundPos().x, getBackgroundPos().y);
+        game.batch.draw(getBackground(), getBackgroundPos().x, getBackgroundPos().y, FinalStand.V_WIDTH / FinalStand.PPM, FinalStand.V_HEIGHT / FinalStand.PPM);
         game.batch.end();
 
     }

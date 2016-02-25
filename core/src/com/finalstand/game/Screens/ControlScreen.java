@@ -19,7 +19,6 @@ import com.finalstand.game.buttons.PlayButton;
 public class ControlScreen implements Screen {
 
     private final FinalStand game;
-    private final Screen lastScreen;
     private Viewport viewport;
     private static OrthographicCamera gameCam;
     private Texture background;
@@ -30,16 +29,15 @@ public class ControlScreen implements Screen {
     private static boolean playButtonPressed;
     private static boolean backButtonPressed;
 
-    public ControlScreen(FinalStand game, Screen lastScreen) {
+    public ControlScreen(FinalStand game) {
         this.game = game;
-        this.lastScreen = lastScreen;
         gameCam = new OrthographicCamera();
         viewport = new FitViewport(FinalStand.V_WIDTH / FinalStand.PPM, FinalStand.V_HEIGHT / FinalStand.PPM, gameCam);
         gameCam.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
         background = new Texture("screens/menu.png");
 
         playButton = new PlayButton("screens/playbutton.png", 300 / FinalStand.PPM, 100 / FinalStand.PPM, 50 / FinalStand.PPM, 50 / FinalStand.PPM);
-        backButton = new BackButton("screens/backbutton.png", 300 / FinalStand.PPM, 50 / FinalStand.PPM, 50 / FinalStand.PPM, 50 / FinalStand.PPM);
+        backButton = new BackButton("screens/backbutton.png", 300 / FinalStand.PPM, 25 / FinalStand.PPM, 50 / FinalStand.PPM, 50 / FinalStand.PPM);
 
         playButtonPressed = false;
         backButtonPressed = false;
@@ -71,13 +69,13 @@ public class ControlScreen implements Screen {
         }
 
         if(backButtonPressed) {
-            game.setScreen(lastScreen);
+            game.setScreen(new SplashScreen(game));
         }
     }
 
     @Override
     public void resize(int width, int height) {
-
+        viewport.update(width, height);
     }
 
     @Override
@@ -107,6 +105,7 @@ public class ControlScreen implements Screen {
 
     public static void backButtonPressed() {
         backButtonPressed = true;
+        System.out.println("Here");
     }
 
     public static Vector3 getWorldMousePos() {

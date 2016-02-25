@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.finalstand.game.FinalStand;
 import com.finalstand.game.buttons.Button;
 import com.finalstand.game.buttons.ControlButton;
+import com.finalstand.game.buttons.ExitButton;
 import com.finalstand.game.buttons.PlayButton;
 
 /**
@@ -25,6 +26,7 @@ public class SplashScreen implements Screen{
 
     private PlayButton playButton;
     private ControlButton controlButton;
+    private ExitButton exitButton;
 
     private static boolean playButtonPressed;
     private static boolean controlButtonPressed;
@@ -37,8 +39,9 @@ public class SplashScreen implements Screen{
         gameCam.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
         background = new Texture("screens/title.png");
 
-        playButton = new PlayButton("screens/playbutton.png", 300 / FinalStand.PPM, 100 / FinalStand.PPM, 50 / FinalStand.PPM, 50 / FinalStand.PPM);
-        controlButton = new ControlButton("screens/controlbutton.png", 300 / FinalStand.PPM, 25 / FinalStand.PPM, 50 / FinalStand.PPM, 50 / FinalStand.PPM);
+        playButton = new PlayButton("screens/playbutton.png", 300 / FinalStand.PPM, 150 / FinalStand.PPM, 50 / FinalStand.PPM, 25 / FinalStand.PPM);
+        controlButton = new ControlButton("screens/controlbutton.png", 300 / FinalStand.PPM, 100 / FinalStand.PPM, 50 / FinalStand.PPM, 25 / FinalStand.PPM);
+        exitButton = new ExitButton("screens/controlbutton.png", 300 / FinalStand.PPM, 50 / FinalStand.PPM, 50 / FinalStand.PPM, 25 / FinalStand.PPM);
 
         playButtonPressed = false;
         controlButtonPressed = false;
@@ -54,6 +57,7 @@ public class SplashScreen implements Screen{
     public void render(float delta) {
         playButton.update();
         controlButton.update();
+        exitButton.update();
 
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -64,6 +68,7 @@ public class SplashScreen implements Screen{
         game.batch.draw(background, 0, 0, 800 / FinalStand.PPM, 400 / FinalStand.PPM);
         game.batch.draw(playButton.getButtonTexture(), playButton.getPosition().x, playButton.getPosition().y, playButton.getWidth(), playButton.getHeight());
         game.batch.draw(controlButton.getButtonTexture(), controlButton.getPosition().x, controlButton.getPosition().y, controlButton.getWidth(), controlButton.getHeight());
+        game.batch.draw(exitButton.getButtonTexture(), exitButton.getPosition().x, exitButton.getPosition().y, exitButton.getWidth(), exitButton.getHeight());
         game.batch.end();
 
         if(playButtonPressed) {
@@ -71,7 +76,7 @@ public class SplashScreen implements Screen{
         }
 
         if(controlButtonPressed) {
-            game.setScreen(new ControlScreen(game, this));
+            game.setScreen(new ControlScreen(game));
         }
     }
 
