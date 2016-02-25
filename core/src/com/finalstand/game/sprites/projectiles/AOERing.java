@@ -12,7 +12,7 @@ public class AOERing extends Projectile{
     private float counter;
     private float maxSize;
 
-    public AOERing(float x, float y, float angle, int level)
+    public AOERing(float x, float y, double angle, int level)
     {
         super(x, y, angle, level);
         if(level < 3) {

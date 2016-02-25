@@ -19,12 +19,13 @@ public class Projectile extends Sprite{
     protected Rectangle bounds;
     protected Sprite projectileSprite;
 
-    public Projectile(float x, float y, float angle, int level)
+    public Projectile(float x, float y, double angle, int level)
     {
         position = new Vector2(x, y);
         this.level = level;
         speed = 1 / FinalStand.PPM;
         forward = new Vector2((float)Math.sin(angle) * speed, -(float)Math.cos(angle) * speed);
+        System.out.println(forward);
     }
 
     public void update()

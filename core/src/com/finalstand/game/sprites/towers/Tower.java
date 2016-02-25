@@ -35,7 +35,7 @@ public class Tower {
     protected World world;
 
     protected Vector2 projectilePos;
-    protected float towerAngle;
+    protected double towerAngle;
 
     public Tower(float x, float y, World world)
     {

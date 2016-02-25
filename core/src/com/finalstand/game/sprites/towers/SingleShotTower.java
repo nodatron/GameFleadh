@@ -25,7 +25,7 @@ public class SingleShotTower extends Tower{
         currentTexture = level1;
 
         projectilePos = new Vector2(x, y);
-        towerAngle = 0;
+        towerAngle = Math.PI;
     }
 
     @Override
