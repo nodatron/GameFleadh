@@ -153,13 +153,9 @@ public class PlayScreen implements Screen {
         game.batch.begin();
         update();
 
-        for(Projectile projectile : projectiles)
-        {
-            projectile.update();
-            /*game.batch.draw(projectile.getTexture(), projectile.getPosition().x, projectile.getPosition().y,
-                            projectile.getTexture().getWidth() / FinalStand.PPM, projectile.getTexture().getHeight() / FinalStand.PPM);
-            */
-            projectile.getSprite().draw(game.batch);
+        for (int counter = 0; counter < projectiles.size(); counter++) {
+             projectiles.get(counter).getSprite().draw(game.batch);
+             projectiles.get(counter).update();
         }
 
         for(Tower tower: towers)
@@ -180,13 +176,9 @@ public class PlayScreen implements Screen {
         {
             upgradeButton.update();
             sellButton.update();
-            /*game.batch.draw(upgradeButton.getButtonTexture(), upgradeButton.getPosition().x, upgradeButton.getPosition().y,
-                    upgradeButton.getWidth(), upgradeButton.getHeight());
-            game.batch.draw(sellButton.getButtonTexture(), sellButton.getPosition().x, sellButton.getPosition().y,
-                    sellButton.getWidth(), sellButton.getHeight());*/
+
             upgradeButton.getButtonSprite().draw(game.batch);
             sellButton.getButtonSprite().draw(game.batch);
-            //font.draw(game.batch, upgradeButton.getButtonText(), upgradeButton.getPosition().x, upgradeButton.getPosition().y);
         }
         checkTowerPressed();
 
