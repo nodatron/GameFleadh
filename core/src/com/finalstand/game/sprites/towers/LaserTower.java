@@ -5,6 +5,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.finalstand.game.FinalStand;
+import com.finalstand.game.Screens.PlayScreen;
+import com.finalstand.game.sprites.projectiles.Laser;
+import com.finalstand.game.sprites.projectiles.Projectile;
 
 /**
  * Created by Keith on 09/02/2016.
@@ -20,6 +24,10 @@ public class LaserTower extends Tower{
         level3 = new Texture("towers/laserTower_level3_notFiring.png");
         //Texture level3Firing = new Texture("laserTower_level3_firing.png");
         currentTexture = level1;
+
+        projectilePos =  new Vector2(x + ((getCurrentTexture().getWidth() / 2.5f) / FinalStand.PPM),
+                                     y + ((getCurrentTexture().getHeight() / 2.5f) / FinalStand.PPM));
+        towerAngle = Math.PI;
     }
 
     @Override
@@ -29,5 +37,17 @@ public class LaserTower extends Tower{
         {
             currentTexture = level3Firing;
         }*/
+        if(Gdx.input.justTouched())
+        {
+            createProjectile();
+        }
+    }
+
+    @Override
+    public void createProjectile()
+    {
+        Projectile p = new Laser(projectilePos.x, projectilePos.y, towerAngle, level,
+                                 getCurrentTexture().getWidth() / FinalStand.PPM, getCurrentTexture().getHeight() / FinalStand.PPM);
+        PlayScreen.projectiles.add(p);
     }
 }
