@@ -12,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.finalstand.game.FinalStand;
+import com.finalstand.game.Screens.PlayScreen;
 import com.finalstand.game.tools.Waypoint;
 
 /**
@@ -171,10 +172,6 @@ public class Creep extends Sprite{
         movement[index] = false;
     }
 
-    public void setSetDirection(boolean value) {
-        setDirection = value;
-    }
-
     public void setWaypointHit() { waypointHit++; }
 
     public int getWaypointHit() { return waypointHit; }
@@ -207,7 +204,6 @@ public class Creep extends Sprite{
     public void reachedEnd(int index) {
         if(getWaypointHit() == dir.size + 1) {
             //creep has reached the base of the player
-
         }
     }
 

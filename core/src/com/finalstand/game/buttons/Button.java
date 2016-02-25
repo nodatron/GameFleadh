@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.finalstand.game.FinalStand;
 import com.finalstand.game.sprites.towers.Tower;
 
 /**
@@ -27,6 +28,16 @@ public class Button {
     protected float width;
 
     protected String buttonText;
+
+    public Button(float x, float y, float w, float h, String filename) {
+        position = new Vector2(x, y);
+        width = w;
+        height = h;
+        buttonTexture = new Texture(filename);
+        buttonSprite = new Sprite(buttonTexture);
+        buttonSprite.setPosition(x / FinalStand.PPM, y / FinalStand.PPM);
+        buttonSprite.setSize(w / FinalStand.PPM, h / FinalStand.PPM);
+    }
 
     public Button(float x, float y, float w, float h, String text, Tower tower)
     {

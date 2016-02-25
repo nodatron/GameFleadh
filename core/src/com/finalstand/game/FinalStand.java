@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.finalstand.game.Screens.MenuScreen;
 import com.finalstand.game.Screens.PlayScreen;
+import com.finalstand.game.Screens.SplashScreen;
 
 public class FinalStand extends Game {
 
@@ -34,7 +35,7 @@ public class FinalStand extends Game {
 	public void create () {
 		batch = new SpriteBatch();
 
-		setScreen(new PlayScreen(this));
+		setScreen(new SplashScreen(this));
 	}
 
 	@Override
