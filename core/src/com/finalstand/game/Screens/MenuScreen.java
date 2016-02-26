@@ -15,6 +15,8 @@ import com.finalstand.game.buttons.ControlButton;
 import com.finalstand.game.buttons.ExitButton;
 import com.finalstand.game.buttons.ResumeButton;
 
+import javafx.scene.control.MenuButton;
+
 /**
  * Created by Niall PC on 20/02/2016.
  */
@@ -31,6 +33,7 @@ public class MenuScreen implements Screen {
     private ResumeButton resumeButton;
     private ExitButton exitButton;
     private ControlButton controlButton;
+    private MenuButton menuButton;
 
     private static boolean exitButtonPressed;
     private static boolean resumeButtonPressed;
@@ -79,12 +82,12 @@ public class MenuScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         game.batch.setProjectionMatrix(gameCam.combined);
+
         game.batch.begin();
         game.batch.draw(getBackground(), getBackgroundPos().x, getBackgroundPos().y, FinalStand.V_WIDTH / FinalStand.PPM, FinalStand.V_HEIGHT / FinalStand.PPM);
         game.batch.draw(resumeButton.getButtonTexture(), resumeButton.getPosition().x, resumeButton.getPosition().y, resumeButton.getWidth(), resumeButton.getHeight());
         game.batch.draw(controlButton.getButtonTexture(), controlButton.getPosition().x, controlButton.getPosition().y, controlButton.getWidth(), controlButton.getHeight());
         game.batch.draw(exitButton.getButtonTexture(), exitButton.getPosition().x, exitButton.getPosition().y, exitButton.getWidth(), exitButton.getHeight());
-
         game.batch.end();
 
         if(resumeButtonPressed) {

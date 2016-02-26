@@ -78,8 +78,18 @@ public class PlayScreen implements Screen {
     public static OptionTexture optionTexture;
     public static boolean optionChosen;
 
+    public enum State
+    {
+        EXIT_GAME_CONFIRMATION,
+        RUN,
+        RESUME,
+        PAUSE
+    }
+
+    private State state;
     public PlayScreen(FinalStand game){
         this.game = game;
+        state = State.RUN;
         //      texture = new Texture("background.jpg");
         gameCam = new OrthographicCamera();
         viewport = new FitViewport(FinalStand.V_WIDTH / FinalStand.PPM, FinalStand.V_HEIGHT / FinalStand.PPM, gameCam);
@@ -135,101 +145,92 @@ public class PlayScreen implements Screen {
     @Override
     public void render(float delta) {
 
-        // Clearing the screen
-        Gdx.gl.glClearColor(1, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        switch (state) {
+            case RUN: {
+                // Clearing the screen
+                Gdx.gl.glClearColor(1, 0, 0, 1);
+                Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+                //renders the map
+                renderer.render();
 
-
-        //renders the map
-        renderer.render();
-
-        //renders the debug lines for box2d
+                //renders the debug lines for box2d
 //        b2dr.render(world, gameCam.combined);
 
 
+                game.batch.setProjectionMatrix(gameCam.combined);
+                game.batch.begin();
+                update();
+                handleInput();
 
-        game.batch.setProjectionMatrix(gameCam.combined);
-        game.batch.begin();
-        update();
-        handleInput();
+                world.step(1 / 60f, 6, 2);
 
-        world.step(1 / 60f, 6, 2);
+                gameCam.update();
 
-        gameCam.update();
+                for (Creep c : spawnableCreeps) {
+                    c.update();
+                    c.render(game.batch);
+                }
 
-        for(Creep c : spawnableCreeps) {
-            c.update();
-            c.render(game.batch);
-        }
-
-        if(keepSpawning && elapsed > 100) {
-            spawnNewCreep();
-            elapsed = 0;
-        }
+                if (keepSpawning && elapsed > 100) {
+                    spawnNewCreep();
+                    elapsed = 0;
+                }
 
 //        player.update();
-        renderer.setView(gameCam);
+                renderer.setView(gameCam);
 
 
-        elapsed ++;
-//        player.render(game.batch);
-//        player.sprite.draw(batch);
-//        for(Tower tower: towers)
-//        {
-//            game.batch.draw(tower.getCurrentTexture(), tower.getPosition().x, tower.getPosition().y, gameCam.viewportWidth / 6, gameCam.viewportHeight / 2);
-//        }
-//        game.batch.end();
-//        if(Gdx.input.justTouched())
-//        {
-//            for(Tower tower : towers)
-//            {
-//                tower.upgrade();
-//            }
-//        }
+                elapsed++;
 
-        for(Tower tower: towers)
-        {
-            //tower.checkPressed();
-            game.batch.draw(tower.getCurrentTexture(), tower.getPosition().x, tower.getPosition().y, tower.getCurrentTexture().getWidth() / FinalStand.PPM, tower.getCurrentTexture().getHeight() / FinalStand.PPM);
-        }
+                for (Tower tower : towers) {
+                    //tower.checkPressed();
+                    game.batch.draw(tower.getCurrentTexture(), tower.getPosition().x, tower.getPosition().y, tower.getCurrentTexture().getWidth() / FinalStand.PPM, tower.getCurrentTexture().getHeight() / FinalStand.PPM);
+                }
 
-        //render UI
-        game.batch.draw(ui.getBackground(), ui.getPosition().x, ui.getPosition().y, ui.getWidth(), ui.getHeight());
-        game.batch.draw(ui.getOption1Texture(), ui.getOption1Pos().x, ui.getOption1Pos().y, ui.getTextureWidth(), ui.getTextureHeight());
-        game.batch.draw(ui.getOption2Texture(), ui.getOption2Pos().x, ui.getOption2Pos().y, ui.getTextureWidth(), ui.getTextureHeight());
-        game.batch.draw(ui.getOption3Texture(), ui.getOption3Pos().x, ui.getOption3Pos().y, ui.getTextureWidth(), ui.getTextureHeight());
-        game.batch.draw(ui.getOption4Texture(), ui.getOption4Pos().x, ui.getOption4Pos().y, ui.getTextureWidth(), ui.getTextureHeight());
+                //render UI
+                game.batch.draw(ui.getBackground(), ui.getPosition().x, ui.getPosition().y, ui.getWidth(), ui.getHeight());
+                game.batch.draw(ui.getOption1Texture(), ui.getOption1Pos().x, ui.getOption1Pos().y, ui.getTextureWidth(), ui.getTextureHeight());
+                game.batch.draw(ui.getOption2Texture(), ui.getOption2Pos().x, ui.getOption2Pos().y, ui.getTextureWidth(), ui.getTextureHeight());
+                game.batch.draw(ui.getOption3Texture(), ui.getOption3Pos().x, ui.getOption3Pos().y, ui.getTextureWidth(), ui.getTextureHeight());
+                game.batch.draw(ui.getOption4Texture(), ui.getOption4Pos().x, ui.getOption4Pos().y, ui.getTextureWidth(), ui.getTextureHeight());
 
-        if(displayButtons == true)
-        {
-            upgradeButton.update();
-            sellButton.update();
+                if (displayButtons == true) {
+                    upgradeButton.update();
+                    sellButton.update();
             /*game.batch.draw(upgradeButton.getButtonTexture(), upgradeButton.getPosition().x, upgradeButton.getPosition().y,
                     upgradeButton.getWidth(), upgradeButton.getHeight());
             game.batch.draw(sellButton.getButtonTexture(), sellButton.getPosition().x, sellButton.getPosition().y,
                     sellButton.getWidth(), sellButton.getHeight());*/
-            upgradeButton.getButtonSprite().draw(game.batch);
-            sellButton.getButtonSprite().draw(game.batch);
-            //font.draw(game.batch, upgradeButton.getButtonText(), upgradeButton.getPosition().x, upgradeButton.getPosition().y);
+                    upgradeButton.getButtonSprite().draw(game.batch);
+                    sellButton.getButtonSprite().draw(game.batch);
+                    //font.draw(game.batch, upgradeButton.getButtonText(), upgradeButton.getPosition().x, upgradeButton.getPosition().y);
+                }
+                checkTowerPressed();
+
+                if (optionChosen == true) {
+                    optionTexture.update();
+                    game.batch.draw(optionTexture.getTexture(), optionTexture.getPosition().x, optionTexture.getPosition().y, ui.getTextureWidth(), ui.getTextureHeight());
+                }
+                game.batch.end();
+
+                if (Gdx.input.justTouched()) {
+                    ui.optionClicked(getWorldMousePos());
+                }
+
+
+                game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
+                hud.stage.draw();
+            } break;
+
+            case EXIT_GAME_CONFIRMATION: {
+
+            } break;
+
+            case RESUME: {
+
+            }
         }
-        checkTowerPressed();
-
-        if(optionChosen == true)
-        {
-            optionTexture.update();
-            game.batch.draw(optionTexture.getTexture(), optionTexture.getPosition().x, optionTexture.getPosition().y, ui.getTextureWidth(), ui.getTextureHeight());
-        }
-        game.batch.end();
-
-        if(Gdx.input.justTouched())
-        {
-            ui.optionClicked(getWorldMousePos());
-        }
-
-
-        game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
-        hud.stage.draw();
     }
 
     @Override
@@ -266,10 +267,18 @@ public class PlayScreen implements Screen {
     }
 
     public void handleInput() {
-        if(Gdx.input.isKeyPressed(Input.Keys.M) || Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+        if(Gdx.input.isKeyPressed(Input.Keys.M)) {
             game.setScreen(new MenuScreen(game, this));
 //            dispose();
         }
+
+        if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+            setGameState(State.EXIT_GAME_CONFIRMATION);
+        }
+    }
+
+    public void setGameState(State s) {
+        this.state = s;
     }
 
     public void spawnCreep() {
