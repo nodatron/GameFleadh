@@ -266,7 +266,7 @@ public class PlayScreen implements Screen {
     }
 
     public void handleInput() {
-        if(Gdx.input.isKeyPressed(Input.Keys.M)) {
+        if(Gdx.input.isKeyPressed(Input.Keys.M) || Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             game.setScreen(new MenuScreen(game, this));
 //            dispose();
         }

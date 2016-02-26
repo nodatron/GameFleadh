@@ -1,3 +1,5 @@
+/// Make a new contol screen for the menu control screen
+
 package com.finalstand.game.Screens;
 
 import com.badlogic.gdx.Gdx;
