@@ -1,7 +1,9 @@
 package com.finalstand.game.ui;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.World;
@@ -15,12 +17,14 @@ import javax.xml.soap.Text;
  * Created by Keith on 16/02/2016.
  */
 public class OptionTexture {
-    private Texture texture;
+    //private Texture texture;
+    private Sprite sprite;
     private Vector3 position;
     private float textureWidth;
     private float textureHeight;
 
     private int towerOption;
+    private float rotation;
 
     private World world;
 
@@ -30,10 +34,19 @@ public class OptionTexture {
         textureHeight = h;
         position = new Vector3(0, 0, 0);
         this.world = world;
+        rotation = 180;
     }
 
     public void update()
     {
+        if(Gdx.input.isKeyJustPressed(Input.Keys.R)) {
+            System.out.println(rotation);
+            /*sprite.setOriginCenter();
+            rotation += 90;
+            sprite.setRotation(rotation);
+            sprite.rotate(rotation);*/
+            sprite.rotate90(true);
+        }
         position = PlayScreen.getWorldMousePos();
         position.x -= textureWidth / 2;
         position.y -= textureHeight / 2;
@@ -66,16 +79,18 @@ public class OptionTexture {
         }
     }
 
-    public Texture getTexture() {
+    /*public Texture getTexture() {
         return texture;
-    }
+    }*/
+
+    public Sprite getSprite(){ return sprite; }
 
     public Vector3 getPosition() {
         return position;
     }
 
     public void setTexture(Texture texture) {
-        this.texture = texture;
+        sprite = new Sprite(texture);
     }
 
     public void setTowerOption(int towerOption) {

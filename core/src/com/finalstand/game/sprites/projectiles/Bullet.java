@@ -9,12 +9,11 @@ import com.finalstand.game.FinalStand;
  */
 public class Bullet extends Projectile{
 
-    public Bullet(float x, float y, double angle, int level)
+    public Bullet(float x, float y, double angle, int level, float w, float h)
     {
         super(x, y, angle, level);
         projectileSprite = new Sprite(new Texture("projectiles/singleshot_projectile.png"));
-        projectileSprite.setSize(projectileSprite.getTexture().getWidth() / (FinalStand.PPM * 6),
-                                 projectileSprite.getTexture().getHeight() / (FinalStand.PPM * 6));
+        projectileSprite.setSize(w, h);
         projectileSprite.setPosition(x, y);
     }
 }
