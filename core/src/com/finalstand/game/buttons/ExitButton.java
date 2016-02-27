@@ -26,8 +26,8 @@ public class ExitButton extends Button {
             }
         }
 
-        if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
-            Gdx.app.exit();
-        }
+//        if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+//            Gdx.app.exit();
+//        }
     }
 }

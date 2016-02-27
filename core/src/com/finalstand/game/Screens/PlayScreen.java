@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -17,6 +18,8 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.finalstand.game.FinalStand;
 import com.finalstand.game.buttons.Button;
+import com.finalstand.game.buttons.ExitButton;
+import com.finalstand.game.buttons.ResumeButton;
 import com.finalstand.game.buttons.UpgradeButton;
 import com.finalstand.game.hud.Hud;
 import com.finalstand.game.sprites.creeps.BasicCreep;
@@ -83,10 +86,16 @@ public class PlayScreen implements Screen {
         EXIT_GAME_CONFIRMATION,
         RUN,
         RESUME,
-        PAUSE
+        PAUSE,
+        PLANNING_PHASE
     }
-
     private State state;
+
+    private Texture background;
+    private ExitButton exitButton;
+    private ResumeButton resumeButton;
+    private Vector2 exitConfPosition;
+
     public PlayScreen(FinalStand game){
         this.game = game;
         state = State.RUN;
@@ -132,6 +141,11 @@ public class PlayScreen implements Screen {
 
         hud = new Hud(game.batch);
 
+        background = new Texture("screens/menu.png");
+        exitConfPosition = new Vector2((FinalStand.V_WIDTH / 2) / FinalStand.PPM, (FinalStand.V_HEIGHT / 2) / FinalStand.PPM);
+        resumeButton = new ResumeButton("screens/playbutton.png", exitConfPosition.x, exitConfPosition.y, 50 / FinalStand.PPM, 25 / FinalStand.PPM);
+        exitButton = new ExitButton("screens/controlbutton.png", exitConfPosition.x, exitConfPosition.y + (50 / FinalStand.PPM), 50 / FinalStand.PPM, 25 / FinalStand.PPM);
+
         elapsed = 0;
     }
 
@@ -160,7 +174,6 @@ public class PlayScreen implements Screen {
 
                 game.batch.setProjectionMatrix(gameCam.combined);
                 game.batch.begin();
-                update();
                 handleInput();
 
                 world.step(1 / 60f, 6, 2);
@@ -223,13 +236,31 @@ public class PlayScreen implements Screen {
                 hud.stage.draw();
             } break;
 
+            // TODO(niall) Make the positions of the button look right but the functionality is done
             case EXIT_GAME_CONFIRMATION: {
+                if(Gdx.input.justTouched()) {
+                    Vector3 mouse = getWorldMousePos();
+                    if (mouse.x > resumeButton.getPosition().x && mouse.x < resumeButton.getPosition().x + resumeButton.getPosition().x &&
+                            mouse.y > resumeButton.getPosition().y && mouse.y < resumeButton.getPosition().y + resumeButton.getHeight()) {
+                        setGameState(State.RUN);
+                    }
+                }
+                exitButton.update();
+//                Gdx.gl.glClearColor(1, 0, 0, 1);
+//                Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+                game.batch.setProjectionMatrix(gameCam.combined);
+                game.batch.begin();
+                game.batch.draw(getBackground(), getExitConfPosition().x - 50 / FinalStand.PPM, getExitConfPosition().y - 100 / FinalStand.PPM,  100 / FinalStand.PPM, 200 / FinalStand.PPM);
+                game.batch.draw(resumeButton.getButtonTexture(), resumeButton.getPosition().x - 50 / FinalStand.PPM, resumeButton.getPosition().y, resumeButton.getWidth(), resumeButton.getHeight());
+                game.batch.draw(exitButton.getButtonTexture(), exitButton.getPosition().x, exitButton.getPosition().y, exitButton.getWidth(), exitButton.getHeight());
+                game.batch.end();
 
             } break;
 
-            case RESUME: {
+            case PLANNING_PHASE: {
 
-            }
+            } break;
         }
     }
 
@@ -255,15 +286,15 @@ public class PlayScreen implements Screen {
 
     @Override
     public void dispose() {
-        //dispose o resources that are not used anymore
-//        world.dispose();
         map.dispose();
-//        b2dr.dispose();
-//        renderer.disppose();
     }
 
-    public void update() {
+    public Texture getBackground() {
+        return background;
+    }
 
+    public Vector2 getExitConfPosition() {
+        return exitConfPosition;
     }
 
     public void handleInput() {
