@@ -40,12 +40,9 @@ public class OptionTexture {
     public void update()
     {
         if(Gdx.input.isKeyJustPressed(Input.Keys.R)) {
-            System.out.println(rotation);
-            /*sprite.setOriginCenter();
+            sprite.setOriginCenter();
             rotation += 90;
             sprite.setRotation(rotation);
-            sprite.rotate(rotation);*/
-            sprite.rotate90(true);
         }
         position = PlayScreen.getWorldMousePos();
         position.x -= textureWidth / 2;

@@ -25,7 +25,7 @@ public class DOTTower extends Tower{
         currentTexture = level1;
 
         projectilePos = new Vector2(x, y);
-        towerAngle = Math.PI;
+        towerAngle = 180;
     }
 
     @Override

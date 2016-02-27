@@ -10,6 +10,7 @@ import com.finalstand.game.FinalStand;
 import com.finalstand.game.sprites.InteractiveTileObject;
 import com.finalstand.game.sprites.RoadBounds;
 import com.finalstand.game.sprites.creeps.Creep;
+import com.finalstand.game.sprites.towers.Tower;
 
 /**
  * Created by Niall PC on 18/02/2016.
@@ -85,6 +86,15 @@ public class WorldContactListener implements ContactListener {
                     ((Waypoint) fixB.getUserData()).onBottomHit((Creep) fixA.getUserData());
                 } else {
                     ((Waypoint) fixA.getUserData()).onBottomHit((Creep) fixB.getUserData());
+                }
+            } break;
+
+            case FinalStand.TOWER_BIT | FinalStand.ROADBOUNDS_BIT:{
+                Gdx.app.log("World Contact Listener", "tower, roadbounds hit right");
+                if(fixA.getFilterData().categoryBits == FinalStand.TOWER_BIT) {
+                    ((RoadBounds) fixB.getUserData()).onTowerHit((Tower) fixA.getUserData());
+                } else {
+                    ((RoadBounds) fixA.getUserData()).onTowerHit((Tower) fixB.getUserData());
                 }
             } break;
         }

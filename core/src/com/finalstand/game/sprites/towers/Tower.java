@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.finalstand.game.FinalStand;
@@ -36,6 +37,7 @@ public class Tower {
 
     protected Vector2 projectilePos;
     protected double towerAngle;
+    protected float towerRange;
 
     public Tower(float x, float y, World world)
     {
@@ -43,13 +45,16 @@ public class Tower {
         level = 1;
 
         this.world = world;
-
-        defineTower();
     }
 
     public void update(){}
     public Texture getCurrentTexture(){return currentTexture;}
     public Vector2 getPosition(){return position;}
+
+    public double getTowerAngle() {
+        return towerAngle;
+    }
+
     public void upgrade()
     {
         if(level < 3)
@@ -69,7 +74,7 @@ public class Tower {
     public void defineTower() {
         BodyDef bdef = new BodyDef();
         bdef.position.set(position.x, position.y);
-        bdef.type = BodyDef.BodyType.StaticBody;
+        bdef.type = BodyDef.BodyType.DynamicBody;
 
         b2Body = world.createBody(bdef);
 
@@ -78,6 +83,7 @@ public class Tower {
         shape.setRadius(8 / FinalStand.PPM);
         fdef.filter.categoryBits = FinalStand.TOWER_BIT;
         fdef.filter.maskBits = FinalStand.DEFAULT | FinalStand.ROADBOUNDS_BIT;
+        fdef.isSensor = true;
         fdef.shape = shape;
         b2Body.createFixture(fdef);
     }

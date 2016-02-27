@@ -58,7 +58,7 @@ public class PlayScreen implements Screen {
 //    private Creep player;
 
     private Array<Creep> creeps;
-    private Array<Creep> spawnableCreeps;
+    public static Array<Creep> spawnableCreeps;
     private boolean keepSpawning;
     private int creepsSpawned;
     private int elapsed;
@@ -145,7 +145,7 @@ public class PlayScreen implements Screen {
         renderer.render();
 
         //renders the debug lines for box2d
-//        b2dr.render(world, gameCam.combined);
+        b2dr.render(world, gameCam.combined);
 
 
 
@@ -158,12 +158,12 @@ public class PlayScreen implements Screen {
              projectiles.get(counter).update();
         }
 
-        for(Tower tower: towers)
-        {
-            tower.update();
-            game.batch.draw(tower.getCurrentTexture(), tower.getPosition().x, tower.getPosition().y,
-                    tower.getCurrentTexture().getWidth() / FinalStand.PPM, tower.getCurrentTexture().getHeight() / FinalStand.PPM);
-        }
+//        for(Tower tower: towers)
+//        {
+//            tower.update();
+//            game.batch.draw(tower.getCurrentTexture(), tower.getPosition().x, tower.getPosition().y,
+//                    tower.getCurrentTexture().getWidth() / FinalStand.PPM, tower.getCurrentTexture().getHeight() / FinalStand.PPM);
+//        }
 
         //render UI
         game.batch.draw(ui.getBackground(), ui.getPosition().x, ui.getPosition().y, ui.getWidth(), ui.getHeight());

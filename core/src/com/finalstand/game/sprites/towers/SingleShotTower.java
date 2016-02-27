@@ -25,7 +25,7 @@ public class SingleShotTower extends Tower{
 //        bounds = new Rectangle(x, y, level1.getWidth(), level1.getHeight());
 
         level1 = new Texture("towers/singleshot_level1.png");
-        level2 = new Texture("towers/singleshot_level2_alt.png");
+        level2 = new Texture("towers/singleshot_level2.png");
         level3 = new Texture("towers/singleshot_level3.png");
         currentTexture = level1;
 
@@ -38,13 +38,16 @@ public class SingleShotTower extends Tower{
         rightProjectilePos = new Vector2(x + ((getCurrentTexture().getWidth() / 1.45f) / FinalStand.PPM),
                                          y + ((getCurrentTexture().getHeight() / 2.5f) / FinalStand.PPM));
 
-        towerAngle = Math.PI;
+        towerAngle = 180;
+        towerRange = (getCurrentTexture().getHeight() * 2.0f) / FinalStand.PPM;
+
+        defineTower();
     }
 
     @Override
     public void update()
     {
-        if(Gdx.input.justTouched())
+        if(targetCreep())
         {
             createProjectile();
         }
@@ -72,6 +75,20 @@ public class SingleShotTower extends Tower{
                     (getCurrentTexture().getHeight() / FinalStand.PPM) / 5.0f);
             PlayScreen.projectiles.add(p3);
         }
+    }
+
+    public boolean targetCreep()
+    {
+        for(int counter = 0; counter < PlayScreen.spawnableCreeps.size; counter++) {
+            Vector2 creepPos = new Vector2(PlayScreen.spawnableCreeps.get(counter).getSprite().getX(),
+                                            PlayScreen.spawnableCreeps.get(counter).getSprite().getY());
+
+            if (position.dst(creepPos) < towerRange) {
+                //System.out.println("angle: " + towerAngle);
+                return true;
+            }
+        }
+        return false;
     }
 
     public Rectangle getBounds() {

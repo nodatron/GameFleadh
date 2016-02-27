@@ -27,7 +27,7 @@ public class LaserTower extends Tower{
 
         projectilePos =  new Vector2(x + ((getCurrentTexture().getWidth() / 2.5f) / FinalStand.PPM),
                                      y + ((getCurrentTexture().getHeight() / 2.5f) / FinalStand.PPM));
-        towerAngle = Math.PI;
+        towerAngle = 180;
     }
 
     @Override

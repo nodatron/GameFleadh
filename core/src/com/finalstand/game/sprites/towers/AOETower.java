@@ -15,8 +15,7 @@ import com.finalstand.game.sprites.projectiles.Projectile;
  */
 public class AOETower extends Tower{
 
-    public AOETower(float x, float y, World world)
-    {
+    public AOETower(float x, float y, World world){
         super(x, y, world);
 
         level1 = new Texture("towers/aoe_level1.png");
@@ -25,9 +24,10 @@ public class AOETower extends Tower{
         currentTexture = level1;
 
         projectilePos = new Vector2(x + ((getCurrentTexture().getWidth() / 2) / FinalStand.PPM),
-                                    y + ((getCurrentTexture().getHeight() / 2) / FinalStand.PPM));
+                y + ((getCurrentTexture().getHeight() / 2) / FinalStand.PPM));
         towerAngle = 0;
     }
+
 
     @Override
     public void update()

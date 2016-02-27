@@ -216,4 +216,7 @@ public class Creep extends Sprite{
 
     }
 
+    public Sprite getSprite() {
+        return sprite;
+    }
 }
