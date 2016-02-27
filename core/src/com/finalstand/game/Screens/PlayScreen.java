@@ -81,8 +81,7 @@ public class PlayScreen implements Screen {
     public static OptionTexture optionTexture;
     public static boolean optionChosen;
 
-    public enum State
-    {
+    public enum State {
         EXIT_GAME_CONFIRMATION,
         RUN,
         RESUME,
@@ -237,6 +236,7 @@ public class PlayScreen implements Screen {
             } break;
 
             // TODO(niall) Make the positions of the button look right but the functionality is done
+            // TODO(niall) add a exit to mainmenu option
             case EXIT_GAME_CONFIRMATION: {
                 if(Gdx.input.justTouched()) {
                     Vector3 mouse = getWorldMousePos();
@@ -287,6 +287,7 @@ public class PlayScreen implements Screen {
     @Override
     public void dispose() {
         map.dispose();
+//        background.dispose();
     }
 
     public Texture getBackground() {

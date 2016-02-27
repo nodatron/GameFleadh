@@ -39,6 +39,18 @@ public class MenuScreen implements Screen {
     private static boolean resumeButtonPressed;
     private static boolean controlButtonPressed;
 
+    public enum State {
+        MENU_CONTROL,
+        MENU,
+        EXIT_CONFIRMATION
+    }
+    private State state;
+    private Texture exitConfBackground;
+    private ExitButton toMainMenu;
+    private ExitButton toDesktop;
+    private ResumeButton exitConfResumeButton;
+    private Vector2 exitConfPosition;
+
     public MenuScreen(FinalStand game, Screen play){
 
         this.game = game;
@@ -56,6 +68,13 @@ public class MenuScreen implements Screen {
         exitButtonPressed = false;
         resumeButtonPressed = false;
         controlButtonPressed = false;
+
+        state = State.MENU;
+        background = new Texture("screens/menu.png");
+        exitConfPosition = new Vector2((FinalStand.V_WIDTH / 2) / FinalStand.PPM, (FinalStand.V_HEIGHT / 2) / FinalStand.PPM);
+        exitConfResumeButton = new ResumeButton("screens/playbutton.png", exitConfPosition.x, exitConfPosition.y, 50 / FinalStand.PPM, 25 / FinalStand.PPM);
+        toMainMenu = new ExitButton("screens/controlbutton.png", exitConfPosition.x, exitConfPosition.y + (50 / FinalStand.PPM), 50 / FinalStand.PPM, 25 / FinalStand.PPM);
+        toDesktop = new ExitButton("screens/controlbutton.png", exitConfPosition.x, exitConfPosition.y + (50 / FinalStand.PPM), 50 / FinalStand.PPM, 25 / FinalStand.PPM);
     }
 
     @Override
@@ -73,29 +92,53 @@ public class MenuScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        update(delta);
-        resumeButton.update();
-        exitButton.update();
-        controlButton.update();
+        switch (state) {
+            case MENU: {
+                update(delta);
+                resumeButton.update();
+                exitButton.update();
+                controlButton.update();
 
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+                Gdx.gl.glClearColor(0, 0, 0, 1);
+                Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        game.batch.setProjectionMatrix(gameCam.combined);
+                game.batch.setProjectionMatrix(gameCam.combined);
 
-        game.batch.begin();
-        game.batch.draw(getBackground(), getBackgroundPos().x, getBackgroundPos().y, FinalStand.V_WIDTH / FinalStand.PPM, FinalStand.V_HEIGHT / FinalStand.PPM);
-        game.batch.draw(resumeButton.getButtonTexture(), resumeButton.getPosition().x, resumeButton.getPosition().y, resumeButton.getWidth(), resumeButton.getHeight());
-        game.batch.draw(controlButton.getButtonTexture(), controlButton.getPosition().x, controlButton.getPosition().y, controlButton.getWidth(), controlButton.getHeight());
-        game.batch.draw(exitButton.getButtonTexture(), exitButton.getPosition().x, exitButton.getPosition().y, exitButton.getWidth(), exitButton.getHeight());
-        game.batch.end();
+                game.batch.begin();
+                game.batch.draw(getBackground(), getBackgroundPos().x, getBackgroundPos().y, FinalStand.V_WIDTH / FinalStand.PPM, FinalStand.V_HEIGHT / FinalStand.PPM);
+                game.batch.draw(resumeButton.getButtonTexture(), resumeButton.getPosition().x, resumeButton.getPosition().y, resumeButton.getWidth(), resumeButton.getHeight());
+                game.batch.draw(controlButton.getButtonTexture(), controlButton.getPosition().x, controlButton.getPosition().y, controlButton.getWidth(), controlButton.getHeight());
+                game.batch.draw(exitButton.getButtonTexture(), exitButton.getPosition().x, exitButton.getPosition().y, exitButton.getWidth(), exitButton.getHeight());
+                game.batch.end();
 
-        if(resumeButtonPressed) {
-            game.setScreen(play);
-        }
+                if (resumeButtonPressed) {
+                    game.setScreen(play);
+                }
 
-        if(controlButtonPressed) {
-            game.setScreen(new ControlScreen(game));
+                if (controlButtonPressed) {
+                    game.setScreen(new ControlScreen(game));
+                }
+            } break;
+
+            case EXIT_CONFIRMATION: {
+                if(Gdx.input.justTouched()) {
+                    Vector3 mouse = getWorldMousePos();
+                    if (mouse.x > resumeButton.getPosition().x && mouse.x < resumeButton.getPosition().x + resumeButton.getPosition().x &&
+                            mouse.y > resumeButton.getPosition().y && mouse.y < resumeButton.getPosition().y + resumeButton.getHeight()) {
+                        setGameState(State.RUN);
+                    }
+                }
+                exitButton.update();
+//                Gdx.gl.glClearColor(1, 0, 0, 1);
+//                Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+                game.batch.setProjectionMatrix(gameCam.combined);
+                game.batch.begin();
+                game.batch.draw(getBackground(), getExitConfPosition().x - 50 / FinalStand.PPM, getExitConfPosition().y - 100 / FinalStand.PPM,  100 / FinalStand.PPM, 200 / FinalStand.PPM);
+                game.batch.draw(resumeButton.getButtonTexture(), resumeButton.getPosition().x - 50 / FinalStand.PPM, resumeButton.getPosition().y, resumeButton.getWidth(), resumeButton.getHeight());
+                game.batch.draw(exitButton.getButtonTexture(), exitButton.getPosition().x, exitButton.getPosition().y, exitButton.getWidth(), exitButton.getHeight());
+                game.batch.end();
+            }
         }
     }
 
@@ -122,6 +165,10 @@ public class MenuScreen implements Screen {
     @Override
     public void dispose() {
         background.dispose();
+    }
+
+    public void setGameState(State s) {
+        this.state = s;
     }
 
     public void update(float delta) {
