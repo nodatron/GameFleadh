@@ -9,7 +9,7 @@ import com.finalstand.game.FinalStand;
  */
 public class Laser extends Projectile{
 
-    public Laser(float x, float y, double angle, int level, float w, float h)
+    public Laser(float x, float y, float angle, int level, float w, float h)
     {
         super(x, y, angle, level);
         if(level < 3) {

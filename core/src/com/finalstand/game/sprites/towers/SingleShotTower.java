@@ -2,6 +2,7 @@ package com.finalstand.game.sprites.towers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
@@ -22,12 +23,12 @@ public class SingleShotTower extends Tower{
     public SingleShotTower(float x, float y, World world)
     {
         super(x, y, world);
-//        bounds = new Rectangle(x, y, level1.getWidth(), level1.getHeight());
 
         level1 = new Texture("towers/singleshot_level1.png");
         level2 = new Texture("towers/singleshot_level2.png");
         level3 = new Texture("towers/singleshot_level3.png");
         currentTexture = level1;
+        towerSprite = new Sprite(currentTexture);
 
         midProjectilePos = new Vector2(x + ((getCurrentTexture().getWidth() / 2.6f) / FinalStand.PPM),
                                        y + ((getCurrentTexture().getHeight() / 2.5f) / FinalStand.PPM));
@@ -47,10 +48,18 @@ public class SingleShotTower extends Tower{
     @Override
     public void update()
     {
-        if(targetCreep())
+        if(targetCreep() && elapsedTime == 40)
         {
             createProjectile();
         }
+
+        elapsedTime++;
+        if(elapsedTime > 40)
+        {
+            elapsedTime = 0;
+        }
+
+        //towerSprite.setRotation(towerAngle);
     }
 
     @Override
@@ -84,14 +93,17 @@ public class SingleShotTower extends Tower{
                                             PlayScreen.spawnableCreeps.get(counter).getSprite().getY());
 
             if (position.dst(creepPos) < towerRange) {
-                //System.out.println("angle: " + towerAngle);
+                towerAngle = (float)Math.atan2(creepPos.y - position.y, creepPos.x - position.x );
+                towerAngle *= (180/Math.PI);
+                if(towerAngle < 0)
+                {
+                    towerAngle = 360 - (-towerAngle);
+                }
+                towerAngle += 90;
+                System.out.println("angle: " + towerAngle);
                 return true;
             }
         }
         return false;
-    }
-
-    public Rectangle getBounds() {
-        return bounds;
     }
 }

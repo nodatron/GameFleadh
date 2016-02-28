@@ -2,6 +2,7 @@ package com.finalstand.game.sprites.projectiles;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.finalstand.game.FinalStand;
@@ -19,12 +20,12 @@ public class Projectile extends Sprite{
     protected Rectangle bounds;
     protected Sprite projectileSprite;
 
-    public Projectile(float x, float y, double angle, int level)
+    public Projectile(float x, float y, float angle, int level)
     {
         position = new Vector2(x, y);
         this.level = level;
         speed = 1 / FinalStand.PPM;
-        forward = new Vector2((float)Math.sin(angle) * speed, -(float)Math.cos(angle) * speed);
+        forward = new Vector2(MathUtils.sinDeg(angle) * speed, -MathUtils.cosDeg(angle) * speed);
         System.out.println(forward);
     }
 

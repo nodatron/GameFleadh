@@ -2,6 +2,7 @@ package com.finalstand.game.sprites.towers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
@@ -22,6 +23,7 @@ public class AOETower extends Tower{
         level2 = new Texture("towers/aoe_level2.png");
         level3 = new Texture("towers/aoe_level3.png");
         currentTexture = level1;
+        towerSprite = new Sprite(currentTexture);
 
         projectilePos = new Vector2(x + ((getCurrentTexture().getWidth() / 2) / FinalStand.PPM),
                 y + ((getCurrentTexture().getHeight() / 2) / FinalStand.PPM));

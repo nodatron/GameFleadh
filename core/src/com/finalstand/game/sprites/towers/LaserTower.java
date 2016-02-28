@@ -2,6 +2,7 @@ package com.finalstand.game.sprites.towers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
@@ -24,6 +25,7 @@ public class LaserTower extends Tower{
         level3 = new Texture("towers/laserTower_level3_notFiring.png");
         //Texture level3Firing = new Texture("laserTower_level3_firing.png");
         currentTexture = level1;
+        towerSprite = new Sprite(currentTexture);
 
         projectilePos =  new Vector2(x + ((getCurrentTexture().getWidth() / 2.5f) / FinalStand.PPM),
                                      y + ((getCurrentTexture().getHeight() / 2.5f) / FinalStand.PPM));

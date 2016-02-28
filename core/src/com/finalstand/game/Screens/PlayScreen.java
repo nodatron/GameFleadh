@@ -158,12 +158,12 @@ public class PlayScreen implements Screen {
              projectiles.get(counter).update();
         }
 
-//        for(Tower tower: towers)
-//        {
-//            tower.update();
-//            game.batch.draw(tower.getCurrentTexture(), tower.getPosition().x, tower.getPosition().y,
-//                    tower.getCurrentTexture().getWidth() / FinalStand.PPM, tower.getCurrentTexture().getHeight() / FinalStand.PPM);
-//        }
+        for(Tower tower: towers)
+        {
+            tower.update();
+            game.batch.draw(tower.getTowerSprite(), tower.getPosition().x, tower.getPosition().y,
+                    tower.getTowerSprite().getWidth() / FinalStand.PPM, tower.getTowerSprite().getHeight() / FinalStand.PPM);
+        }
 
         //render UI
         game.batch.draw(ui.getBackground(), ui.getPosition().x, ui.getPosition().y, ui.getWidth(), ui.getHeight());

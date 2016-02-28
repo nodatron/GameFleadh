@@ -2,6 +2,7 @@ package com.finalstand.game.sprites.towers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -24,25 +25,27 @@ import com.finalstand.game.Screens.PlayScreen;
  */
 public class Tower {
     protected Vector2 position;
-    protected Rectangle bounds;
 
     protected int level;
     protected Texture level1;
     protected Texture level2;
     protected Texture level3;
     protected Texture currentTexture;
+    protected Sprite towerSprite;
 
     protected Body b2Body;
     protected World world;
 
     protected Vector2 projectilePos;
-    protected double towerAngle;
+    protected float towerAngle;
     protected float towerRange;
+    protected float elapsedTime;
 
     public Tower(float x, float y, World world)
     {
         position = new Vector2(x, y);
         level = 1;
+        elapsedTime = 0.0f;
 
         this.world = world;
     }
@@ -50,8 +53,10 @@ public class Tower {
     public void update(){}
     public Texture getCurrentTexture(){return currentTexture;}
     public Vector2 getPosition(){return position;}
-
-    public double getTowerAngle() {
+    public Sprite getTowerSprite() {
+        return towerSprite;
+    }
+    public float getTowerAngle() {
         return towerAngle;
     }
 
@@ -69,6 +74,7 @@ public class Tower {
         {
             currentTexture = level3;
         }
+        towerSprite.setTexture(currentTexture);
     }
 
     public void defineTower() {

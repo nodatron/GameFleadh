@@ -13,7 +13,7 @@ public class DOTGas extends Projectile{
     private float maxTime;
     private Vector2 initialPos;
 
-    public DOTGas(float x, float y, double angle, int level, float w, float h)
+    public DOTGas(float x, float y, float angle, int level, float w, float h)
     {
         super(x, y, angle, level);
         projectileSprite = new Sprite(new Texture("projectiles/dot_projectile.png"));
