@@ -29,6 +29,8 @@ public class SingleShotTower extends Tower{
         level3 = new Texture("towers/singleshot_level3.png");
         currentTexture = level1;
         towerSprite = new Sprite(currentTexture);
+        towerSprite.setPosition(x, y);
+        towerSprite.setSize(towerSprite.getWidth() / FinalStand.PPM, towerSprite.getHeight() / FinalStand.PPM);
 
         midProjectilePos = new Vector2(x + ((getCurrentTexture().getWidth() / 2.6f) / FinalStand.PPM),
                                        y + ((getCurrentTexture().getHeight() / 2.5f) / FinalStand.PPM));
@@ -58,8 +60,6 @@ public class SingleShotTower extends Tower{
         {
             elapsedTime = 0;
         }
-
-        //towerSprite.setRotation(towerAngle);
     }
 
     @Override
