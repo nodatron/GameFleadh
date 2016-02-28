@@ -137,16 +137,16 @@ public class Creep extends Sprite{
         //set the way to go
         if(movement[0]) {
             // go right
-            direction = new Vector2(100f / FinalStand.PPM, 0);
+            direction = new Vector2(300f / FinalStand.PPM, 0);
         } else if(movement[1]) {
             // go left
-            direction = new Vector2(- 100f / FinalStand.PPM, 0);
+            direction = new Vector2(- 300f / FinalStand.PPM, 0);
         } else if(movement[2]) {
             // go up
-            direction = new Vector2(0, 100f / FinalStand.PPM);
+            direction = new Vector2(0, 300f / FinalStand.PPM);
         } else if(movement[3]){
             //go down
-            direction = new Vector2(0, - 100f / FinalStand.PPM);
+            direction = new Vector2(0, - 300f / FinalStand.PPM);
         }
 //        this.b2Body.applyLinearImpulse(direction, this.b2Body.getWorldCenter(), true);
         this.b2Body.setLinearVelocity(direction);
@@ -177,34 +177,37 @@ public class Creep extends Sprite{
     public int getWaypointHit() { return waypointHit; }
 
     public void checkDir() {
-        if(dir.get(getWaypointHit()).equals("right")) {
-            setMovement(0);
-            unsetMovement(1);
-            unsetMovement(2);
-            unsetMovement(3);
-        } else if(dir.get(getWaypointHit()).equals("left")) {
-            setMovement(1);
-            unsetMovement(0);
-            unsetMovement(2);
-            unsetMovement(3);
-        } else if(dir.get(getWaypointHit()).equals("up")) {
-            setMovement(2);
-            unsetMovement(1);
-            unsetMovement(0);
-            unsetMovement(3);
-        } else if(dir.get(getWaypointHit()).equals("down")) {
-            setMovement(3);
-            unsetMovement(1);
-            unsetMovement(2);
-            unsetMovement(0);
+        if(getWaypointHit() == dir.size) {
+            reachedEnd();
+        } else {
+            if (dir.get(getWaypointHit()).equals("right")) {
+                setMovement(0);
+                unsetMovement(1);
+                unsetMovement(2);
+                unsetMovement(3);
+            } else if (dir.get(getWaypointHit()).equals("left")) {
+                setMovement(1);
+                unsetMovement(0);
+                unsetMovement(2);
+                unsetMovement(3);
+            } else if (dir.get(getWaypointHit()).equals("up")) {
+                setMovement(2);
+                unsetMovement(1);
+                unsetMovement(0);
+                unsetMovement(3);
+            } else if (dir.get(getWaypointHit()).equals("down")) {
+                setMovement(3);
+                unsetMovement(1);
+                unsetMovement(2);
+                unsetMovement(0);
+            }
         }
     }
 
 
-    public void reachedEnd(int index) {
-        if(getWaypointHit() == dir.size + 1) {
-            //creep has reached the base of the player
-        }
+    public void reachedEnd() {
+//        PlayScreen.creeps.remove(this);
+        PlayScreen.spawnableCreeps.remove(this);
     }
 
 

@@ -30,13 +30,13 @@ public class Hud {
     private Label healthLabelHeading;
     private Label MapRoundLabelHeading;
 
-    public Hud(SpriteBatch sb) {
+    public Hud(Integer round, Integer map) {
         stage = new Stage();
 
         score = 0;
         health = 10;
-        round = 1;
-        map = 1;
+        this.round = round;
+        this.map = map;
         viewport = new FitViewport(FinalStand.V_WIDTH, FinalStand.V_HEIGHT, new OrthographicCamera());
 
         Table table = new Table();

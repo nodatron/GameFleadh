@@ -60,8 +60,8 @@ public class PlayScreen implements Screen {
 
 //    private Creep player;
 
-    private Array<Creep> creeps;
-    private Array<Creep> spawnableCreeps;
+    public static ArrayList<Creep> creeps;
+    public static ArrayList<Creep> spawnableCreeps;
     private boolean keepSpawning;
     private int creepsSpawned;
     private int elapsed;
@@ -101,9 +101,14 @@ public class PlayScreen implements Screen {
     private Sprite play;
     private Sprite pause;
 
+    private float challengerRating;
+
+    private boolean firstRoundDone;
+
     public PlayScreen(FinalStand game){
         this.game = game;
         state = State.PLANNING_PHASE;
+        firstRoundDone = false;
         //      texture = new Texture("background.jpg");
         gameCam = new OrthographicCamera();
         viewport = new FitViewport(FinalStand.V_WIDTH / FinalStand.PPM, FinalStand.V_HEIGHT / FinalStand.PPM, gameCam);
@@ -124,10 +129,13 @@ public class PlayScreen implements Screen {
         world.setContactListener(new WorldContactListener());
 
 //        player = new BasicCreep(10, 360, world);
+        hud = new Hud(game.round, game.mapNumber);
 
-        creeps = new Array<Creep>();
-        creeps = randomCreeps(5);
-        spawnableCreeps = new Array<Creep>();
+        challengerRating = game.mapNumber * 10 + game.round;
+
+        creeps = new ArrayList<Creep>();
+        creeps = randomCreeps(challengerRating);
+        spawnableCreeps = new ArrayList<Creep>();
         spawnableCreeps.add(creeps.get(0));
         creepsSpawned = 0;
         keepSpawning = true;
@@ -144,7 +152,7 @@ public class PlayScreen implements Screen {
         //towers.add(new DOTTower(game.V_WIDTH / 3, 0));
 //        towers.add(new LaserTower((FinalStand.V_WIDTH / 3) / FinalStand.PPM, 0));
 
-        hud = new Hud(game.batch);
+
 
         background = new Texture("screens/menu.png");
         exitConfPosition = new Vector2((FinalStand.V_WIDTH / 2) / FinalStand.PPM, (FinalStand.V_HEIGHT / 2) / FinalStand.PPM);
@@ -179,8 +187,13 @@ public class PlayScreen implements Screen {
             setGameState(State.RUN);
         }
 
+        if(firstRoundDone) {
+            update();
+        }
+
         switch (state) {
             case RUN: {
+//                    update();
                 if(Gdx.input.justTouched()) {
                     Vector3 mouse = getWorldMousePos();
                     if (mouse.x > pause.getX() && mouse.x < pause.getX() + 20 / FinalStand.PPM &&
@@ -207,12 +220,14 @@ public class PlayScreen implements Screen {
 
                 gameCam.update();
 
-                for (Creep c : spawnableCreeps) {
-                    c.update();
-                    c.render(game.batch);
+//                for (Creep c : spawnableCreeps) {
+                for (int i = 0 ; i < spawnableCreeps.size() ; i ++) {
+                    spawnableCreeps.get(i).render(game.batch);
+                    spawnableCreeps.get(i).update();
                 }
 
                 if (keepSpawning && elapsed > 100) {
+                    System.out.println("Before spawnCreep " + creepsSpawned);
                     spawnNewCreep();
                     elapsed = 0;
                 }
@@ -262,6 +277,10 @@ public class PlayScreen implements Screen {
 
                 game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
                 hud.stage.draw();
+
+                if(spawnableCreeps.size() == 0) {
+                    firstRoundDone = true;
+                }
             } break;
 
             // TODO(niall) Make the positions of the button look right but the functionality is done
@@ -289,11 +308,13 @@ public class PlayScreen implements Screen {
 
             //During this phase of the game the player will be aloud to place towers and traps before the creeps start to spawn
             case PLANNING_PHASE: {
+                System.out.println("Round" + game.round);
                 /* TODO     1. Make a counter for the time allowed between each round
                             2. Make it so that the creeps can be chosen by the game but not spawned
                             3. Everything except for the creeps can be rendered at this time
 
                  */
+
                 if(Gdx.input.justTouched()) {
                     Vector3 mouse = getWorldMousePos();
                     if (mouse.x > play.getX() && mouse.x < play.getX() + 20 / FinalStand.PPM &&
@@ -451,16 +472,19 @@ public class PlayScreen implements Screen {
     }
 
     public void spawnNewCreep() {
-        if(creepsSpawned == creeps.size) {
+        System.out.println("Creeps Spawned " + creepsSpawned + " Creep<> size " + creeps.size());
+        if(creepsSpawned == creeps.size()) {
             keepSpawning = false;
+            System.out.println("Done spawning");
             return;
         }
+        System.out.println("in method Spawn Creeps" + creepsSpawned);
         spawnableCreeps.add(creeps.get(creepsSpawned));
         creepsSpawned++;
     }
 
-    public Array<Creep> randomCreeps(float challengeRating) {
-        Array<Creep> levelCreeps = new Array<Creep>();
+    public ArrayList<Creep> randomCreeps(float challengeRating) {
+        ArrayList<Creep> levelCreeps = new ArrayList<Creep>();
         int randomNumber = 0;
         float currentChallengeRating = 0;
 
@@ -524,5 +548,38 @@ public class PlayScreen implements Screen {
         }
     }
 
+
+    public void update() {
+        // there is no more creeps in the wave
+        if(game.round == game.roundsPerMap) {
+            // Move to a new map
+            game.mapNumber ++;
+            game.round = 0;
+            firstRoundDone = false;
+        }
+
+        if(spawnableCreeps.size() == 0) {
+
+            game.round ++;
+            elapsed = 0;
+            creeps.clear();
+            spawnableCreeps.clear();
+//            waypoints.clear();
+//            towers.clear();
+//            traps.clear();
+
+            challengerRating = game.mapNumber * 10 + game.round;
+
+            creeps = randomCreeps(challengerRating);
+            spawnableCreeps.add(creeps.get(0));
+
+            creepsSpawned = 0;
+            keepSpawning = true;
+            plannignPhaseCounter = 0;
+
+            setGameState(State.PLANNING_PHASE);
+        }
+
+    }
 
 }

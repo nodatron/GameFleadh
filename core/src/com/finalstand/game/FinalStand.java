@@ -16,6 +16,10 @@ public class FinalStand extends Game {
 
 	public SpriteBatch batch;
 
+	public Integer round = 1;
+	public Integer mapNumber = 1;
+	public static final int roundsPerMap = 10;
+
 	//Bits for collision in box2d
 	public static final short DEFAULT = 1;
 	public static final short CREEP_BIT = 2;
