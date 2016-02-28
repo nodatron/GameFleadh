@@ -67,21 +67,21 @@ public class SingleShotTower extends Tower{
     {
         if(level == 1 || level == 3) {
             Projectile p1 = new Bullet(midProjectilePos.x, midProjectilePos.y, towerAngle, level,
-                    (getCurrentTexture().getWidth() / FinalStand.PPM) / 5.0f,
-                    (getCurrentTexture().getHeight() / FinalStand.PPM) / 5.0f);
+                    towerSprite.getWidth() / 5.0f,
+                    towerSprite.getHeight() / 5.0f);
             PlayScreen.projectiles.add(p1);
         }
 
         if(level > 1)
         {
             Projectile p2 = new Bullet(leftProjectilePos.x, leftProjectilePos.y, towerAngle, level,
-                    (getCurrentTexture().getWidth() / FinalStand.PPM) / 5.0f,
-                    (getCurrentTexture().getHeight() / FinalStand.PPM) / 5.0f);
+                    towerSprite.getWidth() / 5.0f,
+                    towerSprite.getHeight() / 5.0f);
             PlayScreen.projectiles.add(p2);
 
             Projectile p3 = new Bullet(rightProjectilePos.x, rightProjectilePos.y, towerAngle, level,
-                    (getCurrentTexture().getWidth() / FinalStand.PPM) / 5.0f,
-                    (getCurrentTexture().getHeight() / FinalStand.PPM) / 5.0f);
+                    towerSprite.getWidth() / 5.0f,
+                    towerSprite.getHeight() / 5.0f);
             PlayScreen.projectiles.add(p3);
         }
     }

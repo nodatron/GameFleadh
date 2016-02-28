@@ -16,15 +16,16 @@ public class Projectile extends Sprite{
     protected Vector2 forward;
     protected float speed;
     protected int level;
+    protected float angle;
 
-    protected Rectangle bounds;
     protected Sprite projectileSprite;
 
     public Projectile(float x, float y, float angle, int level)
     {
         position = new Vector2(x, y);
         this.level = level;
-        speed = 1 / FinalStand.PPM;
+        speed = 6 / FinalStand.PPM;
+        this.angle = angle;
         forward = new Vector2(MathUtils.sinDeg(angle) * speed, -MathUtils.cosDeg(angle) * speed);
         System.out.println(forward);
     }
@@ -41,5 +42,9 @@ public class Projectile extends Sprite{
 
     public Sprite getSprite() {
         return projectileSprite;
+    }
+
+    public float getAngle() {
+        return angle;
     }
 }
