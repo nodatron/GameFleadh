@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -95,9 +96,14 @@ public class PlayScreen implements Screen {
     private ResumeButton resumeButton;
     private Vector2 exitConfPosition;
 
+    private int plannignPhaseCounter;
+
+    private Sprite play;
+    private Sprite pause;
+
     public PlayScreen(FinalStand game){
         this.game = game;
-        state = State.RUN;
+        state = State.PLANNING_PHASE;
         //      texture = new Texture("background.jpg");
         gameCam = new OrthographicCamera();
         viewport = new FitViewport(FinalStand.V_WIDTH / FinalStand.PPM, FinalStand.V_HEIGHT / FinalStand.PPM, gameCam);
@@ -146,6 +152,16 @@ public class PlayScreen implements Screen {
         exitButton = new ExitButton("screens/controlbutton.png", exitConfPosition.x, exitConfPosition.y + (50 / FinalStand.PPM), 50 / FinalStand.PPM, 25 / FinalStand.PPM);
 
         elapsed = 0;
+        plannignPhaseCounter = 0;
+
+        play = new Sprite(new Texture("screens/play.png"));
+        pause = new Sprite(new Texture("screens/pause.png"));
+        //TODO this will have to be added into the UI probably
+        //TODO change the co-ordinates to be based off the ui
+//        play.setPosition(100 / FinalStand.PPM, 200 / FinalStand.PPM);
+//        pause.setPosition(100 / FinalStand.PPM, 200 / FinalStand.PPM);
+        play.setPosition(5 / FinalStand.PPM, (FinalStand.V_HEIGHT / 4) / FinalStand.PPM);
+        pause.setPosition(5 / FinalStand.PPM, (FinalStand.V_HEIGHT / 4) / FinalStand.PPM);
     }
 
     @Override
@@ -158,8 +174,20 @@ public class PlayScreen implements Screen {
     @Override
     public void render(float delta) {
 
+        if(plannignPhaseCounter >= 1000) {
+            plannignPhaseCounter = 0;
+            setGameState(State.RUN);
+        }
+
         switch (state) {
             case RUN: {
+                if(Gdx.input.justTouched()) {
+                    Vector3 mouse = getWorldMousePos();
+                    if (mouse.x > pause.getX() && mouse.x < pause.getX() + 20 / FinalStand.PPM &&
+                            mouse.y > pause.getY() && mouse.y < pause.getY() + 10 / FinalStand.PPM) {
+                        setGameState(State.PAUSE);
+                    }
+                }
                 // Clearing the screen
                 Gdx.gl.glClearColor(1, 0, 0, 1);
                 Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -192,6 +220,7 @@ public class PlayScreen implements Screen {
 //        player.update();
                 renderer.setView(gameCam);
 
+                game.batch.draw(pause.getTexture(), pause.getX(), pause.getY(), 20 / FinalStand.PPM, 10 / FinalStand.PPM);
 
                 elapsed++;
 
@@ -258,9 +287,112 @@ public class PlayScreen implements Screen {
 
             } break;
 
+            //During this phase of the game the player will be aloud to place towers and traps before the creeps start to spawn
             case PLANNING_PHASE: {
+                /* TODO     1. Make a counter for the time allowed between each round
+                            2. Make it so that the creeps can be chosen by the game but not spawned
+                            3. Everything except for the creeps can be rendered at this time
 
+                 */
+                if(Gdx.input.justTouched()) {
+                    Vector3 mouse = getWorldMousePos();
+                    if (mouse.x > play.getX() && mouse.x < play.getX() + 20 / FinalStand.PPM &&
+                            mouse.y > play.getY() && mouse.y < play.getY() + 10 / FinalStand.PPM) {
+                        plannignPhaseCounter = 1000;
+                    }
+                }
+
+
+                Gdx.gl.glClearColor(1, 0, 0, 1);
+                Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+                //renders the map
+                renderer.render();
+
+                //renders the debug lines for box2d
+                b2dr.render(world, gameCam.combined);
+
+
+                game.batch.setProjectionMatrix(gameCam.combined);
+                game.batch.begin();
+                handleInput();
+
+                world.step(1 / 60f, 6, 2);
+
+                gameCam.update();
+
+//                for (Creep c : spawnableCreeps) {
+//                    c.update();
+//                    c.render(game.batch);
+//                }
+//
+//                if (keepSpawning && elapsed > 100) {
+//                    spawnNewCreep();
+//                    elapsed = 0;
+//                }
+
+//        player.update();
+                renderer.setView(gameCam);
+
+
+
+                elapsed++;
+
+                for (Tower tower : towers) {
+                    //tower.checkPressed();
+                    game.batch.draw(tower.getCurrentTexture(), tower.getPosition().x, tower.getPosition().y, tower.getCurrentTexture().getWidth() / FinalStand.PPM, tower.getCurrentTexture().getHeight() / FinalStand.PPM);
+                }
+
+                //render UI
+                game.batch.draw(ui.getBackground(), ui.getPosition().x, ui.getPosition().y, ui.getWidth(), ui.getHeight());
+                game.batch.draw(ui.getOption1Texture(), ui.getOption1Pos().x, ui.getOption1Pos().y, ui.getTextureWidth(), ui.getTextureHeight());
+                game.batch.draw(ui.getOption2Texture(), ui.getOption2Pos().x, ui.getOption2Pos().y, ui.getTextureWidth(), ui.getTextureHeight());
+                game.batch.draw(ui.getOption3Texture(), ui.getOption3Pos().x, ui.getOption3Pos().y, ui.getTextureWidth(), ui.getTextureHeight());
+                game.batch.draw(ui.getOption4Texture(), ui.getOption4Pos().x, ui.getOption4Pos().y, ui.getTextureWidth(), ui.getTextureHeight());
+
+                if (displayButtons == true) {
+                    upgradeButton.update();
+                    sellButton.update();
+            /*game.batch.draw(upgradeButton.getButtonTexture(), upgradeButton.getPosition().x, upgradeButton.getPosition().y,
+                    upgradeButton.getWidth(), upgradeButton.getHeight());
+            game.batch.draw(sellButton.getButtonTexture(), sellButton.getPosition().x, sellButton.getPosition().y,
+                    sellButton.getWidth(), sellButton.getHeight());*/
+                    upgradeButton.getButtonSprite().draw(game.batch);
+                    sellButton.getButtonSprite().draw(game.batch);
+                    //font.draw(game.batch, upgradeButton.getButtonText(), upgradeButton.getPosition().x, upgradeButton.getPosition().y);
+                }
+                checkTowerPressed();
+
+                if (optionChosen == true) {
+                    optionTexture.update();
+                    game.batch.draw(optionTexture.getTexture(), optionTexture.getPosition().x, optionTexture.getPosition().y, ui.getTextureWidth(), ui.getTextureHeight());
+                }
+                game.batch.draw(play.getTexture(), play.getX(), play.getY(), 20 / FinalStand.PPM, 10 / FinalStand.PPM);
+                game.batch.end();
+
+                if (Gdx.input.justTouched()) {
+                    ui.optionClicked(getWorldMousePos());
+                }
+
+
+                game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
+                hud.stage.draw();
+                plannignPhaseCounter++;
             } break;
+
+            case PAUSE: {
+                if(Gdx.input.justTouched()) {
+                    Vector3 mouse = getWorldMousePos();
+                    if (mouse.x > play.getX() && mouse.x < play.getX() + 20 / FinalStand.PPM &&
+                            mouse.y > play.getY() && mouse.y < play.getY() + 10 / FinalStand.PPM) {
+                        setGameState(State.RUN);
+                    }
+                }
+
+                game.batch.begin();
+                game.batch.draw(play.getTexture(), play.getX(), play.getY(), 20 / FinalStand.PPM, 10 / FinalStand.PPM);
+                game.batch.end();
+            }
         }
     }
 
