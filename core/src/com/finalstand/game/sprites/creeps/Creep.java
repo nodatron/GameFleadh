@@ -27,8 +27,7 @@ public class Creep extends Sprite{
     protected Vector2 position;
 
     protected int health;
-    protected int armour;
-    protected boolean[] status;
+    protected float speed;
 
     protected World world;
     protected Body b2Body;
@@ -53,6 +52,7 @@ public class Creep extends Sprite{
         timeElapsed = 0;
         dir = Waypoint.readWaypoints("map1.txt");
         waypointHit = 0;
+        speed = 1;
 //        texture = new Texture("BasicCreep.png");
 //        sprite = new Sprite(texture);
     }
@@ -148,6 +148,7 @@ public class Creep extends Sprite{
             //go down
             direction = new Vector2(0, - 300f / FinalStand.PPM);
         }
+        direction.scl(speed);
 //        this.b2Body.applyLinearImpulse(direction, this.b2Body.getWorldCenter(), true);
         this.b2Body.setLinearVelocity(direction);
 //        timeElapsed++;

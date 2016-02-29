@@ -22,8 +22,6 @@ public class BasicCreep extends Creep {
 //        setMovement();
 
         health = 100;
-        armour = 10;
-        status = new boolean[5];
 
     }
 
