@@ -21,6 +21,7 @@ public class DOTTower extends Tower{
     public DOTTower(float x, float y, World world, float angle)
     {
         super(x, y, world, angle);
+        maxTime = 250.0f;
 
         level1 = new Texture("towers/dot_level1.png");
         level2 = new Texture("towers/dot_level2.png");
@@ -38,7 +39,7 @@ public class DOTTower extends Tower{
     public void createProjectile()
     {
         Projectile p = new DOTGas(projectilePos.x, projectilePos.y, towerAngle, level,
-                                  getCurrentTexture().getWidth() / FinalStand.PPM, getCurrentTexture().getHeight() / FinalStand.PPM);
+                                  towerSprite.getWidth(), towerSprite.getHeight());
         PlayScreen.projectiles.add(p);
     }
 }

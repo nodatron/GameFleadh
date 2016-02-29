@@ -40,25 +40,27 @@ public class Tower {
     protected float towerAngle;
     protected float towerRange;
     protected float elapsedTime;
+    protected float maxTime;
 
     public Tower(float x, float y, World world, float angle)
     {
         position = new Vector2(x, y);
         level = 1;
         elapsedTime = 0.0f;
+        maxTime = 40.0f;
         towerAngle = angle;
 
         this.world = world;
     }
 
     public void update(){
-        if(targetCreep() && elapsedTime == 40)
+        if(targetCreep() && elapsedTime == maxTime)
         {
             createProjectile();
         }
 
         elapsedTime++;
-        if(elapsedTime > 40)
+        if(elapsedTime > maxTime)
         {
             elapsedTime = 0;
         }
