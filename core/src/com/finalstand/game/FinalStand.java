@@ -17,7 +17,7 @@ public class FinalStand extends Game {
 	public SpriteBatch batch;
 
 	public Integer round = 1;
-	public Integer mapNumber = 4;
+	public Integer mapNumber = 1;
 	public static final int roundsPerMap = 11;
 
 	public static boolean gameOver = false;

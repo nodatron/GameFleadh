@@ -41,7 +41,7 @@ public class SplashScreen implements Screen{
 
         playButton = new PlayButton("screens/playbutton.png", 300 / FinalStand.PPM, 150 / FinalStand.PPM, 50 / FinalStand.PPM, 25 / FinalStand.PPM);
         controlButton = new ControlButton("screens/controlbutton.png", 300 / FinalStand.PPM, 100 / FinalStand.PPM, 50 / FinalStand.PPM, 25 / FinalStand.PPM);
-        exitButton = new ExitButton("screens/controlbutton.png", 300 / FinalStand.PPM, 50 / FinalStand.PPM, 50 / FinalStand.PPM, 25 / FinalStand.PPM);
+        exitButton = new ExitButton("screens/exit.png", 300 / FinalStand.PPM, 50 / FinalStand.PPM, 50 / FinalStand.PPM, 25 / FinalStand.PPM);
 
         playButtonPressed = false;
         controlButtonPressed = false;
