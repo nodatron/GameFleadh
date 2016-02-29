@@ -328,8 +328,8 @@ public class PlayScreen implements Screen {
             boolean towerPressed = false;
             Vector3 mouse = PlayScreen.getWorldMousePos();
             for(Tower tower : towers) {
-                if (mouse.x > tower.getPosition().x && mouse.x < tower.getPosition().x + (tower.getCurrentTexture().getWidth() / FinalStand.PPM) &&
-                        mouse.y > tower.getPosition().y && mouse.y < tower.getPosition().y + (tower.getCurrentTexture().getHeight() / FinalStand.PPM))
+                if (mouse.x > tower.getPosition().x && mouse.x < tower.getPosition().x + tower.getTowerSprite().getWidth() &&
+                        mouse.y > tower.getPosition().y && mouse.y < tower.getPosition().y + tower.getTowerSprite().getHeight())
                 {
                     tower.TowerOptions();
                     towerPressed = true;

@@ -20,6 +20,7 @@ public class AOETower extends Tower{
 
     public AOETower(float x, float y, World world, float angle){
         super(x, y, world, angle);
+        maxTime = 100.0f;
 
         level1 = new Texture("towers/aoe_level1.png");
         level2 = new Texture("towers/aoe_level2.png");
@@ -29,8 +30,8 @@ public class AOETower extends Tower{
         towerSprite.setPosition(x, y);
         towerSprite.setSize(size.x, size.y);
 
-        projectilePos = new Vector2(x + ((getCurrentTexture().getWidth() / 2) / FinalStand.PPM),
-                y + ((getCurrentTexture().getHeight() / 2) / FinalStand.PPM));
+        projectilePos = new Vector2(x + (getTowerSprite().getWidth() / 2),
+                                    y + (getTowerSprite().getHeight() / 2));
         towerRange = (getCurrentTexture().getHeight() * 2.0f) / FinalStand.PPM;
     }
 
