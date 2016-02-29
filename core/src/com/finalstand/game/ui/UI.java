@@ -16,6 +16,11 @@ import com.finalstand.game.sprites.towers.SingleShotTower;
  */
 public class UI {
     private static final int NUM_OF_BOUNDS = 4; //number of options in the UI
+    private static final int OPTION1_COST = 100;
+    private static final int OPTION2_COST = 200;
+    private static final int OPTION3_COST = 250;
+    private static final int OPTION4_COST = 400;
+
     private Vector2 position;
     private float height, width;
 
@@ -50,10 +55,7 @@ public class UI {
         boundsWidth = width / NUM_OF_BOUNDS;
         boundsHeight = height;
 
-        textureWidth = (boundsWidth / 6) * 4;
-        textureHeight = (boundsHeight / 6) * 4;
-
-        option1Pos = new Vector2(boundsWidth / 6, boundsHeight / 6);
+        option1Pos = new Vector2(boundsWidth / 4, boundsHeight / 6);
         option2Pos = new Vector2((boundsWidth / 6) + boundsWidth, boundsHeight / 6);
         option3Pos = new Vector2((boundsWidth / 6) + (boundsWidth * 2), boundsHeight / 6);
         option4Pos = new Vector2((boundsWidth / 6) + (boundsWidth * 3), boundsHeight / 6);
