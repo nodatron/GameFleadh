@@ -15,13 +15,13 @@ public class BossCreep extends Creep {
     public BossCreep(float x, float y, World world) {
         super(world);
         position = new Vector2(x, y);
-        texture = new Texture("creeps/BasicCreep.png");
+        texture = new Texture("creeps/BossCreep.png");
         sprite = new Sprite(texture);
 
         defineCreep();
 
         health = 1000;
-        speed = 2;
+        speed = 0.5f;
 
     }
 

@@ -3,6 +3,7 @@ package com.finalstand.game.tools;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.finalstand.game.FinalStand;
@@ -20,13 +21,22 @@ import java.io.IOException;
  */
 public class Waypoint extends InteractiveTileObject{
 
+    private Vector2 pos;
+    private Vector2 baseDimensions;
+
     public Waypoint(World world, TiledMap map, Rectangle bounds) {
         super(world, map, bounds);
         fixture.setUserData(this);
         setCategoryFilter(FinalStand.WAYPOINT_BIT);
 
+        pos = new Vector2(bounds.getX(), bounds.getY());
+        baseDimensions = new Vector2(bounds.getWidth() / FinalStand.PPM, bounds.getHeight() / FinalStand.PPM);
+
         PlayScreen.waypoints.add(this);
     }
+
+    public Vector2 getPos() { return pos; }
+    public Vector2 getBaseDimensions() { return baseDimensions; }
 
     @Override
     public void onRightHit(Creep creep) {

@@ -105,6 +105,10 @@ public class PlayScreen implements Screen {
 
     private BossCreep bossCreep;
 
+    private Texture base;
+    private Vector2 basePos;
+    private Vector2 baseDimensions;
+
     public PlayScreen(FinalStand game){
         this.game = game;
         state = State.PLANNING_PHASE;
@@ -172,6 +176,9 @@ public class PlayScreen implements Screen {
         pause.setPosition(5 / FinalStand.PPM, (FinalStand.V_HEIGHT / 4) / FinalStand.PPM);
 
         bossCreep = new BossCreep(10, 360, world);
+        base = new Texture("base.png");
+        basePos = waypoints.get(waypoints.size - 1).getPos();
+        baseDimensions = waypoints.get(waypoints.size - 1).getBaseDimensions();
     }
 
     @Override
@@ -234,11 +241,12 @@ public class PlayScreen implements Screen {
                 }
                 renderer.setView(gameCam);
                 game.batch.draw(pause.getTexture(), pause.getX(), pause.getY(), 20 / FinalStand.PPM, 10 / FinalStand.PPM);
+                game.batch.draw(base, 100 / FinalStand.PPM, 100 / FinalStand.PPM, baseDimensions.x, baseDimensions.y);
                 elapsed++;
                 for (Tower tower : towers) {
                     game.batch.draw(tower.getCurrentTexture(), tower.getPosition().x, tower.getPosition().y, tower.getCurrentTexture().getWidth() / FinalStand.PPM, tower.getCurrentTexture().getHeight() / FinalStand.PPM);
                 }
-                //render UI
+//                render UI
                 game.batch.draw(ui.getBackground(), ui.getPosition().x, ui.getPosition().y, ui.getWidth(), ui.getHeight());
                 game.batch.draw(ui.getOption1Texture(), ui.getOption1Pos().x, ui.getOption1Pos().y, ui.getTextureWidth(), ui.getTextureHeight());
                 game.batch.draw(ui.getOption2Texture(), ui.getOption2Pos().x, ui.getOption2Pos().y, ui.getTextureWidth(), ui.getTextureHeight());
@@ -256,6 +264,7 @@ public class PlayScreen implements Screen {
                     optionTexture.update();
                     game.batch.draw(optionTexture.getTexture(), optionTexture.getPosition().x, optionTexture.getPosition().y, ui.getTextureWidth(), ui.getTextureHeight());
                 }
+                game.batch.draw(base, 100 / FinalStand.PPM, 100 / FinalStand.PPM, baseDimensions.x, baseDimensions.y);
                 game.batch.end();
                 if (Gdx.input.justTouched()) {
                     ui.optionClicked(getWorldMousePos());
@@ -311,14 +320,14 @@ public class PlayScreen implements Screen {
                 world.step(1 / 60f, 6, 2);
                 gameCam.update();
                 renderer.setView(gameCam);
-
+                game.batch.draw(base, basePos.x, basePos.y, baseDimensions.x, baseDimensions.y);
                 elapsed++;
                 for (Tower tower : towers) {
                     //tower.checkPressed();
                     game.batch.draw(tower.getCurrentTexture(), tower.getPosition().x, tower.getPosition().y, tower.getCurrentTexture().getWidth() / FinalStand.PPM, tower.getCurrentTexture().getHeight() / FinalStand.PPM);
                 }
 
-                //render UI
+//                render UI
                 game.batch.draw(ui.getBackground(), ui.getPosition().x, ui.getPosition().y, ui.getWidth(), ui.getHeight());
                 game.batch.draw(ui.getOption1Texture(), ui.getOption1Pos().x, ui.getOption1Pos().y, ui.getTextureWidth(), ui.getTextureHeight());
                 game.batch.draw(ui.getOption2Texture(), ui.getOption2Pos().x, ui.getOption2Pos().y, ui.getTextureWidth(), ui.getTextureHeight());
@@ -338,6 +347,7 @@ public class PlayScreen implements Screen {
                     game.batch.draw(optionTexture.getTexture(), optionTexture.getPosition().x, optionTexture.getPosition().y, ui.getTextureWidth(), ui.getTextureHeight());
                 }
                 game.batch.draw(play.getTexture(), play.getX(), play.getY(), 20 / FinalStand.PPM, 10 / FinalStand.PPM);
+                game.batch.draw(base, basePos.x - baseDimensions.x, basePos.y - baseDimensions.y, 2 * baseDimensions.x, 3 * baseDimensions.y);
                 game.batch.end();
                 if (Gdx.input.justTouched()) {
                     ui.optionClicked(getWorldMousePos());
@@ -428,6 +438,8 @@ public class PlayScreen implements Screen {
                     optionTexture.update();
                     game.batch.draw(optionTexture.getTexture(), optionTexture.getPosition().x, optionTexture.getPosition().y, ui.getTextureWidth(), ui.getTextureHeight());
                 }
+                game.batch.draw(base, basePos.x - baseDimensions.x, basePos.y - baseDimensions.y, 2 * baseDimensions.x, 3 * baseDimensions.y);
+                System.out.println("base position" + basePos.x + " base position " + basePos.y);
                 game.batch.end();
 
                 if (Gdx.input.justTouched()) {
