@@ -25,6 +25,7 @@ import com.finalstand.game.sprites.creeps.HeavyCreep;
 import com.finalstand.game.sprites.creeps.MediumCreep;
 import com.finalstand.game.sprites.projectiles.Projectile;
 import com.finalstand.game.sprites.towers.AOETower;
+import com.finalstand.game.sprites.towers.DOTTower;
 import com.finalstand.game.sprites.towers.LaserTower;
 import com.finalstand.game.sprites.towers.SingleShotTower;
 import com.finalstand.game.sprites.towers.Tower;
@@ -123,7 +124,7 @@ public class PlayScreen implements Screen {
 
         projectiles = new ArrayList<Projectile>();
 
-        ui = new UI(0, 0, 8, 1);
+        ui = new UI(0, 0, (FinalStand.V_WIDTH / 2)/ FinalStand.PPM, (FinalStand.V_HEIGHT / 6) / FinalStand.PPM);
         optionTexture = new OptionTexture(ui.getTextureWidth(), ui.getTextureHeight(), world);
         optionChosen = false;
 
@@ -172,10 +173,10 @@ public class PlayScreen implements Screen {
 
         //render UI
         game.batch.draw(ui.getBackground(), ui.getPosition().x, ui.getPosition().y, ui.getWidth(), ui.getHeight());
-        game.batch.draw(ui.getOption1Texture(), ui.getOption1Pos().x, ui.getOption1Pos().y, ui.getTextureWidth(), ui.getTextureHeight());
-        game.batch.draw(ui.getOption2Texture(), ui.getOption2Pos().x, ui.getOption2Pos().y, ui.getTextureWidth(), ui.getTextureHeight());
-        game.batch.draw(ui.getOption3Texture(), ui.getOption3Pos().x, ui.getOption3Pos().y, ui.getTextureWidth(), ui.getTextureHeight());
-        game.batch.draw(ui.getOption4Texture(), ui.getOption4Pos().x, ui.getOption4Pos().y, ui.getTextureWidth(), ui.getTextureHeight());
+        game.batch.draw(ui.getOption1Texture(), ui.getOption1Pos().x, ui.getOption1Pos().y, SingleShotTower.size.x, SingleShotTower.size.y);
+        game.batch.draw(ui.getOption2Texture(), ui.getOption2Pos().x, ui.getOption2Pos().y, AOETower.size.x, AOETower.size.y);
+        game.batch.draw(ui.getOption3Texture(), ui.getOption3Pos().x, ui.getOption3Pos().y, DOTTower.size.x, DOTTower.size.y);
+        game.batch.draw(ui.getOption4Texture(), ui.getOption4Pos().x, ui.getOption4Pos().y, LaserTower.size.x, LaserTower.size.y);
 
         if(displayButtons == true)
         {
@@ -190,8 +191,6 @@ public class PlayScreen implements Screen {
         if(optionChosen == true)
         {
             optionTexture.update();
-//            game.batch.draw(optionTexture.getSprite(), optionTexture.getPosition().x, optionTexture.getPosition().y,
-//                    ui.getTextureWidth(), ui.getTextureHeight());
             optionTexture.getSprite().draw(game.batch);
         }
         game.batch.end();

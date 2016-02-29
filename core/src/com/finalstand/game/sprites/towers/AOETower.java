@@ -16,6 +16,8 @@ import com.finalstand.game.sprites.projectiles.Projectile;
  */
 public class AOETower extends Tower{
 
+    public static Vector2 size = new Vector2(32 / FinalStand.PPM, 32 / FinalStand.PPM);
+
     public AOETower(float x, float y, World world, float angle){
         super(x, y, world, angle);
 
@@ -25,20 +27,11 @@ public class AOETower extends Tower{
         currentTexture = level1;
         towerSprite = new Sprite(currentTexture);
         towerSprite.setPosition(x, y);
-        towerSprite.setSize(towerSprite.getWidth() / FinalStand.PPM, towerSprite.getHeight() / FinalStand.PPM);
+        towerSprite.setSize(size.x, size.y);
 
         projectilePos = new Vector2(x + ((getCurrentTexture().getWidth() / 2) / FinalStand.PPM),
                 y + ((getCurrentTexture().getHeight() / 2) / FinalStand.PPM));
-    }
-
-
-    @Override
-    public void update()
-    {
-        if(Gdx.input.justTouched())
-        {
-            createProjectile();
-        }
+        towerRange = (getCurrentTexture().getHeight() * 2.0f) / FinalStand.PPM;
     }
 
     @Override

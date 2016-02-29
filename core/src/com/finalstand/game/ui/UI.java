@@ -6,6 +6,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.finalstand.game.Screens.PlayScreen;
 import com.finalstand.game.Screens.PlayScreen;
+import com.finalstand.game.sprites.towers.AOETower;
+import com.finalstand.game.sprites.towers.DOTTower;
+import com.finalstand.game.sprites.towers.LaserTower;
+import com.finalstand.game.sprites.towers.SingleShotTower;
 
 /**
  * Created by Keith on 16/02/2016.
@@ -53,15 +57,6 @@ public class UI {
         option2Pos = new Vector2((boundsWidth / 6) + boundsWidth, boundsHeight / 6);
         option3Pos = new Vector2((boundsWidth / 6) + (boundsWidth * 2), boundsHeight / 6);
         option4Pos = new Vector2((boundsWidth / 6) + (boundsWidth * 3), boundsHeight / 6);
-
-
-    }
-
-    public void update()
-    {
-        /*if(Gdx.input.justTouched()) {
-            optionClicked(PlayState.getWorldMousePos());
-        }*/
     }
 
     public void optionClicked(Vector3 mousePos)
@@ -82,10 +77,13 @@ public class UI {
 
         switch(optionNum)
         {
-            case 0: {PlayScreen.optionTexture.setTexture(option1Texture); break;}
-            case 1: {PlayScreen.optionTexture.setTexture(option2Texture); break;}
-            case 2: {PlayScreen.optionTexture.setTexture(option3Texture); break;}
-            case 3: {PlayScreen.optionTexture.setTexture(option4Texture); break;}
+            case 0: {
+                PlayScreen.optionTexture.setTexture(option1Texture, SingleShotTower.size.x, SingleShotTower.size.y);
+                break;
+            }
+            case 1: {PlayScreen.optionTexture.setTexture(option2Texture, AOETower.size.x, AOETower.size.y); break;}
+            case 2: {PlayScreen.optionTexture.setTexture(option3Texture, DOTTower.size.x, DOTTower.size.y); break;}
+            case 3: {PlayScreen.optionTexture.setTexture(option4Texture, LaserTower.size.x, LaserTower.size.y); break;}
         }
     }
 

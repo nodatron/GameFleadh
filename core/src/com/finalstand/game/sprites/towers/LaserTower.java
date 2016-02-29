@@ -16,6 +16,8 @@ import com.finalstand.game.sprites.projectiles.Projectile;
  */
 public class LaserTower extends Tower{
 
+    public static Vector2 size = new Vector2(16 / FinalStand.PPM, 32 / FinalStand.PPM);
+
     public LaserTower(float x, float y, World world, float angle)
     {
         super(x, y, world, angle);
@@ -27,23 +29,11 @@ public class LaserTower extends Tower{
         currentTexture = level1;
         towerSprite = new Sprite(currentTexture);
         towerSprite.setPosition(x, y);
-        towerSprite.setSize(towerSprite.getWidth() / FinalStand.PPM, towerSprite.getHeight() / FinalStand.PPM);
+        towerSprite.setSize(size.x, size.y);
 
         projectilePos =  new Vector2(x + ((getCurrentTexture().getWidth() / 2.5f) / FinalStand.PPM),
-                                     y + ((getCurrentTexture().getHeight() / 2.5f) / FinalStand.PPM));
-    }
-
-    @Override
-    public void update()
-    {
-        /*if(level == 3 && firing)
-        {
-            currentTexture = level3Firing;
-        }*/
-        if(Gdx.input.justTouched())
-        {
-            createProjectile();
-        }
+                                     y + ((getTowerSprite().getHeight() / 2.0f) / FinalStand.PPM));
+        towerRange = (getCurrentTexture().getHeight() * 2.0f) / FinalStand.PPM;
     }
 
     @Override

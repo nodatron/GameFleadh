@@ -35,7 +35,7 @@ public class OptionTexture {
         textureHeight = h;
         position = new Vector3(0, 0, 0);
         this.world = world;
-        rotation = 180;
+        rotation = 0;
     }
 
     public void update()
@@ -50,19 +50,17 @@ public class OptionTexture {
             sprite.setRotation(rotation);
         }
         position = PlayScreen.getWorldMousePos();
-//        position.x -= textureWidth / 2;
-//        position.y -= textureHeight / 2;
+        position.x -= sprite.getWidth() / 2;
+        position.y -= sprite.getHeight() / 2;
         sprite.setPosition(position.x, position.y);
 
         if(Gdx.input.justTouched())
         {
             PlayScreen.optionChosen = false;
-            position = PlayScreen.getWorldMousePos();
+//            position = PlayScreen.getWorldMousePos();
 
             switch (towerOption) {
                 case 0: {
-                    //position.x -= SingleShotTower.getCurrentTexture().getWidth() / 2;
-                    //position.y -= SingleShotTower.getCurrentTexture().getHeight() / 2;
                     PlayScreen.towers.add(new com.finalstand.game.sprites.towers.SingleShotTower(position.x, position.y, world, rotation - 180));
                     break;
                 }
@@ -82,19 +80,15 @@ public class OptionTexture {
         }
     }
 
-    /*public Texture getTexture() {
-        return texture;
-    }*/
-
     public Sprite getSprite(){ return sprite; }
 
     public Vector3 getPosition() {
         return position;
     }
 
-    public void setTexture(Texture texture) {
+    public void setTexture(Texture texture, float width, float height) {
         sprite = new Sprite(texture);
-        sprite.setSize(texture.getWidth() / FinalStand.PPM, texture.getHeight() / FinalStand.PPM);
+        sprite.setSize(width, height);
     }
 
     public void setTowerOption(int towerOption) {

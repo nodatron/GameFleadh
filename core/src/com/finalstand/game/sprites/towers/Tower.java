@@ -51,7 +51,18 @@ public class Tower {
         this.world = world;
     }
 
-    public void update(){}
+    public void update(){
+        if(targetCreep() && elapsedTime == 40)
+        {
+            createProjectile();
+        }
+
+        elapsedTime++;
+        if(elapsedTime > 40)
+        {
+            elapsedTime = 0;
+        }
+    }
     public Texture getCurrentTexture(){return currentTexture;}
     public Vector2 getPosition(){return position;}
     public Sprite getTowerSprite() {
@@ -105,5 +116,20 @@ public class Tower {
         PlayScreen.upgradeButton = new UpgradeButton(100, this);
         PlayScreen.sellButton = new SellButton(200, this);
         PlayScreen.displayButtons = true;
+    }
+
+    public boolean targetCreep()
+    {
+        for(int counter = 0; counter < PlayScreen.spawnableCreeps.size; counter++) {
+            Vector2 creepPos = new Vector2(PlayScreen.spawnableCreeps.get(counter).getSprite().getX(),
+                    PlayScreen.spawnableCreeps.get(counter).getSprite().getY());
+
+            System.out.println(towerRange);
+            if (position.dst(creepPos) < towerRange) {
+
+                return true;
+            }
+        }
+        return false;
     }
 }

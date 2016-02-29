@@ -19,6 +19,7 @@ public class SingleShotTower extends Tower{
     private Vector2 midProjectilePos;
     private Vector2 leftProjectilePos;
     private Vector2 rightProjectilePos;
+    public static Vector2 size = new Vector2(16 / FinalStand.PPM, 32 / FinalStand.PPM);
 
     public SingleShotTower(float x, float y, World world, float angle)
     {
@@ -30,35 +31,19 @@ public class SingleShotTower extends Tower{
         currentTexture = level1;
         towerSprite = new Sprite(currentTexture);
         towerSprite.setPosition(x, y);
-        towerSprite.setSize(towerSprite.getWidth() / FinalStand.PPM, towerSprite.getHeight() / FinalStand.PPM);
+        towerSprite.setSize(size.x, size.y);
 
-        midProjectilePos = new Vector2(x + ((getCurrentTexture().getWidth() / 2.6f) / FinalStand.PPM),
-                                       y + ((getCurrentTexture().getHeight() / 2.5f) / FinalStand.PPM));
+        midProjectilePos = new Vector2(x + ((getTowerSprite().getWidth() / 2.6f)),
+                                       y + ((getTowerSprite().getHeight() / 2.5f)));
 
-        leftProjectilePos = new Vector2(x + ((getCurrentTexture().getWidth() / 9.3f) / FinalStand.PPM),
-                                        y + ((getCurrentTexture().getHeight() / 2.5f) / FinalStand.PPM));
+        leftProjectilePos = new Vector2(x + ((getTowerSprite().getWidth() / 9.3f)),
+                                        y + ((getTowerSprite().getHeight() / 2.5f)));
 
-        rightProjectilePos = new Vector2(x + ((getCurrentTexture().getWidth() / 1.45f) / FinalStand.PPM),
-                                         y + ((getCurrentTexture().getHeight() / 2.5f) / FinalStand.PPM));
-
+        rightProjectilePos = new Vector2(x + ((getTowerSprite().getWidth() / 1.45f)),
+                                         y + ((getTowerSprite().getHeight() / 2.5f)));
         towerRange = (getCurrentTexture().getHeight() * 2.0f) / FinalStand.PPM;
 
         defineTower();
-    }
-
-    @Override
-    public void update()
-    {
-        if(targetCreep() && elapsedTime == 40)
-        {
-            createProjectile();
-        }
-
-        elapsedTime++;
-        if(elapsedTime > 40)
-        {
-            elapsedTime = 0;
-        }
     }
 
     @Override
@@ -85,6 +70,7 @@ public class SingleShotTower extends Tower{
         }
     }
 
+    @Override
     public boolean targetCreep()
     {
         for(int counter = 0; counter < PlayScreen.spawnableCreeps.size; counter++) {
@@ -99,7 +85,6 @@ public class SingleShotTower extends Tower{
                     towerAngle = 360 - (-towerAngle);
                 }
                 towerAngle += 90;
-//                System.out.println("angle: " + towerAngle);
                 return true;
             }
         }
