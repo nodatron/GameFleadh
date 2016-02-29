@@ -57,7 +57,6 @@ public class OptionTexture {
         if(Gdx.input.justTouched())
         {
             PlayScreen.optionChosen = false;
-//            position = PlayScreen.getWorldMousePos();
 
             switch (towerOption) {
                 case 0: {
@@ -93,5 +92,9 @@ public class OptionTexture {
 
     public void setTowerOption(int towerOption) {
         this.towerOption = towerOption;
+    }
+
+    public void setRotation(float rotation) {
+        this.rotation = rotation;
     }
 }

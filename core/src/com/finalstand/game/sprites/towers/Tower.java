@@ -46,8 +46,8 @@ public class Tower {
     {
         position = new Vector2(x, y);
         level = 1;
-        elapsedTime = 0.0f;
         maxTime = 40.0f;
+        elapsedTime = maxTime / 2.0f;
         towerAngle = angle;
 
         this.world = world;
@@ -126,7 +126,6 @@ public class Tower {
             Vector2 creepPos = new Vector2(PlayScreen.spawnableCreeps.get(counter).getSprite().getX(),
                     PlayScreen.spawnableCreeps.get(counter).getSprite().getY());
 
-            System.out.println(towerRange);
             if (position.dst(creepPos) < towerRange) {
 
                 return true;

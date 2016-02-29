@@ -31,8 +31,8 @@ public class LaserTower extends Tower{
         towerSprite.setPosition(x, y);
         towerSprite.setSize(size.x, size.y);
 
-        projectilePos =  new Vector2(x + ((getCurrentTexture().getWidth() / 2.5f) / FinalStand.PPM),
-                                     y + ((getTowerSprite().getHeight() / 2.0f) / FinalStand.PPM));
+        projectilePos =  new Vector2(x + (towerSprite.getWidth() / 2.5f),
+                                     y + (towerSprite.getHeight() / 2.0f));
         towerRange = (getCurrentTexture().getHeight() * 2.0f) / FinalStand.PPM;
     }
 
@@ -40,7 +40,7 @@ public class LaserTower extends Tower{
     public void createProjectile()
     {
         Projectile p = new Laser(projectilePos.x, projectilePos.y, towerAngle, level,
-                                (getCurrentTexture().getWidth() / FinalStand.PPM) / 4.0f, getCurrentTexture().getHeight() / FinalStand.PPM);
+                                towerSprite.getWidth() / 4.0f, towerSprite.getHeight());
         PlayScreen.projectiles.add(p);
     }
 }

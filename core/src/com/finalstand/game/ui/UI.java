@@ -74,6 +74,7 @@ public class UI {
     {
         PlayScreen.optionChosen = true;
         PlayScreen.optionTexture.setTowerOption(optionNum);
+        PlayScreen.optionTexture.setRotation(0.0f);
 
         switch(optionNum)
         {

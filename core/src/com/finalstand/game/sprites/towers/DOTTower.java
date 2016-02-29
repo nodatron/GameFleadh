@@ -33,6 +33,7 @@ public class DOTTower extends Tower{
 
         projectilePos = new Vector2(x, y);
         towerRange = (getCurrentTexture().getHeight() * 2.0f) / FinalStand.PPM;
+        System.out.println(towerAngle);
     }
 
     @Override

@@ -14,10 +14,12 @@ public class DOTGas extends Projectile{
     private float removeTime;
     private Vector2 initialPos;
     private float range;
+    private float angle;
 
     public DOTGas(float x, float y, float angle, int level, float w, float h)
     {
         super(x, y, angle, level);
+        this.angle = angle;
         projectileSprite = new Sprite(new Texture("projectiles/dot_projectile.png"));
         projectileSprite.setSize(w, h);
         projectileSprite.setPosition(x, y);
@@ -35,9 +37,41 @@ public class DOTGas extends Projectile{
         {
             PlayScreen.projectiles.remove(this);
         }
-        if(projectileSprite.getY() < initialPos.y + range) {
-            position.add(forward);
-            projectileSprite.setPosition(position.x, position.y);
+
+        switch((int)angle)
+        {
+            case -180:
+            {
+                if(projectileSprite.getY() < initialPos.y + range) {
+                    position.add(forward);
+                    projectileSprite.setPosition(position.x, position.y);
+                }
+                break;
+            }
+            case -90:
+            {
+                if(projectileSprite.getX() > initialPos.x - range) {
+                    position.add(forward);
+                    projectileSprite.setPosition(position.x, position.y);
+                }
+                break;
+            }
+            case 0:
+            {
+                if(projectileSprite.getY() > initialPos.y - range) {
+                    position.add(forward);
+                    projectileSprite.setPosition(position.x, position.y);
+                }
+                break;
+            }
+            case 90:
+            {
+                if(projectileSprite.getX() < initialPos.x + range) {
+                    position.add(forward);
+                    projectileSprite.setPosition(position.x, position.y);
+                }
+                break;
+            }
         }
     }
 }
