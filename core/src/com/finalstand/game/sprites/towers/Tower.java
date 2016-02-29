@@ -110,7 +110,6 @@ public class Tower {
 
     public void createProjectile()
     {
-        Projectile p = new Projectile(projectilePos.x, projectilePos.y, towerAngle, level);
     }
 
     public void TowerOptions()

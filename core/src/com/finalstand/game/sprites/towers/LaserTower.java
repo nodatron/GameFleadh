@@ -24,6 +24,7 @@ public class LaserTower extends Tower{
     public LaserTower(float x, float y, World world, float angle)
     {
         super(x, y, world, angle);
+        maxTime = 80.0f;
 
         level1 = new Texture("towers/laserTower_level1.png");
         level2 = new Texture("towers/laserTower_level2.png");

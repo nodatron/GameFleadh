@@ -14,7 +14,7 @@ public class AOERing extends Projectile{
 
     public AOERing(float x, float y, float angle, int level)
     {
-        super(x, y, angle, level);
+        super(x, y, angle, level, 6 / FinalStand.PPM);
         if(level < 3) {
             projectileSprite = new Sprite(new Texture("projectiles/aoe_projectile_level1.png"));
         }

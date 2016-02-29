@@ -20,11 +20,11 @@ public class Projectile extends Sprite{
 
     protected Sprite projectileSprite;
 
-    public Projectile(float x, float y, float angle, int level)
+    public Projectile(float x, float y, float angle, int level, float speed)
     {
         position = new Vector2(x, y);
         this.level = level;
-        speed = 6 / FinalStand.PPM;
+        this.speed = speed;
         this.angle = angle;
         forward = new Vector2(MathUtils.sinDeg(angle) * speed, -MathUtils.cosDeg(angle) * speed);
 //        System.out.println(forward);

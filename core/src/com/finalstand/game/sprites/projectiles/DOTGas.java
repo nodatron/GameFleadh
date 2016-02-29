@@ -3,6 +3,7 @@ package com.finalstand.game.sprites.projectiles;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import com.finalstand.game.FinalStand;
 import com.finalstand.game.Screens.PlayScreen;
 import com.finalstand.game.sprites.towers.DOTTower;
 
@@ -18,7 +19,7 @@ public class DOTGas extends Projectile{
 
     public DOTGas(float x, float y, float angle, int level, float w, float h)
     {
-        super(x, y, angle, level);
+        super(x, y, angle, level, 2 / FinalStand.PPM);
         this.angle = angle;
         projectileSprite = new Sprite(new Texture("projectiles/dot_projectile.png"));
         projectileSprite.setSize(w, h);

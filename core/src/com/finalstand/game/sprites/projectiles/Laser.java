@@ -11,7 +11,7 @@ public class Laser extends Projectile{
 
     public Laser(float x, float y, float angle, int level, float w, float h)
     {
-        super(x, y, angle, level);
+        super(x, y, angle, level, 8 / FinalStand.PPM);
         if(level < 3) {
             projectileSprite = new Sprite(new Texture("projectiles/laser_projectile_level1.png"));
         }
