@@ -20,9 +20,9 @@ public class SingleShotTower extends Tower{
     private Vector2 leftProjectilePos;
     private Vector2 rightProjectilePos;
 
-    public SingleShotTower(float x, float y, World world)
+    public SingleShotTower(float x, float y, World world, float angle)
     {
-        super(x, y, world);
+        super(x, y, world, angle);
 
         level1 = new Texture("towers/singleshot_level1.png");
         level2 = new Texture("towers/singleshot_level2.png");
@@ -41,7 +41,6 @@ public class SingleShotTower extends Tower{
         rightProjectilePos = new Vector2(x + ((getCurrentTexture().getWidth() / 1.45f) / FinalStand.PPM),
                                          y + ((getCurrentTexture().getHeight() / 2.5f) / FinalStand.PPM));
 
-        towerAngle = 180;
         towerRange = (getCurrentTexture().getHeight() * 2.0f) / FinalStand.PPM;
 
         defineTower();
@@ -100,7 +99,7 @@ public class SingleShotTower extends Tower{
                     towerAngle = 360 - (-towerAngle);
                 }
                 towerAngle += 90;
-                System.out.println("angle: " + towerAngle);
+//                System.out.println("angle: " + towerAngle);
                 return true;
             }
         }

@@ -27,7 +27,7 @@ public class Projectile extends Sprite{
         speed = 6 / FinalStand.PPM;
         this.angle = angle;
         forward = new Vector2(MathUtils.sinDeg(angle) * speed, -MathUtils.cosDeg(angle) * speed);
-        System.out.println(forward);
+//        System.out.println(forward);
     }
 
     public void update()

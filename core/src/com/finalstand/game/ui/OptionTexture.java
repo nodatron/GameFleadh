@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.World;
+import com.finalstand.game.FinalStand;
 import com.finalstand.game.Screens.PlayScreen;
 import com.finalstand.game.Screens.PlayScreen;
 import com.finalstand.game.sprites.towers.*;
@@ -42,11 +43,16 @@ public class OptionTexture {
         if(Gdx.input.isKeyJustPressed(Input.Keys.R)) {
             sprite.setOriginCenter();
             rotation += 90;
+            if(rotation == 360)
+            {
+                rotation = 0;
+            }
             sprite.setRotation(rotation);
         }
         position = PlayScreen.getWorldMousePos();
-        position.x -= textureWidth / 2;
-        position.y -= textureHeight / 2;
+//        position.x -= textureWidth / 2;
+//        position.y -= textureHeight / 2;
+        sprite.setPosition(position.x, position.y);
 
         if(Gdx.input.justTouched())
         {
@@ -57,19 +63,19 @@ public class OptionTexture {
                 case 0: {
                     //position.x -= SingleShotTower.getCurrentTexture().getWidth() / 2;
                     //position.y -= SingleShotTower.getCurrentTexture().getHeight() / 2;
-                    PlayScreen.towers.add(new com.finalstand.game.sprites.towers.SingleShotTower(position.x, position.y, world));
+                    PlayScreen.towers.add(new com.finalstand.game.sprites.towers.SingleShotTower(position.x, position.y, world, rotation - 180));
                     break;
                 }
                 case 1: {
-                    PlayScreen.towers.add(new com.finalstand.game.sprites.towers.AOETower(position.x, position.y, world));
+                    PlayScreen.towers.add(new com.finalstand.game.sprites.towers.AOETower(position.x, position.y, world, rotation - 180));
                     break;
                 }
                 case 2: {
-                    PlayScreen.towers.add(new com.finalstand.game.sprites.towers.DOTTower(position.x, position.y, world));
+                    PlayScreen.towers.add(new com.finalstand.game.sprites.towers.DOTTower(position.x, position.y, world, rotation - 180));
                     break;
                 }
                 case 3: {
-                    PlayScreen.towers.add(new com.finalstand.game.sprites.towers.LaserTower(position.x, position.y, world));
+                    PlayScreen.towers.add(new com.finalstand.game.sprites.towers.LaserTower(position.x, position.y, world, rotation - 180));
                     break;
                 }
             }
@@ -88,6 +94,7 @@ public class OptionTexture {
 
     public void setTexture(Texture texture) {
         sprite = new Sprite(texture);
+        sprite.setSize(texture.getWidth() / FinalStand.PPM, texture.getHeight() / FinalStand.PPM);
     }
 
     public void setTowerOption(int towerOption) {

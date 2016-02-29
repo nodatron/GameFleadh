@@ -41,11 +41,12 @@ public class Tower {
     protected float towerRange;
     protected float elapsedTime;
 
-    public Tower(float x, float y, World world)
+    public Tower(float x, float y, World world, float angle)
     {
         position = new Vector2(x, y);
         level = 1;
         elapsedTime = 0.0f;
+        towerAngle = angle;
 
         this.world = world;
     }

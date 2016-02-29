@@ -16,9 +16,9 @@ import com.finalstand.game.sprites.projectiles.Projectile;
  */
 public class LaserTower extends Tower{
 
-    public LaserTower(float x, float y, World world)
+    public LaserTower(float x, float y, World world, float angle)
     {
-        super(x, y, world);
+        super(x, y, world, angle);
 
         level1 = new Texture("towers/laserTower_level1.png");
         level2 = new Texture("towers/laserTower_level2.png");
@@ -26,10 +26,11 @@ public class LaserTower extends Tower{
         //Texture level3Firing = new Texture("laserTower_level3_firing.png");
         currentTexture = level1;
         towerSprite = new Sprite(currentTexture);
+        towerSprite.setPosition(x, y);
+        towerSprite.setSize(towerSprite.getWidth() / FinalStand.PPM, towerSprite.getHeight() / FinalStand.PPM);
 
         projectilePos =  new Vector2(x + ((getCurrentTexture().getWidth() / 2.5f) / FinalStand.PPM),
                                      y + ((getCurrentTexture().getHeight() / 2.5f) / FinalStand.PPM));
-        towerAngle = 180;
     }
 
     @Override

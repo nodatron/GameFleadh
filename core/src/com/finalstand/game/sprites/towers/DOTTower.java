@@ -16,18 +16,19 @@ import com.finalstand.game.sprites.projectiles.Projectile;
  */
 public class DOTTower extends Tower{
 
-    public DOTTower(float x, float y, World world)
+    public DOTTower(float x, float y, World world, float angle)
     {
-        super(x, y, world);
+        super(x, y, world, angle);
 
         level1 = new Texture("towers/dot_level1.png");
         level2 = new Texture("towers/dot_level2.png");
         level3 = new Texture("towers/dot_level3.png");
         currentTexture = level1;
         towerSprite = new Sprite(currentTexture);
+        towerSprite.setPosition(x, y);
+        towerSprite.setSize(towerSprite.getWidth() / FinalStand.PPM, towerSprite.getHeight() / FinalStand.PPM);
 
         projectilePos = new Vector2(x, y);
-        towerAngle = 180;
     }
 
     @Override

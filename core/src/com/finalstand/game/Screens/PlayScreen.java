@@ -190,7 +190,9 @@ public class PlayScreen implements Screen {
         if(optionChosen == true)
         {
             optionTexture.update();
-            game.batch.draw(optionTexture.getSprite(), optionTexture.getPosition().x, optionTexture.getPosition().y, ui.getTextureWidth(), ui.getTextureHeight());
+//            game.batch.draw(optionTexture.getSprite(), optionTexture.getPosition().x, optionTexture.getPosition().y,
+//                    ui.getTextureWidth(), ui.getTextureHeight());
+            optionTexture.getSprite().draw(game.batch);
         }
         game.batch.end();
 
