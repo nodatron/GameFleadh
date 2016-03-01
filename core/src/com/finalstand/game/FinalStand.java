@@ -2,9 +2,8 @@ package com.finalstand.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.finalstand.game.Screens.MenuScreen;
-import com.finalstand.game.Screens.PlayScreen;
 import com.finalstand.game.Screens.SplashScreen;
+
 
 public class FinalStand extends Game {
 
@@ -23,6 +22,7 @@ public class FinalStand extends Game {
 	public static boolean gameOver = false;
 	public static int score = 1000;
 	public static int health = 10;
+
 
 	//Bits for collision in box2d
 	public static final short DEFAULT = 1;

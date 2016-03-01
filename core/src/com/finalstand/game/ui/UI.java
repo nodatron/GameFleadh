@@ -1,16 +1,25 @@
 package com.finalstand.game.ui;
 
-import com.badlogic.gdx.Gdx;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.finalstand.game.Screens.PlayScreen;
+import com.finalstand.game.sprites.towers.AOETower;
+import com.finalstand.game.sprites.towers.DOTTower;
+import com.finalstand.game.sprites.towers.LaserTower;
+import com.finalstand.game.sprites.towers.SingleShotTower;
 
 /**
  * Created by Keith on 16/02/2016.
  */
 public class UI {
-    private static final int NUM_OF_BOUNDS = 4; //number of options in the UI
+    private static final int NUM_OF_BOUNDS = 8; //number of options in the UI
+    private static final int OPTION1_COST = 100;
+    private static final int OPTION2_COST = 200;
+    private static final int OPTION3_COST = 250;
+    private static final int OPTION4_COST = 400;
+
     private Vector2 position;
     private float height, width;
 
@@ -19,13 +28,19 @@ public class UI {
     private Texture option2Texture;
     private Texture option3Texture;
     private Texture option4Texture;
-    private float textureWidth;
-    private float textureHeight;
+    private Texture option5Texture;
+    private Texture option6Texture;
+    private Texture option7Texture;
+    private Texture option8Texture;
 
     private Vector2 option1Pos;
     private Vector2 option2Pos;
     private Vector2 option3Pos;
     private Vector2 option4Pos;
+    private Vector2 option5Pos;
+    private Vector2 option6Pos;
+    private Vector2 option7Pos;
+    private Vector2 option8Pos;
 
     private float boundsHeight;
     private float boundsWidth;
@@ -41,26 +56,22 @@ public class UI {
         option2Texture = new Texture("towers/aoe_level1.png");
         option3Texture = new Texture("towers/dot_level1.png");
         option4Texture = new Texture("towers/laserTower_level1.png");
+        option5Texture = new Texture("towers/singleshot_level1.png");
+        option6Texture = new Texture("towers/aoe_level1.png");
+        option7Texture = new Texture("towers/dot_level1.png");
+        option8Texture = new Texture("towers/laserTower_level1.png");
 
         boundsWidth = width / NUM_OF_BOUNDS;
         boundsHeight = height;
 
-        textureWidth = (boundsWidth / 6) * 4;
-        textureHeight = (boundsHeight / 6) * 4;
-
-        option1Pos = new Vector2(boundsWidth / 6, boundsHeight / 6);
+        option1Pos = new Vector2(boundsWidth / 4, boundsHeight / 6);
         option2Pos = new Vector2((boundsWidth / 6) + boundsWidth, boundsHeight / 6);
         option3Pos = new Vector2((boundsWidth / 6) + (boundsWidth * 2), boundsHeight / 6);
         option4Pos = new Vector2((boundsWidth / 6) + (boundsWidth * 3), boundsHeight / 6);
-
-
-    }
-
-    public void update()
-    {
-        /*if(Gdx.input.justTouched()) {
-            optionClicked(PlayState.getWorldMousePos());
-        }*/
+        option5Pos = new Vector2((boundsWidth / 6) + (boundsWidth * 4), boundsHeight / 6);
+        option6Pos = new Vector2((boundsWidth / 6) + (boundsWidth * 5), boundsHeight / 6);
+        option7Pos = new Vector2((boundsWidth / 6) + (boundsWidth * 6), boundsHeight / 6);
+        option8Pos = new Vector2((boundsWidth / 6) + (boundsWidth * 7), boundsHeight / 6);
     }
 
     public void optionClicked(Vector3 mousePos)
@@ -78,13 +89,18 @@ public class UI {
     {
         PlayScreen.optionChosen = true;
         PlayScreen.optionTexture.setTowerOption(optionNum);
+        PlayScreen.optionTexture.setRotation(0.0f);
 
         switch(optionNum)
         {
-            case 0: {PlayScreen.optionTexture.setTexture(option1Texture); break;}
-            case 1: {PlayScreen.optionTexture.setTexture(option2Texture); break;}
-            case 2: {PlayScreen.optionTexture.setTexture(option3Texture); break;}
-            case 3: {PlayScreen.optionTexture.setTexture(option4Texture); break;}
+            case 0: {PlayScreen.optionTexture.setTexture(option1Texture, SingleShotTower.size.x, SingleShotTower.size.y); break;}
+            case 1: {PlayScreen.optionTexture.setTexture(option2Texture, AOETower.size.x, AOETower.size.y); break;}
+            case 2: {PlayScreen.optionTexture.setTexture(option3Texture, DOTTower.size.x, DOTTower.size.y); break;}
+            case 3: {PlayScreen.optionTexture.setTexture(option4Texture, LaserTower.size.x, LaserTower.size.y); break;}
+            case 4: {PlayScreen.optionTexture.setTexture(option1Texture, SingleShotTower.size.x, SingleShotTower.size.y); break;}
+            case 5: {PlayScreen.optionTexture.setTexture(option2Texture, AOETower.size.x, AOETower.size.y); break;}
+            case 6: {PlayScreen.optionTexture.setTexture(option3Texture, DOTTower.size.x, DOTTower.size.y); break;}
+            case 7: {PlayScreen.optionTexture.setTexture(option4Texture, LaserTower.size.x, LaserTower.size.y); break;}
         }
     }
 
@@ -109,6 +125,22 @@ public class UI {
         return option4Texture;
     }
 
+    public Texture getOption5Texture() {
+        return option5Texture;
+    }
+
+    public Texture getOption6Texture() {
+        return option6Texture;
+    }
+
+    public Texture getOption7Texture() {
+        return option7Texture;
+    }
+
+    public Texture getOption8Texture() {
+        return option8Texture;
+    }
+
     public Vector2 getOption1Pos() {
         return option1Pos;
     }
@@ -123,6 +155,22 @@ public class UI {
 
     public Vector2 getOption4Pos() {
         return option4Pos;
+    }
+
+    public Vector2 getOption5Pos() {
+        return option5Pos;
+    }
+
+    public Vector2 getOption6Pos() {
+        return option6Pos;
+    }
+
+    public Vector2 getOption7Pos() {
+        return option7Pos;
+    }
+
+    public Vector2 getOption8Pos() {
+        return option8Pos;
     }
 
     public Vector2 getPosition() {
@@ -143,13 +191,5 @@ public class UI {
 
     public float getBoundsWidth() {
         return boundsWidth;
-    }
-
-    public float getTextureWidth() {
-        return textureWidth;
-    }
-
-    public float getTextureHeight() {
-        return textureHeight;
     }
 }

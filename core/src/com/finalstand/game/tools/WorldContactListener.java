@@ -7,9 +7,9 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.finalstand.game.FinalStand;
-import com.finalstand.game.sprites.InteractiveTileObject;
 import com.finalstand.game.sprites.RoadBounds;
 import com.finalstand.game.sprites.creeps.Creep;
+import com.finalstand.game.sprites.towers.Tower;
 
 /**
  * Created by Niall PC on 18/02/2016.
@@ -87,59 +87,17 @@ public class WorldContactListener implements ContactListener {
                     ((Waypoint) fixA.getUserData()).onBottomHit((Creep) fixB.getUserData());
                 }
             } break;
-        }
 
-//        // checks if one of the fixtures is RightBound
-//        if(fixA.getUserData() == "RightBound" || fixB.getUserData() == "RightBound") {
-//            //Figures out which one of the fixtures is RightBound
-//            Fixture rightBound = fixA.getUserData() == "RightBound" ? fixA : fixB;
-//            Fixture object = rightBound == fixA ? fixB : fixA;
-//
-//            // if the other fixture is an instance of InteractiveTileObject we want to do collision detection
-//            if(object.getUserData() instanceof InteractiveTileObject) {
-//                ((InteractiveTileObject) object.getUserData()).onRightHit((Creep) fixA.getUserData());
-//            }
-//
-//        }
-//
-//        // checks if one of the fixtures is LeftBound
-//        if(fixA.getUserData() == "LeftBound" || fixB.getUserData() == "LeftBound") {
-//            //Figures out which one of the fixtures is LeftBound
-//            Fixture leftBound = fixA.getUserData() == "LeftBound" ? fixA : fixB;
-//            Fixture object = leftBound == fixA ? fixB : fixA;
-//
-//            // if the other fixture is an instance of InteractiveTileObject we want to do collision detection
-//            if(object.getUserData() instanceof InteractiveTileObject) {
-//                ((InteractiveTileObject) object.getUserData()).onLeftHit((Creep) fixA.getUserData());
-//            }
-//
-//        }
-//
-//        // checks if one of the fixtures is TopBound
-//        if(fixA.getUserData() == "TopBound" || fixB.getUserData() == "TopBound") {
-//            //Figures out which one of the fixtures is TopBound
-//            Fixture topBound = fixA.getUserData() == "TopBound" ? fixA : fixB;
-//            Fixture object = topBound == fixA ? fixB : fixA;
-//
-//            // if the other fixture is an instance of InteractiveTileObject we want to do collision detection
-//            if(object.getUserData() instanceof InteractiveTileObject) {
-//                ((InteractiveTileObject) object.getUserData()).onTopHit((Creep) fixA.getUserData());
-//            }
-//
-//        }
-//
-//        // checks if one of the fixtures is BottomBound
-//        if(fixA.getUserData() == "BottomBound" || fixB.getUserData() == "BottomBound") {
-//            //Figures out which one of the fixtures is BottomBound
-//            Fixture botBound = fixA.getUserData() == "BottomBound" ? fixA : fixB;
-//            Fixture object = botBound == fixA ? fixB : fixA;
-//
-//            // if the other fixture is an instance of InteractiveTileObject we want to do collision detection
-//            if(object.getUserData() instanceof InteractiveTileObject) {
-//                ((InteractiveTileObject) object.getUserData()).onBottomHit((Creep) fixA.getUserData());
-//            }
-//
-//        }
+            case FinalStand.TOWER_BIT | FinalStand.ROADBOUNDS_BIT:{
+                Gdx.app.log("World Contact Listener", "tower, roadbounds hit right");
+                if(fixA.getFilterData().categoryBits == FinalStand.TOWER_BIT) {
+                    ((RoadBounds) fixB.getUserData()).onTowerHit((Tower) fixA.getUserData());
+                } else {
+                    ((RoadBounds) fixA.getUserData()).onTowerHit((Tower) fixB.getUserData());
+                }
+            } break;
+
+        }
     }
 
     @Override
@@ -182,60 +140,6 @@ public class WorldContactListener implements ContactListener {
                 }
             } break;
         }
-//        Gdx.app.log("End Contact", "");
-//        Fixture fixA = contact.getFixtureA();
-//        Fixture fixB = contact.getFixtureB();
-//
-//        if(fixA.getUserData() == "RightBound" || fixB.getUserData() == "RightBound") {
-//            //Figures out which one of the fixtures is RightBound
-//            Fixture rightBound = fixA.getUserData() == "RightBound" ? fixA : fixB;
-//            Fixture object = rightBound == fixA ? fixB : fixA;
-//
-//            // if the other fixture is an instance of InteractiveTileObject we want to do release detection
-//            if(object.getUserData() instanceof InteractiveTileObject) {
-//                ((InteractiveTileObject) object.getUserData()).onRightRelease((Creep) fixA.getUserData());
-//            }
-//
-//        }
-//
-//        // checks if one of the fixtures is LeftBound
-//        if(fixA.getUserData() == "LeftBound" || fixB.getUserData() == "LeftBound") {
-//            //Figures out which one of the fixtures is LeftBound
-//            Fixture leftBound = fixA.getUserData() == "LeftBound" ? fixA : fixB;
-//            Fixture object = leftBound == fixA ? fixB : fixA;
-//
-//            // if the other fixture is an instance of InteractiveTileObject we want to do release detection
-//            if(object.getUserData() instanceof InteractiveTileObject) {
-//                ((InteractiveTileObject) object.getUserData()).onLeftRelease((Creep) fixA.getUserData());
-//            }
-//
-//        }
-//
-//        // checks if one of the fixtures is TopBound
-//        if(fixA.getUserData() == "TopBound" || fixB.getUserData() == "TopBound") {
-//            //Figures out which one of the fixtures is TopBound
-//            Fixture topBound = fixA.getUserData() == "TopBound" ? fixA : fixB;
-//            Fixture object = topBound == fixA ? fixB : fixA;
-//
-//            // if the other fixture is an instance of InteractiveTileObject we want to do release detection
-//            if(object.getUserData() instanceof InteractiveTileObject) {
-//                ((InteractiveTileObject) object.getUserData()).onTopRelease((Creep) fixA.getUserData());
-//            }
-//
-//        }
-//
-//        // checks if one of the fixtures is BottomBound
-//        if(fixA.getUserData() == "BottomBound" || fixB.getUserData() == "BottomBound") {
-//            //Figures out which one of the fixtures is BottomBound
-//            Fixture botBound = fixA.getUserData() == "BottomBound" ? fixA : fixB;
-//            Fixture object = botBound == fixA ? fixB : fixA;
-//
-//            // if the other fixture is an instance of InteractiveTileObject we want to do release detection
-//            if(object.getUserData() instanceof InteractiveTileObject) {
-//                ((InteractiveTileObject) object.getUserData()).onBottomRelease((Creep) fixA.getUserData());
-//            }
-//
-//        }
     }
 
     @Override

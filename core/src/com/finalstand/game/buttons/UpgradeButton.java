@@ -8,6 +8,10 @@ import com.badlogic.gdx.math.Vector3;
 import com.finalstand.game.FinalStand;
 import com.finalstand.game.Screens.PlayScreen;
 import com.finalstand.game.sprites.towers.Tower;
+<<<<<<< HEAD
+=======
+import com.finalstand.game.Screens.PlayScreen;
+>>>>>>> origin/keith
 
 /**
  * Created by Keith on 18/02/2016.
@@ -17,7 +21,11 @@ public class UpgradeButton extends Button{
 
     public UpgradeButton(float cost, Tower tower)
     {
+<<<<<<< HEAD
         super((PlayScreen.ui.getWidth() / 4) * 3, PlayScreen.ui.getHeight(), PlayScreen.ui.getWidth() / 8,
+=======
+        super(PlayScreen.ui.getWidth() / 2, PlayScreen.ui.getHeight(), PlayScreen.ui.getWidth() / 4,
+>>>>>>> origin/keith
                 PlayScreen.ui.getHeight() / 2, "Upgrade: " + cost, tower);
         this.cost = cost;
     }

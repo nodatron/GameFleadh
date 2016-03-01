@@ -32,36 +32,18 @@ public class Hud {
 
     public Hud(Integer round, Integer map, Integer health, Integer score) {
         stage = new Stage();
-
-//        score = 0;
-//        health = 10;
         this.round = round;
         this.map = map;
         viewport = new FitViewport(FinalStand.V_WIDTH, FinalStand.V_HEIGHT, new OrthographicCamera());
 
-//        Table table = new Table();
-//        table.top();
-//        table.setFillParent(true);
-//
-//        scoreLabel = new Label(String.format("%06d", score), new Label.LabelStyle(new BitmapFont(), Color.BLUE));
-//        healthLabel = new Label(String.format("%03d", health), new Label.LabelStyle(new BitmapFont(), Color.BLUE));
-//        roundLabel = new Label(String.format("%02d", round), new Label.LabelStyle(new BitmapFont(), Color.BLUE));
-//        mapLabel = new Label(String.format("%03d", map), new Label.LabelStyle(new BitmapFont(), Color.BLUE));
-//        healthLabelHeading = new Label("Health", new Label.LabelStyle(new BitmapFont(), Color.BLUE));
-//        MapRoundLabelHeading = new Label("Map/Round", new Label.LabelStyle(new BitmapFont(), Color.BLUE));
-//
-//
-//        table.add(mapLabel).expandX().padTop(5);
-//        table.add(healthLabelHeading).padTop(5);
-//        table.add(healthLabel).expandX().padTop(5);
-//        table.add(scoreLabel).expandX().padTop(5);
-//        table.row();
-//        table.add(roundLabel).expandX();
-//
-//        stage.addActor(table);
     }
 
     public void update(Integer mapNumber, Integer round, Integer health, Integer score) {
+        Label healthLabel;
+        Label scoreLabel;
+        Label mapLabel;
+        Label roundLabel;
+
         Table table = new Table();
         table.top();
         table.setFillParent(true);
@@ -78,6 +60,11 @@ public class Hud {
         table.add(healthLabelHeading).padTop(5);
         table.add(healthLabel).expandX().padTop(5);
         table.add(scoreLabel).expandX().padTop(5);
+        mapLabel = new Label(String.format("%02d", map), new Label.LabelStyle(new BitmapFont(), Color.BLUE));
+
+        table.add(mapLabel).expandX().padTop(10);
+        table.add(healthLabel).expandX().padTop(10);
+        table.add(scoreLabel).expandX().padTop(10);
         table.row();
         table.add(roundLabel).expandX();
 

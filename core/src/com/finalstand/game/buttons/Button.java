@@ -1,14 +1,22 @@
 package com.finalstand.game.buttons;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.finalstand.game.FinalStand;
 import com.finalstand.game.sprites.towers.Tower;
+<<<<<<< HEAD
+=======
+import com.finalstand.game.Screens.PlayScreen;
+>>>>>>> origin/keith
 
 /**
  * Created by Keith on 18/02/2016.
@@ -17,11 +25,8 @@ public class Button {
     protected Vector2 position;
     protected Texture buttonTexture;
     protected Sprite buttonSprite;
-    protected TextButton button;
-    protected TextButton.TextButtonStyle style;
-    protected BitmapFont font;
-    protected Skin skin;
-    protected TextureAtlas atlas;
+    protected Label buttonLabel;
+    protected BitmapFont bitmapFonttext;
 
     protected Tower tower;
     protected float height;
@@ -50,12 +55,12 @@ public class Button {
         buttonSprite.setPosition(x, y);
         buttonSprite.setSize(width, height);
 
-        /*font = new BitmapFont();
-        skin = new Skin();
-        atlas = new TextureAtlas();
-        style = new TextButton.TextButtonStyle();
-        style.font = font;
-        button = new TextButton(text, style);*/
+//        buttonLabel = new Label(buttonText, new Label.LabelStyle(new BitmapFont(), Color.RED));
+//        buttonLabel.setPosition(x, y);
+
+//        bitmapFonttext = new BitmapFont(Gdx.files.internal());
+//        bitmapFonttext.setColor(Color.RED);
+
         this.tower = tower;
     }
 
@@ -84,4 +89,12 @@ public class Button {
     }
 
     public void update(){};
+
+    public Label getButtonLabel() {
+        return buttonLabel;
+    }
+
+    public BitmapFont getBitmapFonttext() {
+        return bitmapFonttext;
+    }
 }

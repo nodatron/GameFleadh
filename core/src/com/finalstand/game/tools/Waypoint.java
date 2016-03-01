@@ -28,7 +28,6 @@ public class Waypoint extends InteractiveTileObject{
         super(world, map, bounds);
         fixture.setUserData(this);
         setCategoryFilter(FinalStand.WAYPOINT_BIT);
-
         pos = new Vector2(bounds.getX(), bounds.getY());
         baseDimensions = new Vector2(bounds.getWidth() / FinalStand.PPM, bounds.getHeight() / FinalStand.PPM);
 
@@ -40,25 +39,21 @@ public class Waypoint extends InteractiveTileObject{
 
     @Override
     public void onRightHit(Creep creep) {
-//        Gdx.app.log("Collison", "Waypoint right hit");
-        creep.setWaypointHit();
+        PlayScreen.waypoints.add(this);
     }
 
     @Override
     public void onLeftHit(Creep creep) {
-//        Gdx.app.log("Collison", "Waypoint left hit");
         creep.setWaypointHit();
     }
 
     @Override
     public void onTopHit(Creep creep) {
-//        Gdx.app.log("Collison", "Waypoint top hit");
         creep.setWaypointHit();
     }
 
     @Override
     public void onBottomHit(Creep creep) {
-//        Gdx.app.log("Collison", "Waypoint bottom hit");
         creep.setWaypointHit();
     }
 
@@ -99,5 +94,6 @@ public class Waypoint extends InteractiveTileObject{
 
         return direction;
     }
-
 }
+
+

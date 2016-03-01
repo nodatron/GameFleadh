@@ -53,8 +53,7 @@ public class Creep extends Sprite{
         dir = Waypoint.readWaypoints("map1.txt");
         waypointHit = 0;
         speed = 1;
-//        texture = new Texture("BasicCreep.png");
-//        sprite = new Sprite(texture);
+
     }
 
     /**
@@ -124,13 +123,6 @@ public class Creep extends Sprite{
     }
 
     public void update() {
-        //speeds will be held by variables
-        //this.b2body.getLinearVelocity().x/.y - gets the speed the object is moving at
-        // This moves the creep in positive x direction
-//        this.b2Body.applyLinearImpulse(new Vector2(0.2f / FinalStand.PPM, 0), this.b2Body.getWorldCenter(), true);
-//        if(timeElapsed > 100) {
-//            setDirection = true;
-//        }
 
         checkDir();
 
@@ -216,9 +208,11 @@ public class Creep extends Sprite{
         return b2Body;
     }
 
-
     void dispose() {
 
     }
 
+    public Sprite getSprite() {
+        return sprite;
+    }
 }
