@@ -409,7 +409,7 @@ public class PlayScreen implements Screen {
                 renderer.render();
 
                 //renders the debug lines for box2d
-//        b2dr.render(world, gameCam.combined);
+        b2dr.render(world, gameCam.combined);
 
 
                 game.batch.setProjectionMatrix(gameCam.combined);
@@ -606,20 +606,28 @@ public class PlayScreen implements Screen {
         // there is no more creeps in the wave
         if(game.round == game.roundsPerMap) {
             // Move to a new map
+            System.out.println("i am here");
             game.mapNumber ++;
             game.round = 1;
             firstRoundDone = false;
             waypoints.clear();
             towers.clear();
 //            traps.clear();
+            for(Creep c : creeps) {
+                world.destroyBody(c.getB2Body());
+            }
             spawnableCreeps.clear();
             creeps.clear();
+
         }
 
         if(spawnableCreeps.size() == 0) {
 
             game.round ++;
             elapsed = 0;
+            for(Creep c : creeps) {
+                world.destroyBody(c.getB2Body());
+            }
             creeps.clear();
             spawnableCreeps.clear();
 //            waypoints.clear();

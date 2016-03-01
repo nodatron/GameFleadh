@@ -32,7 +32,7 @@ public class Creep extends Sprite{
     protected World world;
     protected Body b2Body;
 
-//    protected Array<Body> bodies = new Array<Body>();
+    protected Array<Body> bodies = new Array<Body>();
 
     protected boolean[] movement;
 
@@ -155,14 +155,14 @@ public class Creep extends Sprite{
     }
 
     public void render(SpriteBatch batch) {
-//        world.getBodies(bodies);
-//        for(Body body : bodies) {
-//            if(body.getUserData() != null && body.getUserData() instanceof Sprite) {
-//                Sprite ssprite = (Sprite) body.getUserData();
-//                ssprite.setPosition(body.getPosition().x - ssprite.getWidth() / 2, body.getPosition().y - ssprite.getHeight() / 2);
-//                ssprite.draw(batch);
-//            }
-//        }
+        world.getBodies(bodies);
+        for(Body body : bodies) {
+            if(body.getUserData() != null && body.getUserData() instanceof Sprite) {
+                Sprite ssprite = (Sprite) body.getUserData();
+                ssprite.setPosition(body.getPosition().x - ssprite.getWidth() / 2, body.getPosition().y - ssprite.getHeight() / 2);
+                ssprite.draw(batch);
+            }
+        }
     }
 
     public void setMovement(int index) {
@@ -209,7 +209,11 @@ public class Creep extends Sprite{
     public void reachedEnd() {
 //        PlayScreen.creeps.remove(this);
         PlayScreen.spawnableCreeps.remove(this);
-        world.destroyBody(b2Body);
+//        world.destroyBody(b2Body);
+    }
+
+    public Body getB2Body() {
+        return b2Body;
     }
 
 
