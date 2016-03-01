@@ -356,6 +356,4 @@ public class PlayScreen implements Screen {
             }
         }
     }
-
-
 }
