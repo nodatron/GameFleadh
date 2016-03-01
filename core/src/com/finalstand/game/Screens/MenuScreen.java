@@ -62,9 +62,12 @@ public class MenuScreen implements Screen {
         viewport = new FitViewport(FinalStand.V_WIDTH / FinalStand.PPM, FinalStand.V_HEIGHT / FinalStand.PPM, gameCam);
         gameCam.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
 
-        resumeButton = new ResumeButton("screens/resume.png", 300 / FinalStand.PPM, 300 / FinalStand.PPM, 50 / FinalStand.PPM, 25 / FinalStand.PPM);
-        controlButton = new ControlButton("screens/controlbutton.png", 300 / FinalStand.PPM, 200 / FinalStand.PPM, 50 / FinalStand.PPM, 25 / FinalStand.PPM);
-        exitButton = new ExitButton("screens/exit.png", 300 / FinalStand.PPM, 100 / FinalStand.PPM, 50 / FinalStand.PPM, 25 / FinalStand.PPM);
+        resumeButton = new ResumeButton("screens/resume.png", (FinalStand.V_WIDTH / FinalStand.PPM) * 0.3f, (FinalStand.V_HEIGHT / FinalStand.PPM) *0.7f,
+                (FinalStand.V_WIDTH / FinalStand.PPM) *0.4f, (FinalStand.V_HEIGHT / FinalStand.PPM) *0.2f);
+        controlButton = new ControlButton("screens/controlbutton.png", (FinalStand.V_WIDTH / FinalStand.PPM) * 0.3f, (FinalStand.V_HEIGHT / FinalStand.PPM) *0.4f,
+                (FinalStand.V_WIDTH / FinalStand.PPM) *0.4f, (FinalStand.V_HEIGHT / FinalStand.PPM) * 0.2f);
+        exitButton = new ExitButton("screens/exit.png", (FinalStand.V_WIDTH / FinalStand.PPM) * 0.3f, (FinalStand.V_HEIGHT / FinalStand.PPM) *0.1f,
+                (FinalStand.V_WIDTH / FinalStand.PPM) *0.4f, (FinalStand.V_HEIGHT / FinalStand.PPM) *0.2f);
 
         exitButtonPressed = false;
         resumeButtonPressed = false;
@@ -72,10 +75,13 @@ public class MenuScreen implements Screen {
 
         state = State.MENU;
         background = new Texture("screens/menu.png");
-        exitConfPosition = new Vector2(((FinalStand.V_WIDTH / 2) / FinalStand.PPM) - 50 / FinalStand.PPM, ((FinalStand.V_HEIGHT / 2) / FinalStand.PPM) - 100 / FinalStand.PPM);
-        exitConfResumeButton = new ResumeButton("screens/backbutton.png", exitConfPosition.x, exitConfPosition.y - (50 / FinalStand.PPM), 50 / FinalStand.PPM, 25 / FinalStand.PPM);
-        toMainMenu = new ExitButton("screens/mainmenu.png", exitConfPosition.x, exitConfPosition.y, 50 / FinalStand.PPM, 25 / FinalStand.PPM);
-        toDesktop = new ExitButton("screens/desktop.png", exitConfPosition.x, exitConfPosition.y + (50 / FinalStand.PPM), 50 / FinalStand.PPM, 25 / FinalStand.PPM);
+        exitConfPosition = new Vector2((FinalStand.V_WIDTH / FinalStand.PPM) * 0.35f, (FinalStand.V_HEIGHT / FinalStand.PPM) * 0.35f);
+        exitConfResumeButton = new ResumeButton("screens/backbutton.png", exitConfPosition.x, exitConfPosition.y + ((FinalStand.V_HEIGHT / FinalStand.PPM) * 0.25f),
+                                                (FinalStand.V_HEIGHT / FinalStand.PPM) * 0.2f, (FinalStand.V_HEIGHT / FinalStand.PPM) * 0.1f);
+        toMainMenu = new ExitButton("screens/mainmenu.png", exitConfPosition.x, exitConfPosition.y + ((FinalStand.V_HEIGHT / FinalStand.PPM) * 0.15f),
+                (FinalStand.V_HEIGHT / FinalStand.PPM) * 0.2f, (FinalStand.V_HEIGHT / FinalStand.PPM) * 0.1f);
+        toDesktop = new ExitButton("screens/desktop.png", exitConfPosition.x, exitConfPosition.y + ((FinalStand.V_HEIGHT / FinalStand.PPM) * 0.05f),
+                (FinalStand.V_HEIGHT / FinalStand.PPM) * 0.2f, (FinalStand.V_HEIGHT / FinalStand.PPM) * 0.1f);
     }
 
     @Override
@@ -153,7 +159,8 @@ public class MenuScreen implements Screen {
 
                 game.batch.setProjectionMatrix(gameCam.combined);
                 game.batch.begin();
-                game.batch.draw(getBackground(), getExitConfPosition().x, getExitConfPosition().y, 100 / FinalStand.PPM, 200 / FinalStand.PPM);
+                game.batch.draw(getBackground(), getExitConfPosition().x, getExitConfPosition().y,
+                        (FinalStand.V_WIDTH / FinalStand.PPM) * 0.3f, (FinalStand.V_HEIGHT / FinalStand.PPM) * 0.4f);
                 game.batch.draw(exitConfResumeButton.getButtonTexture(), exitConfResumeButton.getPosition().x, exitConfResumeButton.getPosition().y, exitConfResumeButton.getWidth(), exitConfResumeButton.getHeight());
                 game.batch.draw(toMainMenu.getButtonTexture(), toMainMenu.getPosition().x, toMainMenu.getPosition().y, toMainMenu.getWidth(), toMainMenu.getHeight());
                 game.batch.draw(toDesktop.getButtonTexture(), toDesktop.getPosition().x, toDesktop.getPosition().y, toDesktop.getWidth(), toDesktop.getHeight());

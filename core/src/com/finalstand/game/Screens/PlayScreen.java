@@ -12,6 +12,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
@@ -109,8 +110,13 @@ public class PlayScreen implements Screen {
     private Vector2 basePos;
     private Vector2 baseDimensions;
 
+    private boolean run;
+
+    private Array<Body> bodies = new Array<Body>();
+
     public PlayScreen(FinalStand game){
         this.game = game;
+        run = false;
         state = State.PLANNING_PHASE;
         firstRoundDone = false;
         //      texture = new Texture("background.jpg");
@@ -230,15 +236,28 @@ public class PlayScreen implements Screen {
                 handleInput();
                 world.step(1 / 60f, 6, 2);
                 gameCam.update();
+//                game.batch.begin();
+                world.getBodies(bodies);
+                for(Body body : bodies) {
+                    if(body.getUserData() != null && body.getUserData() instanceof Sprite) {
+                        Sprite ssprite = (Sprite) body.getUserData();
+                        ssprite.setPosition(body.getPosition().x - ssprite.getWidth() / 2, body.getPosition().y - ssprite.getHeight() / 2);
+                        ssprite.draw(game.batch);
+                    }
+                }
+
                 for (int i = 0 ; i < spawnableCreeps.size() ; i ++) {
-                    spawnableCreeps.get(i).render(game.batch);
+//                    spawnableCreeps.get(i).render(game.batch);
                     spawnableCreeps.get(i).update();
                 }
+
                 if (keepSpawning && elapsed > 100) {
                     System.out.println("Before spawnCreep " + creepsSpawned);
                     spawnNewCreep();
                     elapsed = 0;
                 }
+//                game.batch.end();
+//                renderGame();
                 renderer.setView(gameCam);
                 game.batch.draw(pause.getTexture(), pause.getX(), pause.getY(), 20 / FinalStand.PPM, 10 / FinalStand.PPM);
                 game.batch.draw(base, 100 / FinalStand.PPM, 100 / FinalStand.PPM, baseDimensions.x, baseDimensions.y);
@@ -270,7 +289,7 @@ public class PlayScreen implements Screen {
                     ui.optionClicked(getWorldMousePos());
                 }
                 game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
-                hud.update(game.round, game.mapNumber, game.health, game.score);
+//                hud.update(game.round, game.mapNumber, game.health, game.score);
                 hud.stage.draw();
                 if(spawnableCreeps.size() == 0) {
                     firstRoundDone = true;
@@ -285,6 +304,7 @@ public class PlayScreen implements Screen {
                     if (mouse.x > resumeButton.getPosition().x && mouse.x < resumeButton.getPosition().x + resumeButton.getPosition().x &&
                             mouse.y > resumeButton.getPosition().y && mouse.y < resumeButton.getPosition().y + resumeButton.getHeight()) {
                         setGameState(State.RUN);
+                        run = true;
                     }
                 }
                 exitButton.update();
@@ -306,6 +326,7 @@ public class PlayScreen implements Screen {
                             mouse.y > play.getY() && mouse.y < play.getY() + 10 / FinalStand.PPM) {
 
                         plannignPhaseCounter = 1000;
+                        run = true;
                     }
                 }
                 Gdx.gl.glClearColor(1, 0, 0, 1);
@@ -424,13 +445,8 @@ public class PlayScreen implements Screen {
                 if (displayButtons == true) {
                     upgradeButton.update();
                     sellButton.update();
-            /*game.batch.draw(upgradeButton.getButtonTexture(), upgradeButton.getPosition().x, upgradeButton.getPosition().y,
-                    upgradeButton.getWidth(), upgradeButton.getHeight());
-            game.batch.draw(sellButton.getButtonTexture(), sellButton.getPosition().x, sellButton.getPosition().y,
-                    sellButton.getWidth(), sellButton.getHeight());*/
                     upgradeButton.getButtonSprite().draw(game.batch);
                     sellButton.getButtonSprite().draw(game.batch);
-                    //font.draw(game.batch, upgradeButton.getButtonText(), upgradeButton.getPosition().x, upgradeButton.getPosition().y);
                 }
                 checkTowerPressed();
 
@@ -593,6 +609,11 @@ public class PlayScreen implements Screen {
             game.mapNumber ++;
             game.round = 1;
             firstRoundDone = false;
+            waypoints.clear();
+            towers.clear();
+//            traps.clear();
+            spawnableCreeps.clear();
+            creeps.clear();
         }
 
         if(spawnableCreeps.size() == 0) {
@@ -616,7 +637,66 @@ public class PlayScreen implements Screen {
 
             setGameState(State.PLANNING_PHASE);
         }
+    }
 
+    //renders the towers, ui, hud, map, box2d
+    public void renderGame() {
+        // Clearing the screen
+//        Gdx.gl.glClearColor(1, 0, 0, 1);
+//        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+//        //renders the map
+//        renderer.render();
+//        game.batch.setProjectionMatrix(gameCam.combined);
+//        game.batch.begin();
+//        handleInput();
+//        world.step(1 / 60f, 0, 0);
+//        gameCam.update();
+//        if(run)
+//        for (int i = 0 ; i < spawnableCreeps.size() ; i ++) {
+//            spawnableCreeps.get(i).render(game.batch);
+//            spawnableCreeps.get(i).update();
+//        }
+//        if (keepSpawning && elapsed > 100) {
+//            System.out.println("Before spawnCreep " + creepsSpawned);
+//            spawnNewCreep();
+//            elapsed = 0;
+//        }
+//        renderer.setView(gameCam);
+//        game.batch.draw(pause.getTexture(), pause.getX(), pause.getY(), 20 / FinalStand.PPM, 10 / FinalStand.PPM);
+//        game.batch.draw(base, 100 / FinalStand.PPM, 100 / FinalStand.PPM, baseDimensions.x, baseDimensions.y);
+//        elapsed++;
+//        for (Tower tower : towers) {
+//            game.batch.draw(tower.getCurrentTexture(), tower.getPosition().x, tower.getPosition().y, tower.getCurrentTexture().getWidth() / FinalStand.PPM, tower.getCurrentTexture().getHeight() / FinalStand.PPM);
+//        }
+////                render UI
+//        game.batch.draw(ui.getBackground(), ui.getPosition().x, ui.getPosition().y, ui.getWidth(), ui.getHeight());
+//        game.batch.draw(ui.getOption1Texture(), ui.getOption1Pos().x, ui.getOption1Pos().y, ui.getTextureWidth(), ui.getTextureHeight());
+//        game.batch.draw(ui.getOption2Texture(), ui.getOption2Pos().x, ui.getOption2Pos().y, ui.getTextureWidth(), ui.getTextureHeight());
+//        game.batch.draw(ui.getOption3Texture(), ui.getOption3Pos().x, ui.getOption3Pos().y, ui.getTextureWidth(), ui.getTextureHeight());
+//        game.batch.draw(ui.getOption4Texture(), ui.getOption4Pos().x, ui.getOption4Pos().y, ui.getTextureWidth(), ui.getTextureHeight());
+//
+//        if (displayButtons == true) {
+//            upgradeButton.update();
+//            sellButton.update();
+//            upgradeButton.getButtonSprite().draw(game.batch);
+//            sellButton.getButtonSprite().draw(game.batch);
+//        }
+//        checkTowerPressed();
+//        if (optionChosen == true) {
+//            optionTexture.update();
+//            game.batch.draw(optionTexture.getTexture(), optionTexture.getPosition().x, optionTexture.getPosition().y, ui.getTextureWidth(), ui.getTextureHeight());
+//        }
+//        game.batch.draw(base, 100 / FinalStand.PPM, 100 / FinalStand.PPM, baseDimensions.x, baseDimensions.y);
+//        game.batch.end();
+//        if (Gdx.input.justTouched()) {
+//            ui.optionClicked(getWorldMousePos());
+//        }
+//        game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
+//        hud.update(game.round, game.mapNumber, game.health, game.score);
+//        hud.stage.draw();
+//        if(spawnableCreeps.size() == 0) {
+//            firstRoundDone = true;
+//        }
     }
 
 }

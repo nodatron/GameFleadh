@@ -39,9 +39,12 @@ public class SplashScreen implements Screen{
         gameCam.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
         background = new Texture("screens/title.png");
 
-        playButton = new PlayButton("screens/playbutton.png", 300 / FinalStand.PPM, 150 / FinalStand.PPM, 50 / FinalStand.PPM, 25 / FinalStand.PPM);
-        controlButton = new ControlButton("screens/controlbutton.png", 300 / FinalStand.PPM, 100 / FinalStand.PPM, 50 / FinalStand.PPM, 25 / FinalStand.PPM);
-        exitButton = new ExitButton("screens/exit.png", 300 / FinalStand.PPM, 50 / FinalStand.PPM, 50 / FinalStand.PPM, 25 / FinalStand.PPM);
+        playButton = new PlayButton("screens/playbutton.png", (FinalStand.V_WIDTH / FinalStand.PPM) * 0.375f, (FinalStand.V_HEIGHT / FinalStand.PPM) *0.3f,
+                (FinalStand.V_WIDTH / FinalStand.PPM) *0.2f, (FinalStand.V_HEIGHT / FinalStand.PPM) *0.075f);
+        controlButton = new ControlButton("screens/controlbutton.png", (FinalStand.V_WIDTH / FinalStand.PPM) * 0.375f, (FinalStand.V_HEIGHT / FinalStand.PPM) *0.2f,
+                (FinalStand.V_WIDTH / FinalStand.PPM) *0.2f, (FinalStand.V_HEIGHT / FinalStand.PPM) *0.075f);
+        exitButton = new ExitButton("screens/exit.png", (FinalStand.V_WIDTH / FinalStand.PPM) * 0.375f, (FinalStand.V_HEIGHT / FinalStand.PPM) *0.1f,
+                (FinalStand.V_WIDTH / FinalStand.PPM) *0.2f, (FinalStand.V_HEIGHT / FinalStand.PPM) *0.075f);
 
         playButtonPressed = false;
         controlButtonPressed = false;

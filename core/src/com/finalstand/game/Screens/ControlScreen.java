@@ -38,8 +38,10 @@ public class ControlScreen implements Screen {
         gameCam.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
         background = new Texture("screens/menu.png");
 
-        playButton = new PlayButton("screens/playbutton.png", 300 / FinalStand.PPM, 100 / FinalStand.PPM, 50 / FinalStand.PPM, 50 / FinalStand.PPM);
-        backButton = new BackButton("screens/backbutton.png", 300 / FinalStand.PPM, 25 / FinalStand.PPM, 50 / FinalStand.PPM, 50 / FinalStand.PPM);
+        playButton = new PlayButton("screens/playbutton.png", (FinalStand.V_WIDTH / FinalStand.PPM) * 0.3f, (FinalStand.V_HEIGHT / FinalStand.PPM) *0.04f,
+                (FinalStand.V_WIDTH / FinalStand.PPM) *0.1f, (FinalStand.V_HEIGHT / FinalStand.PPM) *0.1f);
+        backButton = new BackButton("screens/backbutton.png", (FinalStand.V_WIDTH / FinalStand.PPM) * 0.6f, (FinalStand.V_HEIGHT / FinalStand.PPM) *0.04f,
+                (FinalStand.V_WIDTH / FinalStand.PPM) *0.1f, (FinalStand.V_HEIGHT / FinalStand.PPM) *0.1f);
 
         playButtonPressed = false;
         backButtonPressed = false;
