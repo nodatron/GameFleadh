@@ -125,7 +125,7 @@ public class PlayScreen implements Screen {
         projectiles = new ArrayList<Projectile>();
 
         ui = new UI(0, 0, (FinalStand.V_WIDTH / 2)/ FinalStand.PPM, (FinalStand.V_HEIGHT / 6) / FinalStand.PPM);
-        optionTexture = new OptionTexture(ui.getTextureWidth(), ui.getTextureHeight(), world);
+        optionTexture = new OptionTexture(world);
         optionChosen = false;
 
         hud = new Hud(game.batch);
@@ -140,15 +140,11 @@ public class PlayScreen implements Screen {
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-
-
         //renders the map
         renderer.render();
 
         //renders the debug lines for box2d
         b2dr.render(world, gameCam.combined);
-
-
 
         game.batch.setProjectionMatrix(gameCam.combined);
         game.batch.begin();
@@ -177,6 +173,10 @@ public class PlayScreen implements Screen {
         game.batch.draw(ui.getOption2Texture(), ui.getOption2Pos().x, ui.getOption2Pos().y, AOETower.size.x, AOETower.size.y);
         game.batch.draw(ui.getOption3Texture(), ui.getOption3Pos().x, ui.getOption3Pos().y, DOTTower.size.x, DOTTower.size.y);
         game.batch.draw(ui.getOption4Texture(), ui.getOption4Pos().x, ui.getOption4Pos().y, LaserTower.size.x, LaserTower.size.y);
+        game.batch.draw(ui.getOption5Texture(), ui.getOption5Pos().x, ui.getOption5Pos().y, SingleShotTower.size.x, SingleShotTower.size.y);
+        game.batch.draw(ui.getOption6Texture(), ui.getOption6Pos().x, ui.getOption6Pos().y, AOETower.size.x, AOETower.size.y);
+        game.batch.draw(ui.getOption7Texture(), ui.getOption7Pos().x, ui.getOption7Pos().y, DOTTower.size.x, DOTTower.size.y);
+        game.batch.draw(ui.getOption8Texture(), ui.getOption8Pos().x, ui.getOption8Pos().y, LaserTower.size.x, LaserTower.size.y);
 
         if(displayButtons == true)
         {
@@ -185,6 +185,10 @@ public class PlayScreen implements Screen {
 
             upgradeButton.getButtonSprite().draw(game.batch);
             sellButton.getButtonSprite().draw(game.batch);
+
+//            upgradeButton.getButtonLabel().draw(game.batch, 1);
+
+//            upgradeButton.getBitmapFonttext().draw(game.batch, "hello", upgradeButton.getPosition().x, upgradeButton.getPosition().y);
         }
         checkTowerPressed();
 

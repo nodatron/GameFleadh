@@ -18,21 +18,16 @@ import javax.xml.soap.Text;
  * Created by Keith on 16/02/2016.
  */
 public class OptionTexture {
-    //private Texture texture;
     private Sprite sprite;
     private Vector3 position;
-    private float textureWidth;
-    private float textureHeight;
 
     private int towerOption;
     private float rotation;
 
     private World world;
 
-    public OptionTexture(float w, float h, World world)
+    public OptionTexture(World world)
     {
-        textureWidth = w;
-        textureHeight = h;
         position = new Vector3(0, 0, 0);
         this.world = world;
         rotation = 0;
