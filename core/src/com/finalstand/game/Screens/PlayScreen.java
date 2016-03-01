@@ -32,6 +32,7 @@ import com.finalstand.game.sprites.towers.Tower;
 import com.finalstand.game.tools.B2WorldCreator;
 import com.finalstand.game.tools.Waypoint;
 import com.finalstand.game.tools.WorldContactListener;
+import com.finalstand.game.traps.Trap;
 import com.finalstand.game.ui.OptionTexture;
 import com.finalstand.game.ui.UI;
 
@@ -75,6 +76,8 @@ public class PlayScreen implements Screen {
     public static Button upgradeButton;
     public static Button sellButton;
     public static boolean displayButtons;
+
+    public static ArrayList<Trap> traps;
 
     public static ArrayList<Projectile> projectiles;
 
@@ -122,6 +125,8 @@ public class PlayScreen implements Screen {
         towers = new ArrayList<Tower>();
         displayButtons = false;
 
+        traps = new ArrayList<Trap>();
+
         projectiles = new ArrayList<Projectile>();
 
         ui = new UI(0, 0, (FinalStand.V_WIDTH / 2)/ FinalStand.PPM, (FinalStand.V_HEIGHT / 6) / FinalStand.PPM);
@@ -167,16 +172,22 @@ public class PlayScreen implements Screen {
             tower.getTowerSprite().draw(game.batch);
         }
 
+//        //rendering traps
+//        for(Trap trap : traps)
+//        {
+//            trap.getTrapSprite().draw(game.batch);
+//        }
+
         //render UI
         game.batch.draw(ui.getBackground(), ui.getPosition().x, ui.getPosition().y, ui.getWidth(), ui.getHeight());
         game.batch.draw(ui.getOption1Texture(), ui.getOption1Pos().x, ui.getOption1Pos().y, SingleShotTower.size.x, SingleShotTower.size.y);
         game.batch.draw(ui.getOption2Texture(), ui.getOption2Pos().x, ui.getOption2Pos().y, AOETower.size.x, AOETower.size.y);
         game.batch.draw(ui.getOption3Texture(), ui.getOption3Pos().x, ui.getOption3Pos().y, DOTTower.size.x, DOTTower.size.y);
         game.batch.draw(ui.getOption4Texture(), ui.getOption4Pos().x, ui.getOption4Pos().y, LaserTower.size.x, LaserTower.size.y);
-        game.batch.draw(ui.getOption5Texture(), ui.getOption5Pos().x, ui.getOption5Pos().y, SingleShotTower.size.x, SingleShotTower.size.y);
-        game.batch.draw(ui.getOption6Texture(), ui.getOption6Pos().x, ui.getOption6Pos().y, AOETower.size.x, AOETower.size.y);
-        game.batch.draw(ui.getOption7Texture(), ui.getOption7Pos().x, ui.getOption7Pos().y, DOTTower.size.x, DOTTower.size.y);
-        game.batch.draw(ui.getOption8Texture(), ui.getOption8Pos().x, ui.getOption8Pos().y, LaserTower.size.x, LaserTower.size.y);
+        game.batch.draw(ui.getOption5Texture(), ui.getOption5Pos().x, ui.getOption5Pos().y, Trap.trapSize.x * 2, Trap.trapSize.y * 2);
+        game.batch.draw(ui.getOption6Texture(), ui.getOption6Pos().x, ui.getOption6Pos().y, Trap.trapSize.x * 2, Trap.trapSize.y * 2);
+        game.batch.draw(ui.getOption7Texture(), ui.getOption7Pos().x, ui.getOption7Pos().y, Trap.trapSize.x * 2, Trap.trapSize.y * 2);
+        game.batch.draw(ui.getOption8Texture(), ui.getOption8Pos().x, ui.getOption8Pos().y, Trap.trapSize.x * 2, Trap.trapSize.y * 2);
 
         if(displayButtons == true)
         {

@@ -10,6 +10,7 @@ import com.finalstand.game.sprites.towers.AOETower;
 import com.finalstand.game.sprites.towers.DOTTower;
 import com.finalstand.game.sprites.towers.LaserTower;
 import com.finalstand.game.sprites.towers.SingleShotTower;
+import com.finalstand.game.traps.Trap;
 
 /**
  * Created by Keith on 16/02/2016.
@@ -57,10 +58,10 @@ public class UI {
         option2Texture = new Texture("towers/aoe_level1.png");
         option3Texture = new Texture("towers/dot_level1.png");
         option4Texture = new Texture("towers/laserTower_level1.png");
-        option5Texture = new Texture("towers/singleshot_level1.png");
-        option6Texture = new Texture("towers/aoe_level1.png");
-        option7Texture = new Texture("towers/dot_level1.png");
-        option8Texture = new Texture("towers/laserTower_level1.png");
+        option5Texture = new Texture("traps/barricade2.png");
+        option6Texture = new Texture("traps/bomb.png");
+        option7Texture = new Texture("traps/glue2.png");
+        option8Texture = new Texture("traps/spikes3.png");
 
         boundsWidth = width / NUM_OF_BOUNDS;
         boundsHeight = height;
@@ -98,10 +99,10 @@ public class UI {
             case 1: {PlayScreen.optionTexture.setTexture(option2Texture, AOETower.size.x, AOETower.size.y); break;}
             case 2: {PlayScreen.optionTexture.setTexture(option3Texture, DOTTower.size.x, DOTTower.size.y); break;}
             case 3: {PlayScreen.optionTexture.setTexture(option4Texture, LaserTower.size.x, LaserTower.size.y); break;}
-            case 4: {PlayScreen.optionTexture.setTexture(option1Texture, SingleShotTower.size.x, SingleShotTower.size.y); break;}
-            case 5: {PlayScreen.optionTexture.setTexture(option2Texture, AOETower.size.x, AOETower.size.y); break;}
-            case 6: {PlayScreen.optionTexture.setTexture(option3Texture, DOTTower.size.x, DOTTower.size.y); break;}
-            case 7: {PlayScreen.optionTexture.setTexture(option4Texture, LaserTower.size.x, LaserTower.size.y); break;}
+            case 4: {PlayScreen.optionTexture.setTexture(option5Texture, Trap.trapSize.x, Trap.trapSize.y); break;}
+            case 5: {PlayScreen.optionTexture.setTexture(option6Texture, Trap.trapSize.x, Trap.trapSize.y); break;}
+            case 6: {PlayScreen.optionTexture.setTexture(option7Texture, Trap.trapSize.x, Trap.trapSize.y); break;}
+            case 7: {PlayScreen.optionTexture.setTexture(option8Texture, Trap.trapSize.x, Trap.trapSize.y); break;}
         }
     }
 

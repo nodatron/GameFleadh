@@ -5,9 +5,9 @@ import com.badlogic.gdx.physics.box2d.World;
 /**
  * Created by Carl on 16/02/2016.
  */
-public class Spike extends Trap
+public class Bomb extends Trap
 {
-    public Spike(float x, float y, World world)
+    public Bomb(float x, float y, World world)
     {
         super(x, y, world);
     }

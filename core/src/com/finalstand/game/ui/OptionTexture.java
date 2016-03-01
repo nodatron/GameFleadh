@@ -11,6 +11,10 @@ import com.finalstand.game.FinalStand;
 import com.finalstand.game.Screens.PlayScreen;
 import com.finalstand.game.Screens.PlayScreen;
 import com.finalstand.game.sprites.towers.*;
+import com.finalstand.game.traps.Barricade;
+import com.finalstand.game.traps.Bomb;
+import com.finalstand.game.traps.Glue;
+import com.finalstand.game.traps.Spike;
 
 import javax.xml.soap.Text;
 
@@ -68,6 +72,22 @@ public class OptionTexture {
                 }
                 case 3: {
                     PlayScreen.towers.add(new com.finalstand.game.sprites.towers.LaserTower(position.x, position.y, world, rotation - 180));
+                    break;
+                }
+                case 4: {
+                    PlayScreen.traps.add(new Barricade(position.x, position.y, world));
+                    break;
+                }
+                case 5: {
+                    PlayScreen.traps.add(new Bomb(position.x, position.y, world));
+                    break;
+                }
+                case 6: {
+                    PlayScreen.traps.add(new Glue(position.x, position.y, world));
+                    break;
+                }
+                case 7: {
+                    PlayScreen.traps.add(new Spike(position.x, position.y, world));
                     break;
                 }
             }
