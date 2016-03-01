@@ -73,7 +73,7 @@ public class SingleShotTower extends Tower{
     @Override
     public boolean targetCreep()
     {
-        for(int counter = 0; counter < PlayScreen.spawnableCreeps.size; counter++) {
+        for(int counter = 0; counter < PlayScreen.spawnableCreeps.size(); counter++) {
             Vector2 creepPos = new Vector2(PlayScreen.spawnableCreeps.get(counter).getSprite().getX(),
                                             PlayScreen.spawnableCreeps.get(counter).getSprite().getY());
 

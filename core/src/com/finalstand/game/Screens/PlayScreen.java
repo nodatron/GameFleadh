@@ -37,6 +37,7 @@ import com.finalstand.game.sprites.towers.Tower;
 import com.finalstand.game.tools.B2WorldCreator;
 import com.finalstand.game.tools.Waypoint;
 import com.finalstand.game.tools.WorldContactListener;
+import com.finalstand.game.traps.Trap;
 import com.finalstand.game.ui.OptionTexture;
 import com.finalstand.game.ui.UI;
 
@@ -117,6 +118,8 @@ public class PlayScreen implements Screen {
 
         private Array<Body> bodies = new Array<Body>();
 
+        public static ArrayList<Trap> traps;
+
         public PlayScreen(FinalStand game) {
             this.game = game;
             run = false;
@@ -125,6 +128,9 @@ public class PlayScreen implements Screen {
 
             gameCam = new OrthographicCamera();
             viewport = new FitViewport(FinalStand.V_WIDTH / FinalStand.PPM, FinalStand.V_HEIGHT / FinalStand.PPM, gameCam);
+            mapLoader = new TmxMapLoader();
+            map = mapLoader.load("map1c.tmx");
+            renderer = new OrthogonalTiledMapRenderer(map, 1 / FinalStand.PPM);
 
             // centers the camera
             gameCam.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
@@ -174,6 +180,8 @@ public class PlayScreen implements Screen {
             ui = new UI(0, 0, (FinalStand.V_WIDTH / 2)/ FinalStand.PPM, (FinalStand.V_HEIGHT / 6) / FinalStand.PPM);
             optionTexture = new OptionTexture(world);
             optionChosen = false;
+
+            traps = new ArrayList<Trap>();
     }
 
     @Override

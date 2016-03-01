@@ -39,21 +39,25 @@ public class Waypoint extends InteractiveTileObject{
 
     @Override
     public void onRightHit(Creep creep) {
-        PlayScreen.waypoints.add(this);
+//        Gdx.app.log("Collison", "Waypoint right hit");
+        creep.setWaypointHit();
     }
 
     @Override
     public void onLeftHit(Creep creep) {
+//        Gdx.app.log("Collison", "Waypoint left hit");
         creep.setWaypointHit();
     }
 
     @Override
     public void onTopHit(Creep creep) {
+//        Gdx.app.log("Collison", "Waypoint top hit");
         creep.setWaypointHit();
     }
 
     @Override
     public void onBottomHit(Creep creep) {
+//        Gdx.app.log("Collison", "Waypoint bottom hit");
         creep.setWaypointHit();
     }
 

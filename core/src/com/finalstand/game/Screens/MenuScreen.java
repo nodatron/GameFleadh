@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
-<<<<<<< HEAD
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -18,11 +17,6 @@ import com.finalstand.game.buttons.ResumeButton;
 
 import javafx.scene.control.MenuButton;
 import sun.text.resources.cldr.ia.FormatData_ia;
-=======
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
-import com.finalstand.game.FinalStand;
->>>>>>> origin/keith
 
 /**
  * Created by Niall PC on 20/02/2016.
@@ -31,7 +25,6 @@ public class MenuScreen implements Screen {
 
     private Texture background;
     private Vector2 backgroundPos;
-<<<<<<< HEAD
     private static OrthographicCamera gameCam;
     private Viewport viewport;
 
@@ -90,7 +83,7 @@ public class MenuScreen implements Screen {
         background = new Texture("screens/menu.png");
         exitConfPosition = new Vector2((FinalStand.V_WIDTH / FinalStand.PPM) * 0.35f, (FinalStand.V_HEIGHT / FinalStand.PPM) * 0.35f);
         exitConfResumeButton = new ResumeButton("screens/backbutton.png", exitConfPosition.x + ((FinalStand.V_WIDTH / FinalStand.PPM) * 0.1f), exitConfPosition.y + ((FinalStand.V_HEIGHT / FinalStand.PPM) * 0.3f),
-                                                (FinalStand.V_HEIGHT / FinalStand.PPM) * 0.2f, (FinalStand.V_HEIGHT / FinalStand.PPM) * 0.1f);
+                (FinalStand.V_HEIGHT / FinalStand.PPM) * 0.2f, (FinalStand.V_HEIGHT / FinalStand.PPM) * 0.1f);
         toMainMenu = new ExitButton("screens/mainmenu.png", exitConfPosition.x + ((FinalStand.V_WIDTH / FinalStand.PPM) * 0.1f) , exitConfPosition.y + ((FinalStand.V_HEIGHT / FinalStand.PPM) * 0.15f),
                 (FinalStand.V_HEIGHT / FinalStand.PPM) * 0.2f, (FinalStand.V_HEIGHT / FinalStand.PPM) * 0.1f);
         toDesktop = new ExitButton("screens/desktop.png", exitConfPosition.x + ((FinalStand.V_WIDTH / FinalStand.PPM) * 0.1f), exitConfPosition.y,
@@ -106,24 +99,6 @@ public class MenuScreen implements Screen {
     @Override
     public void show() {
 
-=======
-    private OrthographicCamera gameCam;
-    private Viewport viewport;
-
-    private FinalStand game;
-
-    public MenuScreen(FinalStand game){
-        this.game = game;
-    }
-
-    @Override
-    public void show() {
-        gameCam = new OrthographicCamera();
-        background = new Texture("badlogic.jpg");
-        backgroundPos = new Vector2(0, 0);
-        viewport = new FitViewport(FinalStand.V_WIDTH / FinalStand.PPM, FinalStand.V_HEIGHT / FinalStand.PPM, gameCam);
-        gameCam.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
->>>>>>> origin/keith
     }
 
     public Vector2 getBackgroundPos() {
@@ -131,16 +106,11 @@ public class MenuScreen implements Screen {
     }
 
     public Texture getBackground() {
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/keith
         return background;
     }
 
     @Override
     public void render(float delta) {
-<<<<<<< HEAD
         switch (state) {
             case MENU: {
                 update(delta);
@@ -238,17 +208,6 @@ public class MenuScreen implements Screen {
                 game.batch.end();
             } break;
         }
-=======
-        update(delta);
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        game.batch.setProjectionMatrix(gameCam.combined);
-        game.batch.begin();
-        game.batch.draw(getBackground(), getBackgroundPos().x, getBackgroundPos().y);
-        game.batch.end();
-
->>>>>>> origin/keith
     }
 
     @Override
@@ -274,7 +233,6 @@ public class MenuScreen implements Screen {
     @Override
     public void dispose() {
         background.dispose();
-<<<<<<< HEAD
         exitConfResumeButton.getButtonSprite().getTexture().dispose();
         toMainMenu.getButtonSprite().getTexture().dispose();
         toDesktop.getButtonSprite().getTexture().dispose();
@@ -286,8 +244,6 @@ public class MenuScreen implements Screen {
 
     public void setGameState(State s) {
         this.state = s;
-=======
->>>>>>> origin/keith
     }
 
     public void update(float delta) {
@@ -295,7 +251,6 @@ public class MenuScreen implements Screen {
     }
 
     public void handleInput() {
-<<<<<<< HEAD
         if (Gdx.input.isKeyPressed(Input.Keys.P)) {
             game.setScreen(play);
             dispose();
@@ -324,9 +279,5 @@ public class MenuScreen implements Screen {
 
     public static void exitButtonPressed() {
 //        setGameState(State.EXIT_CONFIRMATION);
-=======
-        if(Gdx.input.isKeyPressed(Input.Keys.P))
-            game.setScreen(new PlayScreen(game));
->>>>>>> origin/keith
     }
 }

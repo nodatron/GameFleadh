@@ -1,12 +1,14 @@
 package com.finalstand.game.traps;
 
+import com.badlogic.gdx.physics.box2d.World;
+
 /**
  * Created by Carl on 16/02/2016.
  */
 public class Glue extends Trap
 {
-    Glue(float x, float y)
+    public Glue(float x, float y, World world)
     {
-        super(x, y);
+        super(x, y, world);
     }
 }
