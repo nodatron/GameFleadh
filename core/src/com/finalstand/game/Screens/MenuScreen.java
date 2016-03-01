@@ -16,6 +16,7 @@ import com.finalstand.game.buttons.ExitButton;
 import com.finalstand.game.buttons.ResumeButton;
 
 import javafx.scene.control.MenuButton;
+import sun.text.resources.cldr.ia.FormatData_ia;
 
 /**
  * Created by Niall PC on 20/02/2016.
@@ -33,7 +34,7 @@ public class MenuScreen implements Screen {
     private ResumeButton resumeButton;
     private ExitButton exitButton;
     private ControlButton controlButton;
-    private MenuButton menuButton;
+
 
     private static boolean exitButtonPressed;
     private static boolean resumeButtonPressed;
@@ -51,6 +52,11 @@ public class MenuScreen implements Screen {
     private ResumeButton exitConfResumeButton;
     private Vector2 exitConfPosition;
     private Vector2 getExitConfPosition;
+
+    private Texture backToMenu;
+    private Vector2 backToMenuPos;
+    private float width;
+    private float height;
 
     public MenuScreen(FinalStand game, Screen play){
 
@@ -76,12 +82,18 @@ public class MenuScreen implements Screen {
         state = State.MENU;
         background = new Texture("screens/menu.png");
         exitConfPosition = new Vector2((FinalStand.V_WIDTH / FinalStand.PPM) * 0.35f, (FinalStand.V_HEIGHT / FinalStand.PPM) * 0.35f);
-        exitConfResumeButton = new ResumeButton("screens/backbutton.png", exitConfPosition.x, exitConfPosition.y + ((FinalStand.V_HEIGHT / FinalStand.PPM) * 0.25f),
+        exitConfResumeButton = new ResumeButton("screens/backbutton.png", exitConfPosition.x + ((FinalStand.V_WIDTH / FinalStand.PPM) * 0.1f), exitConfPosition.y + ((FinalStand.V_HEIGHT / FinalStand.PPM) * 0.3f),
                                                 (FinalStand.V_HEIGHT / FinalStand.PPM) * 0.2f, (FinalStand.V_HEIGHT / FinalStand.PPM) * 0.1f);
-        toMainMenu = new ExitButton("screens/mainmenu.png", exitConfPosition.x, exitConfPosition.y + ((FinalStand.V_HEIGHT / FinalStand.PPM) * 0.15f),
+        toMainMenu = new ExitButton("screens/mainmenu.png", exitConfPosition.x + ((FinalStand.V_WIDTH / FinalStand.PPM) * 0.1f) , exitConfPosition.y + ((FinalStand.V_HEIGHT / FinalStand.PPM) * 0.15f),
                 (FinalStand.V_HEIGHT / FinalStand.PPM) * 0.2f, (FinalStand.V_HEIGHT / FinalStand.PPM) * 0.1f);
-        toDesktop = new ExitButton("screens/desktop.png", exitConfPosition.x, exitConfPosition.y + ((FinalStand.V_HEIGHT / FinalStand.PPM) * 0.05f),
+        toDesktop = new ExitButton("screens/desktop.png", exitConfPosition.x + ((FinalStand.V_WIDTH / FinalStand.PPM) * 0.1f), exitConfPosition.y,
                 (FinalStand.V_HEIGHT / FinalStand.PPM) * 0.2f, (FinalStand.V_HEIGHT / FinalStand.PPM) * 0.1f);
+
+
+        backToMenu = new Texture("screens/backbutton.png");
+        backToMenuPos = new Vector2((FinalStand.V_WIDTH / FinalStand.PPM) * 0.85f, (FinalStand.V_HEIGHT / FinalStand.PPM) * 0.005f);
+        width = (FinalStand.V_WIDTH / FinalStand.PPM) * 0.1f;
+        height = (FinalStand.V_WIDTH / FinalStand.PPM) * 0.05f;
     }
 
     @Override
@@ -172,17 +184,18 @@ public class MenuScreen implements Screen {
             case MENU_CONTROL: {
                 if(Gdx.input.justTouched()) {
                     Vector3 mouse = getWorldMousePos();
-                    if (mouse.x > exitConfResumeButton.getPosition().x && mouse.x < exitConfResumeButton.getPosition().x + exitConfResumeButton.getPosition().x &&
-                            mouse.y > exitConfResumeButton.getPosition().y && mouse.y < exitConfResumeButton.getPosition().y + exitConfResumeButton.getHeight()) {
+                    System.out.println(mouse);
+                    System.out.println(backToMenuPos.x);
+                    System.out.println(backToMenuPos.x + width);
+                    System.out.println(backToMenuPos.y );
+                    System.out.println(backToMenuPos.y + height);
+                    if (mouse.x > backToMenuPos.x && mouse.x < backToMenuPos.x + width &&
+                            mouse.y > backToMenuPos.y && mouse.y < backToMenuPos.y + height + 14 / FinalStand.PPM) {
                         setGameState(State.MENU);
                     }
-                    if (mouse.x > toMainMenu.getPosition().x && mouse.x < toMainMenu.getPosition().x + toMainMenu.getPosition().x &&
-                            mouse.y > toMainMenu.getPosition().y && mouse.y < toMainMenu.getPosition().y + toMainMenu.getHeight()) {
-                        game.setScreen(new SplashScreen(game));
-                        dispose();
-                    }
                 }
-                toDesktop.update();
+
+//                System.out.println(backToMenuPos.x + width);
 
                 Gdx.gl.glClearColor(1, 0, 0, 1);
                 Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -191,9 +204,7 @@ public class MenuScreen implements Screen {
                 game.batch.begin();
 //        playButton.getButtonSprite().draw(game.batch);
                 game.batch.draw(background, 0, 0, 800 / FinalStand.PPM, 400 / FinalStand.PPM);
-                game.batch.draw(resumeButton.getButtonTexture(), resumeButton.getPosition().x, resumeButton.getPosition().y, resumeButton.getWidth(), resumeButton.getHeight());
-                game.batch.draw(toMainMenu.getButtonTexture(), toMainMenu.getPosition().x, toMainMenu.getPosition().y, toMainMenu.getWidth(), toMainMenu.getHeight());
-                game.batch.draw(toDesktop.getButtonTexture(), toDesktop.getPosition().x, toDesktop.getPosition().y, toDesktop.getWidth(), toDesktop.getHeight());
+                game.batch.draw(backToMenu, backToMenuPos.x, backToMenuPos.y, width, height);
                 game.batch.end();
             } break;
         }
@@ -228,6 +239,7 @@ public class MenuScreen implements Screen {
         resumeButton.getButtonSprite().getTexture().dispose();
         exitButton.getButtonSprite().getTexture().dispose();
         controlButton.getButtonSprite().getTexture().dispose();
+        background.dispose();
     }
 
     public void setGameState(State s) {
