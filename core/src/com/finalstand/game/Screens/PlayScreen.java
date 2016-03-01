@@ -370,6 +370,7 @@ public class PlayScreen implements Screen {
                 renderer.setView(gameCam);
                 game.batch.draw(base, basePos.x, basePos.y, baseDimensions.x, baseDimensions.y);
                 elapsed++;
+                game.batch.draw(play.getTexture(), play.getX(), play.getY(), 20 / FinalStand.PPM, 10 / FinalStand.PPM);
                 //rendering projectiles
                 for (int counter = 0; counter < projectiles.size(); counter++) {
                     projectiles.get(counter).getSprite().setOriginCenter();
