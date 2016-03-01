@@ -1,0 +1,57 @@
+Tower Defense Game
+
+build time
+1 min gap per wave
+
+- 3 types of creeps
+    - 1: basic one
+        health, speed, armour, attack
+        strength:   none
+        weak:   none
+    - 2: medium one
+        health, speed , armour, attack
+        strength:   single shot
+        weak:   DOT
+    - 3:    Heavy
+        health, speed, armour, attack
+        strength:   destroying barracades, explosives, single shot, AOE
+        weak:   glue, penetrate, fire
+    - Boss Creep:
+        health, speed,armour,attack
+        strength: at start everything except ___, 2nd phase everything except _____, 3rd phase everything except _____
+        weak: 1st explosive, 2nd ______, 3rd ____
+
+- 4 types of towers
+    - Single Shot
+        - Double shot
+        - Triple shot
+    - AOE
+        - bigger AOE
+        - burn added
+    - DOT
+        - splash
+        - splash with explosion
+    - Penetrate
+        - lob
+        - lob and roll
+
+- Traps
+    - Barracde
+    - spikes
+    - explosive
+    - glue
+    - oil   -slip and trigger
+
+Status for the creeps
+    - Burn
+    - freeze
+    - stuck
+    - posion
+
+
+UI
+    - Towers along the bottom
+    - money dispalyed in top right/left
+    - pause button in oposite corner
+    - time under money with start wave button when intrim betweeen waves happens
+    - bottom right dollar button to make money

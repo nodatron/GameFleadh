@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-up" width="50" height="50" tilewidth="16" tileheight="16" nextobjectid="2">
+ <tileset firstgid="1" name="blah" tilewidth="16" tileheight="16" tilecount="1000" columns="40">
+  <image source="background_gutter.png" width="640" height="400"/>
+ </tileset>
+ <layer name="background" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztwwEJAAAMBKH7/qWXY6DgqqmqqqqqqqqqqurzBwHpCcU=
+  </data>
+ </layer>
+ <layer name="road" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztw7ENAAAMAiDj/0f7Q6cOkJAAAAAAAAAAAABwUV8dxOAAyQ==
+  </data>
+ </layer>
+ <objectgroup name="road">
+  <object id="1" x="0" y="768" width="800" height="32"/>
+ </objectgroup>
+</map>
