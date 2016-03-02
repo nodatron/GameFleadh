@@ -76,4 +76,3 @@ public class DOTGas extends Projectile{
         }
     }
 }
-
