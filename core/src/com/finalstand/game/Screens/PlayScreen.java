@@ -248,7 +248,7 @@ public class PlayScreen implements Screen {
                     spawnableCreeps.get(i).update();
                 }
 
-                if (keepSpawning && elapsed > 100) {
+                if (keepSpawning && elapsed > 40) {
                     System.out.println("Before spawnCreep " + creepsSpawned);
                     spawnNewCreep();
                     elapsed = 0;

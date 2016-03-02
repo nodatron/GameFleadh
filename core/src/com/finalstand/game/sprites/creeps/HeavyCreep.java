@@ -14,7 +14,7 @@ public class HeavyCreep extends Creep {
     public HeavyCreep(float x, float y, World world) {
         super(world);
         position = new Vector2(x, y);
-        texture = new Texture("creeps/HeavyCreep.png");
+        texture = new Texture("creeps/heavycreep2.png");
         sprite = new Sprite(texture);
 
         defineCreep();
