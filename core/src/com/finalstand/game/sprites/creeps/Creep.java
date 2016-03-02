@@ -51,7 +51,7 @@ public class Creep extends Sprite{
         direction = new Vector2(0.2f / FinalStand.PPM, 0);
         timeElapsed = 0;
         this.dir = dir;
-        waypointHit = 0;
+        waypointHit = 1;
         speed = 1;
 
     }

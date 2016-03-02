@@ -122,6 +122,8 @@ public class PlayScreen implements Screen {
 
         public static ArrayList<Trap> traps;
 
+        private Vector2 startingPos;
+
         public PlayScreen(FinalStand game) {
             this.game = game;
             run = false;
@@ -137,7 +139,8 @@ public class PlayScreen implements Screen {
 //            map = mapLoader.load("map1c.tmx");
             map = mapManager.getMap();
             renderer = new OrthogonalTiledMapRenderer(map, 1 / FinalStand.PPM);
-
+            startingPos = mapManager.mapStartLocation(game.mapNumber);
+            System.out.println(startingPos);
             // centers the camera
             gameCam.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
 
@@ -178,8 +181,8 @@ public class PlayScreen implements Screen {
             play.setPosition(5 / FinalStand.PPM, (FinalStand.V_HEIGHT / 4) / FinalStand.PPM);
             pause.setPosition(5 / FinalStand.PPM, (FinalStand.V_HEIGHT / 4) / FinalStand.PPM);
 
-            bossCreep = new BossCreep(mapManager.getCreepStartLocation().x,
-                                      mapManager.getCreepStartLocation().y,
+            bossCreep = new BossCreep(startingPos.x,
+                                      startingPos.y,
                                       mapManager.getDir(), world);
             base = new Texture("base.png");
             basePos = waypoints.get(waypoints.size - 1).getPos();
@@ -192,6 +195,8 @@ public class PlayScreen implements Screen {
             optionChosen = false;
 
             traps = new ArrayList<Trap>();
+
+
     }
 
     @Override
@@ -630,36 +635,36 @@ public class PlayScreen implements Screen {
             randomNumber = randomWithinRange(0, 100);
             if(challengeRating - currentChallengeRating > 1) {
                 if(randomNumber <= 55) {
-                    levelCreeps.add(new BasicCreep(mapManager.getCreepStartLocation().x,
-                                    mapManager.getCreepStartLocation().x,
-                                    mapManager.getDir(), world));
+                    levelCreeps.add(new BasicCreep(startingPos.x,
+                                                   startingPos.y,
+                                                   mapManager.getDir(), world));
                     currentChallengeRating += 0.25f;
                 } else if(randomNumber <= 85 && randomNumber > 55) {
-                    levelCreeps.add(new MediumCreep(mapManager.getCreepStartLocation().x,
-                                                    mapManager.getCreepStartLocation().x,
+                    levelCreeps.add(new MediumCreep(startingPos.x,
+                                                    startingPos.y,
                                                     mapManager.getDir(), world));
                     currentChallengeRating += 0.75f;
                 } else {
-                    levelCreeps.add(new HeavyCreep(mapManager.getCreepStartLocation().x,
-                                                   mapManager.getCreepStartLocation().x,
+                    levelCreeps.add(new HeavyCreep(startingPos.x,
+                                                   startingPos.y,
                                                    mapManager.getDir(), world));
                     currentChallengeRating += 1.0f;
                 }
             } else if(challengeRating - currentChallengeRating >= 0.75) {
                 if(randomNumber <= 65) {
-                    levelCreeps.add(new BasicCreep(mapManager.getCreepStartLocation().x,
-                                                   mapManager.getCreepStartLocation().x,
+                    levelCreeps.add(new BasicCreep(startingPos.x,
+                                                   startingPos.y,
                                                    mapManager.getDir(), world));
                     currentChallengeRating += 0.25f;
                 } else if(randomNumber > 65) {
-                    levelCreeps.add(new MediumCreep(mapManager.getCreepStartLocation().x,
-                                                    mapManager.getCreepStartLocation().x,
+                    levelCreeps.add(new MediumCreep(startingPos.x,
+                                                    startingPos.y,
                                                     mapManager.getDir(), world));
                     currentChallengeRating += 0.75f;
                 }
             } else {
-                levelCreeps.add(new BasicCreep(mapManager.getCreepStartLocation().x,
-                                               mapManager.getCreepStartLocation().x,
+                levelCreeps.add(new BasicCreep(startingPos.x,
+                                               startingPos.y,
                                                mapManager.getDir(), world));
                 currentChallengeRating += 0.25f;
             }

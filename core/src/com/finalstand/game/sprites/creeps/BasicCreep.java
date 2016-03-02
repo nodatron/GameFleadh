@@ -15,6 +15,7 @@ public class BasicCreep extends Creep {
     public BasicCreep(float x, float y, Array<String> dir, World world) {
         super(dir, world);
         position = new Vector2(x, y);
+        System.out.println(position);
         texture = new Texture("creeps/basiccreep2.png");
         sprite = new Sprite(texture);
 

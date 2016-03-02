@@ -5,6 +5,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.finalstand.game.FinalStand;
 import com.finalstand.game.Screens.PlayScreen;
 
 /**
@@ -55,6 +56,19 @@ public class MapManager {
             case 3: { filename = "map3.txt"; } break;
         }
         return filename;
+    }
+
+    public Vector2 mapStartLocation(Integer mapNumber) {
+        Vector2 location = new Vector2();
+        switch(mapNumber) {
+            case 1: { location = new Vector2(PlayScreen.waypoints.get(0).getPos().x + (32 / FinalStand.PPM),
+                                             PlayScreen.waypoints.get(0).getPos().y + (8 / FinalStand.PPM)); } break;
+            case 2: { location = new Vector2(PlayScreen.waypoints.get(0).getPos().x + (8 / FinalStand.PPM),
+                                             PlayScreen.waypoints.get(0).getPos().y + (16 / FinalStand.PPM)); } break;
+            case 3: { location = new Vector2(PlayScreen.waypoints.get(0).getPos().x + (8 / FinalStand.PPM),
+                                             PlayScreen.waypoints.get(0).getPos().y + (16 / FinalStand.PPM)); } break;
+        }
+        return location;
     }
 
 }
