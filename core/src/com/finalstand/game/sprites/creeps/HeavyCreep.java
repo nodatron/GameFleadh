@@ -5,14 +5,15 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 
 /**
  * Created by Niall on 09/02/2016.
  */
 public class HeavyCreep extends Creep {
 
-    public HeavyCreep(float x, float y, World world) {
-        super(world);
+    public HeavyCreep(float x, float y, Array<String> dir, World world) {
+        super(dir, world);
         position = new Vector2(x, y);
         texture = new Texture("creeps/heavycreep2.png");
         sprite = new Sprite(texture);

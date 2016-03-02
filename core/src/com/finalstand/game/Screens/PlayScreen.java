@@ -35,6 +35,7 @@ import com.finalstand.game.sprites.towers.LaserTower;
 import com.finalstand.game.sprites.towers.SingleShotTower;
 import com.finalstand.game.sprites.towers.Tower;
 import com.finalstand.game.tools.B2WorldCreator;
+import com.finalstand.game.tools.MapManager;
 import com.finalstand.game.tools.Waypoint;
 import com.finalstand.game.tools.WorldContactListener;
 import com.finalstand.game.traps.Trap;
@@ -47,6 +48,7 @@ import java.util.ArrayList;
  * Created by Niall PC on 20/02/2016.
  */
 public class PlayScreen implements Screen {
+        private MapManager mapManager;
         private World world;
         private Box2DDebugRenderer b2dr;
 
@@ -125,21 +127,27 @@ public class PlayScreen implements Screen {
             run = false;
             state = State.PLANNING_PHASE;
             firstRoundDone = false;
-
+            world = new World(new Vector2(0, 0), true);
             gameCam = new OrthographicCamera();
             viewport = new FitViewport(FinalStand.V_WIDTH / FinalStand.PPM, FinalStand.V_HEIGHT / FinalStand.PPM, gameCam);
-            mapLoader = new TmxMapLoader();
-            map = mapLoader.load("map1c.tmx");
+            waypoints = new Array<Waypoint>();
+            mapManager = new MapManager(MapManager.getMapFileName(game.mapNumber),
+                                        MapManager.getWaypointFileName(game.mapNumber), world);
+//            mapLoader = new TmxMapLoader();
+//            map = mapLoader.load("map1c.tmx");
+            map = mapManager.getMap();
             renderer = new OrthogonalTiledMapRenderer(map, 1 / FinalStand.PPM);
 
             // centers the camera
             gameCam.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
 
-            waypoints = new Array<Waypoint>();
+//            waypoints = new Array<Waypoint>();
 
-            world = new World(new Vector2(0, 0), true);
+
             b2dr = new Box2DDebugRenderer();
-            new B2WorldCreator(world, map);
+
+//            new B2WorldCreator(world, map);
+
             world.setContactListener(new WorldContactListener());
 
             hud = new Hud(game.round, game.mapNumber, game.health, game.score);
@@ -170,7 +178,9 @@ public class PlayScreen implements Screen {
             play.setPosition(5 / FinalStand.PPM, (FinalStand.V_HEIGHT / 4) / FinalStand.PPM);
             pause.setPosition(5 / FinalStand.PPM, (FinalStand.V_HEIGHT / 4) / FinalStand.PPM);
 
-            bossCreep = new BossCreep(10, 360, world);
+            bossCreep = new BossCreep(mapManager.getCreepStartLocation().x,
+                                      mapManager.getCreepStartLocation().y,
+                                      mapManager.getDir(), world);
             base = new Texture("base.png");
             basePos = waypoints.get(waypoints.size - 1).getPos();
             baseDimensions = waypoints.get(waypoints.size - 1).getBaseDimensions();
@@ -620,25 +630,37 @@ public class PlayScreen implements Screen {
             randomNumber = randomWithinRange(0, 100);
             if(challengeRating - currentChallengeRating > 1) {
                 if(randomNumber <= 55) {
-                    levelCreeps.add(new BasicCreep(10, 360, world));
+                    levelCreeps.add(new BasicCreep(mapManager.getCreepStartLocation().x,
+                                    mapManager.getCreepStartLocation().x,
+                                    mapManager.getDir(), world));
                     currentChallengeRating += 0.25f;
                 } else if(randomNumber <= 85 && randomNumber > 55) {
-                    levelCreeps.add(new MediumCreep(10, 360, world));
+                    levelCreeps.add(new MediumCreep(mapManager.getCreepStartLocation().x,
+                                                    mapManager.getCreepStartLocation().x,
+                                                    mapManager.getDir(), world));
                     currentChallengeRating += 0.75f;
                 } else {
-                    levelCreeps.add(new HeavyCreep(10, 360, world));
+                    levelCreeps.add(new HeavyCreep(mapManager.getCreepStartLocation().x,
+                                                   mapManager.getCreepStartLocation().x,
+                                                   mapManager.getDir(), world));
                     currentChallengeRating += 1.0f;
                 }
             } else if(challengeRating - currentChallengeRating >= 0.75) {
                 if(randomNumber <= 65) {
-                    levelCreeps.add(new BasicCreep(10, 360, world));
+                    levelCreeps.add(new BasicCreep(mapManager.getCreepStartLocation().x,
+                                                   mapManager.getCreepStartLocation().x,
+                                                   mapManager.getDir(), world));
                     currentChallengeRating += 0.25f;
                 } else if(randomNumber > 65) {
-                    levelCreeps.add(new MediumCreep(10, 360, world));
+                    levelCreeps.add(new MediumCreep(mapManager.getCreepStartLocation().x,
+                                                    mapManager.getCreepStartLocation().x,
+                                                    mapManager.getDir(), world));
                     currentChallengeRating += 0.75f;
                 }
             } else {
-                levelCreeps.add(new BasicCreep(10, 360, world));
+                levelCreeps.add(new BasicCreep(mapManager.getCreepStartLocation().x,
+                                               mapManager.getCreepStartLocation().x,
+                                               mapManager.getDir(), world));
                 currentChallengeRating += 0.25f;
             }
         }

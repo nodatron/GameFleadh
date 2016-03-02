@@ -43,14 +43,14 @@ public class Creep extends Sprite{
     protected Array<String> dir;
     protected int waypointHit;
 
-    public Creep(World world) {
+    public Creep(Array<String> dir, World world) {
         this.world = world;
         movement = new boolean[4];
         movement[0] = true;
         setDirection = false;
         direction = new Vector2(0.2f / FinalStand.PPM, 0);
         timeElapsed = 0;
-        dir = Waypoint.readWaypoints("map1.txt");
+        this.dir = dir;
         waypointHit = 0;
         speed = 1;
 

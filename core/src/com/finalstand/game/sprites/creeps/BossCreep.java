@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.finalstand.game.FinalStand;
 
 
@@ -16,8 +17,8 @@ import com.finalstand.game.FinalStand;
  */
 public class BossCreep extends Creep {
 
-    public BossCreep(float x, float y, World world) {
-        super(world);
+    public BossCreep(float x, float y, Array<String> dir, World world) {
+        super(dir, world);
         position = new Vector2(x, y);
         texture = new Texture("creeps/BossCreep.png");
         sprite = new Sprite(texture);
