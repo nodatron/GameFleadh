@@ -12,8 +12,8 @@ import com.badlogic.gdx.utils.Array;
  */
 public class BasicCreep extends Creep {
 
-    public BasicCreep(float x, float y, Array<String> dir, World world) {
-        super(dir, world);
+    public BasicCreep(float x, float y, World world) {
+        super(world);
         position = new Vector2(x, y);
         System.out.println(position);
         texture = new Texture("creeps/basiccreep2.png");

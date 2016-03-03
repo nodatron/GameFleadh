@@ -61,8 +61,8 @@ public class MapManager {
     public Vector2 mapStartLocation(Integer mapNumber) {
         Vector2 location = new Vector2();
         switch(mapNumber) {
-            case 1: { location = new Vector2(PlayScreen.waypoints.get(0).getPos().x + (32 / FinalStand.PPM),
-                                             PlayScreen.waypoints.get(0).getPos().y + (8 / FinalStand.PPM)); } break;
+            case 1: { location = new Vector2(PlayScreen.waypoints.get(0).getPos().x + (16 / FinalStand.PPM),
+                                             PlayScreen.waypoints.get(0).getPos().y + (16 / FinalStand.PPM)); } break;
             case 2: { location = new Vector2(PlayScreen.waypoints.get(0).getPos().x + (8 / FinalStand.PPM),
                                              PlayScreen.waypoints.get(0).getPos().y + (16 / FinalStand.PPM)); } break;
             case 3: { location = new Vector2(PlayScreen.waypoints.get(0).getPos().x + (8 / FinalStand.PPM),

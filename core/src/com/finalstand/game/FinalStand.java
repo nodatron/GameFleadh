@@ -15,8 +15,8 @@ public class FinalStand extends Game {
 
 	public SpriteBatch batch;
 
-	public Integer round = 1;
-	public Integer mapNumber = 1;
+	public static Integer round = 1;
+	public static Integer mapNumber = 1;
 	public static final int roundsPerMap = 11;
 
 	public static boolean gameOver = false;
@@ -26,18 +26,19 @@ public class FinalStand extends Game {
 
 	//Bits for collision in box2d
 	public static final short DEFAULT = 1;
-	public static final short CREEP_BIT = 2;
+	public static final short SPIKE_BIT = 2;
 	public static final short TOWER_BIT = 4;
 	public static final short ROADBOUNDS_BIT = 8;
 	public static final short PROJECTILE_BIT = 16;
-	public static final short TRAP_BIT = 32;
-	public static final short BASE_BIT = 64;
+	public static final short CREEP_BIT = 32;
+	public static final short BOMB_BIT = 64;
 	public static final short WAYPOINT_BIT = 128;
-	public static final short TOUCHING_BIT = 256;
+	public static final short BARRICADE_BIT = 256;
 	public static final short RIGHT_BOUND_BIT = 512;
 	public static final short LEFT_BOUND_BIT = 1024;
 	public static final short TOP_BOUND_BIT = 2048;
 	public static final short BOT_BOUND_BIT = 4096;
+	public static final short GLUE_BIT = 8192;
 
 	@Override
 	public void create () {

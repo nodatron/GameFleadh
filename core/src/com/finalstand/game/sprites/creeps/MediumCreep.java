@@ -12,8 +12,8 @@ import com.badlogic.gdx.utils.Array;
  */
 public class MediumCreep extends Creep {
 
-    public MediumCreep(float x, float y,Array<String> dir, World world) {
-        super(dir, world);
+    public MediumCreep(float x, float y, World world) {
+        super(world);
         position = new Vector2(x, y);
         texture = new Texture("creeps/mediumcreep2.png");
         sprite = new Sprite(texture);

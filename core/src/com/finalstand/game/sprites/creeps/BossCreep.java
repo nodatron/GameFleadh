@@ -17,8 +17,8 @@ import com.finalstand.game.FinalStand;
  */
 public class BossCreep extends Creep {
 
-    public BossCreep(float x, float y, Array<String> dir, World world) {
-        super(dir, world);
+    public BossCreep(float x, float y, World world) {
+        super(world);
         position = new Vector2(x, y);
         texture = new Texture("creeps/BossCreep.png");
         sprite = new Sprite(texture);
@@ -45,14 +45,18 @@ public class BossCreep extends Creep {
 
         //setting what a creep can collide with and what bit it is
         fdef.filter.categoryBits = FinalStand.CREEP_BIT;
-        fdef.filter.maskBits = FinalStand.DEFAULT | FinalStand.ROADBOUNDS_BIT | FinalStand.PROJECTILE_BIT
-                | FinalStand.TRAP_BIT | FinalStand.BASE_BIT | FinalStand.WAYPOINT_BIT;
+        fdef.filter.maskBits = fdef.filter.maskBits = FinalStand.DEFAULT | FinalStand.ROADBOUNDS_BIT | FinalStand.PROJECTILE_BIT
+                | FinalStand.BARRICADE_BIT | FinalStand.GLUE_BIT | FinalStand.BOMB_BIT
+                | FinalStand.SPIKE_BIT | FinalStand.WAYPOINT_BIT;
         fdef.shape = shape;
         b2Body.createFixture(fdef);
 
         EdgeShape rightBound = new EdgeShape();
         rightBound.set(new Vector2(8 / FinalStand.PPM, 3 / FinalStand.PPM), new Vector2(8 / FinalStand.PPM, - 3 / FinalStand.PPM));
         fdef.filter.categoryBits = FinalStand.RIGHT_BOUND_BIT;
+        fdef.filter.maskBits = fdef.filter.maskBits = FinalStand.DEFAULT | FinalStand.ROADBOUNDS_BIT | FinalStand.PROJECTILE_BIT
+                | FinalStand.BARRICADE_BIT | FinalStand.GLUE_BIT | FinalStand.BOMB_BIT
+                | FinalStand.SPIKE_BIT | FinalStand.WAYPOINT_BIT;
         fdef.shape = rightBound;
         fdef.isSensor = true;
         b2Body.createFixture(fdef).setUserData(this);
@@ -60,6 +64,9 @@ public class BossCreep extends Creep {
         EdgeShape leftBound = new EdgeShape();
         leftBound.set(new Vector2(-8 / FinalStand.PPM, 3 / FinalStand.PPM), new Vector2(-8 / FinalStand.PPM, - 3 / FinalStand.PPM));
         fdef.filter.categoryBits = FinalStand.LEFT_BOUND_BIT;
+        fdef.filter.maskBits = fdef.filter.maskBits = FinalStand.DEFAULT | FinalStand.ROADBOUNDS_BIT | FinalStand.PROJECTILE_BIT
+                | FinalStand.BARRICADE_BIT | FinalStand.GLUE_BIT | FinalStand.BOMB_BIT
+                | FinalStand.SPIKE_BIT | FinalStand.WAYPOINT_BIT;
         fdef.shape = leftBound;
         fdef.isSensor = true;
         b2Body.createFixture(fdef).setUserData(this);
@@ -67,6 +74,9 @@ public class BossCreep extends Creep {
         EdgeShape topBound = new EdgeShape();
         topBound.set(new Vector2(3 / FinalStand.PPM, 8 / FinalStand.PPM), new Vector2(- 3 / FinalStand.PPM, 8 / FinalStand.PPM));
         fdef.filter.categoryBits = FinalStand.TOP_BOUND_BIT;
+        fdef.filter.maskBits = fdef.filter.maskBits = FinalStand.DEFAULT | FinalStand.ROADBOUNDS_BIT | FinalStand.PROJECTILE_BIT
+                | FinalStand.BARRICADE_BIT | FinalStand.GLUE_BIT | FinalStand.BOMB_BIT
+                | FinalStand.SPIKE_BIT | FinalStand.WAYPOINT_BIT;
         fdef.shape = topBound;
         fdef.isSensor = true;
         b2Body.createFixture(fdef).setUserData(this);
@@ -74,6 +84,9 @@ public class BossCreep extends Creep {
         EdgeShape bottomBound = new EdgeShape();
         bottomBound.set(new Vector2(3 / FinalStand.PPM, - 8 / FinalStand.PPM), new Vector2(- 3 / FinalStand.PPM, -8 / FinalStand.PPM));
         fdef.filter.categoryBits = FinalStand.BOT_BOUND_BIT;
+        fdef.filter.maskBits = fdef.filter.maskBits = FinalStand.DEFAULT | FinalStand.ROADBOUNDS_BIT | FinalStand.PROJECTILE_BIT
+                | FinalStand.BARRICADE_BIT | FinalStand.GLUE_BIT | FinalStand.BOMB_BIT
+                | FinalStand.SPIKE_BIT | FinalStand.WAYPOINT_BIT;
         fdef.shape = bottomBound;
         fdef.isSensor = true;
         b2Body.createFixture(fdef).setUserData(this);
