@@ -15,7 +15,7 @@ public class MediumCreep extends Creep {
     public MediumCreep(float x, float y, World world) {
         super(world);
         position = new Vector2(x, y);
-        texture = new Texture("creeps/mediumcreep2.png");
+        texture = new Texture("creeps/mediumcreep3.png");
         sprite = new Sprite(texture);
 
         defineCreep();

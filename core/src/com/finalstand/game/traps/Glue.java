@@ -45,6 +45,7 @@ public class Glue extends Trap
 
         fdef.shape = shape;
         b2Body.createFixture(fdef);
+
     }
 
     public void render()

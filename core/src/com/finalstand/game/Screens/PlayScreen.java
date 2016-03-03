@@ -14,6 +14,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -254,17 +255,19 @@ public class PlayScreen implements Screen {
                 handleInput();
                 world.step(1 / 60f, 6, 2);
                 gameCam.update();
+                renderer.setView(gameCam);
+
 //                game.batch.begin();
-//                world.getBodies(bodies);
-//                for(Body body : bodies) {
-//                    if(body.getUserData() != null && body.getUserData() instanceof Sprite) {
-//                        Sprite ssprite = (Sprite) body.getUserData();
-//                        ssprite.setPosition(body.getPosition().x - ssprite.getWidth() / 2, body.getPosition().y - ssprite.getHeight() / 2);
-//                        ssprite.draw(game.batch);
-//                    }
-//                }
+                world.getBodies(bodies);
+                for(Body body : bodies) {
+                    if(body.getUserData() != null && body.getUserData() instanceof Sprite) {
+                        Sprite sprite = (Sprite) body.getUserData();
+                        sprite.setPosition(body.getPosition().x - sprite.getWidth() / 2, body.getPosition().y - sprite.getHeight() / 2);
+                        sprite.draw(game.batch);
+                    }
+                }
                 for (int i = 0 ; i < spawnableCreeps.size() ; i ++) {
-                    spawnableCreeps.get(i).render(game.batch);
+//                    spawnableCreeps.get(i).render(game.batch);
                     spawnableCreeps.get(i).update();
 //                    spawnableCreeps.get(i).render(game.batch);
                 }
@@ -276,10 +279,9 @@ public class PlayScreen implements Screen {
                 }
 //                game.batch.end();
 //                renderGame();
-                renderer.setView(gameCam);
                 game.batch.draw(pause.getTexture(), pause.getX(), pause.getY(), 20 / FinalStand.PPM, 10 / FinalStand.PPM);
                 game.batch.draw(base, basePos.x / FinalStand.PPM, (basePos.y - 16) / FinalStand.PPM, baseDimensions.x * 3, baseDimensions.y * 3);
-                elapsed++;
+
 
                 //rendering projectiles
                 for (int counter = 0; counter < projectiles.size(); counter++) {
@@ -298,9 +300,9 @@ public class PlayScreen implements Screen {
                     tower.getTowerSprite().draw(game.batch);
                 }
 
-                for(Trap trap : traps) {
-                    trap.getImage().draw(game.batch);
-                    trap.update();
+                for(int i = 0 ; i < traps.size() ; i ++) {
+                    traps.get(i).getImage().draw(game.batch);
+                    traps.get(i).update();
                 }
 
                 //render UI
@@ -322,9 +324,6 @@ public class PlayScreen implements Screen {
                     upgradeButton.getButtonSprite().draw(game.batch);
                     sellButton.getButtonSprite().draw(game.batch);
 
-//            upgradeButton.getButtonLabel().draw(game.batch, 1);
-
-//            upgradeButton.getBitmapFonttext().draw(game.batch, "hello", upgradeButton.getPosition().x, upgradeButton.getPosition().y);
                 }
                 checkTowerPressed();
 
@@ -344,9 +343,12 @@ public class PlayScreen implements Screen {
                 game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
 //                hud.update(game.round, game.mapNumber, game.health, game.score);
                 hud.stage.draw();
+
                 if(spawnableCreeps.size() == 0) {
                     firstRoundDone = true;
                 }
+
+                elapsed++;
             } break;
 
             // TODO(niall) Make the positions of the button look right but the functionality is done
@@ -503,7 +505,7 @@ public class PlayScreen implements Screen {
 
                 gameCam.update();
 
-                bossCreep.render(game.batch);
+//                bossCreep.render(game.batch);
                 bossCreep.update();
 
 //        player.update();
