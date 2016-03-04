@@ -38,7 +38,7 @@ import com.finalstand.game.tools.B2WorldCreator;
 import com.finalstand.game.tools.MapManager;
 import com.finalstand.game.tools.Waypoint;
 import com.finalstand.game.tools.WorldContactListener;
-import com.finalstand.game.traps.Trap;
+import com.finalstand.game.sprites.traps.Trap;
 import com.finalstand.game.ui.OptionTexture;
 import com.finalstand.game.ui.UI;
 
@@ -156,7 +156,14 @@ public class PlayScreen implements Screen {
             hud = new Hud(game.round, game.mapNumber, game.health, game.score);
 
             challengerRating = game.mapNumber * 10 + game.round;
-
+            if(FinalStand.mapNumber == 1) {
+                bossCreep = new BossCreep(10 , 360, world);
+            } else if(FinalStand.mapNumber == 2) {
+                bossCreep = new BossCreep(10, 360, world);
+            }
+            else if (FinalStand.mapNumber == 3 || FinalStand.mapNumber == 4){
+                bossCreep = new BossCreep(10 , 360, world);
+            }
             creeps = new ArrayList<Creep>();
             creeps = randomCreeps(challengerRating);
             spawnableCreeps = new ArrayList<Creep>();
@@ -181,14 +188,7 @@ public class PlayScreen implements Screen {
             play.setPosition(5 / FinalStand.PPM, (FinalStand.V_HEIGHT / 4) / FinalStand.PPM);
             pause.setPosition(5 / FinalStand.PPM, (FinalStand.V_HEIGHT / 4) / FinalStand.PPM);
 
-            if(FinalStand.mapNumber == 1) {
-                bossCreep = new BossCreep(10 , 360, world);
-            } else if(FinalStand.mapNumber == 2) {
-                bossCreep = new BossCreep(10, 360, world);
-            }
-            else if (FinalStand.mapNumber == 3 || FinalStand.mapNumber == 4){
-                bossCreep = new BossCreep(10 , 360, world);
-            }
+
             base = new Texture("base.png");
             basePos = waypoints.get(waypoints.size - 1).getPos();
             baseDimensions = waypoints.get(waypoints.size - 1).getBaseDimensions();
@@ -255,16 +255,16 @@ public class PlayScreen implements Screen {
                 world.step(1 / 60f, 6, 2);
                 gameCam.update();
 //                game.batch.begin();
-//                world.getBodies(bodies);
-//                for(Body body : bodies) {
-//                    if(body.getUserData() != null && body.getUserData() instanceof Sprite) {
-//                        Sprite ssprite = (Sprite) body.getUserData();
-//                        ssprite.setPosition(body.getPosition().x - ssprite.getWidth() / 2, body.getPosition().y - ssprite.getHeight() / 2);
-//                        ssprite.draw(game.batch);
-//                    }
-//                }
+                world.getBodies(bodies);
+                for(Body body : bodies) {
+                    if(body.getUserData() != null && body.getUserData() instanceof Sprite) {
+                        Sprite ssprite = (Sprite) body.getUserData();
+                        ssprite.setPosition(body.getPosition().x - ssprite.getWidth() / 2, body.getPosition().y - ssprite.getHeight() / 2);
+                        ssprite.draw(game.batch);
+                    }
+                }
                 for (int i = 0 ; i < spawnableCreeps.size() ; i ++) {
-                    spawnableCreeps.get(i).render(game.batch);
+//                    spawnableCreeps.get(i).render(game.batch);
                     spawnableCreeps.get(i).update();
 //                    spawnableCreeps.get(i).render(game.batch);
                 }
@@ -304,9 +304,14 @@ public class PlayScreen implements Screen {
                     tower.getTowerSprite().draw(game.batch);
                 }
 
-                for(Trap trap : traps) {
-                    trap.getImage().draw(game.batch);
-                    trap.update();
+                for(int i = 0 ; i < traps.size() ; i ++) {
+                    if(traps.get(i).isDead()) {
+                        world.destroyBody(traps.get(i).getB2Body());
+                        traps.remove(i);
+                    } else {
+                        traps.get(i).getImage().draw(game.batch);
+                        traps.get(i).update();
+                    }
                 }
 
                 //render UI
@@ -420,9 +425,14 @@ public class PlayScreen implements Screen {
                     tower.getTowerSprite().draw(game.batch);
                 }
 
-                for(Trap trap : traps) {
-                    trap.getImage().draw(game.batch);
-                    trap.update();
+                for(int i = 0 ; i < traps.size() ; i ++) {
+                    if(traps.get(i).isDead()) {
+                        world.destroyBody(traps.get(i).getB2Body());
+                        traps.remove(i);
+                    } else {
+                        traps.get(i).getImage().draw(game.batch);
+                        traps.get(i).update();
+                    }
                 }
 
                 //render UI
@@ -498,7 +508,7 @@ public class PlayScreen implements Screen {
                 renderer.render();
 
                 //renders the debug lines for box2d
-//        b2dr.render(world, gameCam.combined);
+        b2dr.render(world, gameCam.combined);
 
 
                 game.batch.setProjectionMatrix(gameCam.combined);
@@ -509,7 +519,7 @@ public class PlayScreen implements Screen {
 
                 gameCam.update();
 
-                bossCreep.render(game.batch);
+//                bossCreep.render(game.batch);
                 bossCreep.update();
 
 //        player.update();

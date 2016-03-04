@@ -1,4 +1,4 @@
-package com.finalstand.game.traps;
+package com.finalstand.game.sprites.traps;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -9,8 +9,6 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.finalstand.game.FinalStand;
 import com.finalstand.game.Screens.PlayScreen;
 import com.finalstand.game.sprites.creeps.Creep;
-
-import java.awt.geom.Point2D;
 
 /**
  * Created by noel on 22/02/2016.
@@ -39,32 +37,48 @@ public class Bomb extends Trap
         explosionDuration = 0;
     }
 
+    public boolean isBombActive() {
+        return bombActive;
+    }
+
+    public void setBombActive(boolean bombActive) {
+        this.bombActive = bombActive;
+    }
+
+    public int getExplosionDuration() {
+        return explosionDuration;
+    }
+
+    public void setExplosionDuration(int explosionDuration) {
+        this.explosionDuration = explosionDuration;
+    }
+
     public void defineTrap()
     {
         BodyDef bdef = new BodyDef();
         // this is temporary
-        bdef.position.set(10 / FinalStand.PPM, 355 / FinalStand.PPM);
+        bdef.position.set(getPosition().x + (getImage().getWidth() / 2), getPosition().y + (getImage().getHeight() / 2));
         bdef.type = BodyDef.BodyType.DynamicBody;
 
         b2Body = world.createBody(bdef);
 
         FixtureDef fdef = new FixtureDef(); // Needed for collision detection
         CircleShape shape = new CircleShape();
-        shape.setRadius(24/ FinalStand.PPM);
+        shape.setRadius(24 / FinalStand.PPM);
 
         fdef.filter.categoryBits = FinalStand.BOMB_BIT;
-        fdef.filter.maskBits = FinalStand.DEFAULT | FinalStand.RIGHT_BOUND_BIT | FinalStand.LEFT_BOUND_BIT
-                | FinalStand.TOP_BOUND_BIT | FinalStand.BOT_BOUND_BIT;
+        fdef.filter.maskBits = FinalStand.DEFAULT | FinalStand.CREEP_BIT | FinalStand.ROADBOUNDS_BIT;
 
         fdef.shape = shape;
-        b2Body.createFixture(fdef);
+        fdef.isSensor = true;
+        b2Body.createFixture(fdef).setUserData(this);
     }
 
     public void update()
     {
         // checkCollisions();
 
-        if(bombActive)
+        if(isBombActive())
         {
             delay--;
 

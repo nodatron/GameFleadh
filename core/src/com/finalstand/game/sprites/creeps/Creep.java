@@ -106,6 +106,7 @@ public class Creep extends Sprite{
         }
         waypointHit = 0;
         speed = 1;
+        initSpeed = speed;
 
     }
 

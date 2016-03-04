@@ -1,4 +1,4 @@
-package com.finalstand.game.traps;
+package com.finalstand.game.sprites.traps;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -10,14 +10,11 @@ import com.finalstand.game.FinalStand;
 import com.finalstand.game.Screens.PlayScreen;
 import com.finalstand.game.sprites.creeps.Creep;
 
-import java.awt.geom.Point2D;
-
 /**
  * Created by Carl on 16/02/2016.
  */
 public class Barricade extends Trap
 {
-    int health;
 
     public Barricade(float x, float y, World world)
     {
@@ -29,6 +26,7 @@ public class Barricade extends Trap
         health = 120; // should last for two seconds
         cost = 10;
         this.world = world;
+        defineTrap();
     }
 
     //change the categorybit for each one to the classes bit so for Glue change it to GLUE_BIT
@@ -38,7 +36,7 @@ public class Barricade extends Trap
     {
         BodyDef bdef = new BodyDef();
         // this is temporary
-        bdef.position.set(10 / FinalStand.PPM, 355 / FinalStand.PPM);
+        bdef.position.set(getPosition().x + (getImage().getWidth() / 2), getPosition().y + (getImage().getHeight() / 2));
         bdef.type = BodyDef.BodyType.DynamicBody;
 
         b2Body = world.createBody(bdef);
@@ -48,37 +46,37 @@ public class Barricade extends Trap
         shape.setRadius(5/ FinalStand.PPM);
 
         fdef.filter.categoryBits = FinalStand.BARRICADE_BIT;
-        fdef.filter.maskBits = FinalStand.DEFAULT | FinalStand.RIGHT_BOUND_BIT | FinalStand.LEFT_BOUND_BIT
-                | FinalStand.TOP_BOUND_BIT | FinalStand.BOT_BOUND_BIT;
+        fdef.filter.maskBits = FinalStand.DEFAULT | FinalStand.CREEP_BIT | FinalStand.ROADBOUNDS_BIT;
 
         fdef.shape = shape;
-        b2Body.createFixture(fdef);
+        fdef.isSensor = true;
+        b2Body.createFixture(fdef).setUserData(this);
     }
 
     public void update()
     {
-        //checkCollisions();
-
-
+        if(isHit()) {
+            setHealth(getHealth() - 10);
+            if(getHealth() <= 0) {
+                setIsDead(true);
+            }
+        }
     }
 
+    //Written by Niall
     @Override
     public void onCreepHit(Creep creep)
     {
+        System.out.println("Hitting barricade");
+        creep.setInitSpeed(creep.getSpeed());
         creep.setSpeed(0);
-        health--;
-
-        if(health <= 0)
-        {
-            PlayScreen.traps.remove(this);
-            world.destroyBody(b2Body);
-        }
+        setIsHit(true);
     }
 
     @Override
     public void onCreepRelease(Creep creep)
     {
-        creep.setSpeed(1);
+        creep.setSpeed(creep.getInitSpeed());
     }
 
     public void render()

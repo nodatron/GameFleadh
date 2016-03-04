@@ -9,7 +9,7 @@ import com.finalstand.game.sprites.towers.AOETower;
 import com.finalstand.game.sprites.towers.DOTTower;
 import com.finalstand.game.sprites.towers.LaserTower;
 import com.finalstand.game.sprites.towers.SingleShotTower;
-import com.finalstand.game.traps.Trap;
+import com.finalstand.game.sprites.traps.Trap;
 
 /**
  * Created by Keith on 16/02/2016.

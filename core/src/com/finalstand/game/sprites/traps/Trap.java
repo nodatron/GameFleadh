@@ -1,4 +1,4 @@
-package com.finalstand.game.traps;
+package com.finalstand.game.sprites.traps;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -23,6 +23,61 @@ public abstract class Trap extends Sprite
 
     protected World world;
     protected Body b2Body;
+
+    protected boolean isDead = false;
+    protected boolean isHit = false;
+
+    protected int health;
+
+    public Vector2 getPosition() {
+        return position;
+    }
+
+    public void setPosition(Vector2 position) {
+        this.position = position;
+    }
+
+    public int getHealth() {
+
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public boolean isHit() {
+        return isHit;
+    }
+
+    public void setIsHit(boolean isHit) {
+        this.isHit = isHit;
+    }
+
+    public int getHits() {
+
+        return hits;
+    }
+
+    public void setHits(int hits) {
+        this.hits = hits;
+    }
+
+    public boolean isDead() {
+        return isDead;
+    }
+
+    public void setIsDead(boolean isDead) {
+        this.isDead = isDead;
+    }
+
+    public Body getB2Body() {
+        return b2Body;
+    }
+
+    public void setB2Body(Body b2Body) {
+        this.b2Body = b2Body;
+    }
 
     public static Vector2 trapSize = new Vector2(16 / FinalStand.PPM, 16 / FinalStand.PPM);
 
