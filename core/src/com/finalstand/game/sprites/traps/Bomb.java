@@ -20,6 +20,7 @@ public class Bomb extends Trap
     int delay;
     float blastRadius;
     int explosionDuration;
+    private boolean isBombExploded = false;
 
     public Bomb(float x, float y, World world)
     {
@@ -35,6 +36,7 @@ public class Bomb extends Trap
         delay = 120; // two seconds @ 60fps
         blastRadius = 128.0f;
         explosionDuration = 0;
+        defineTrap();
     }
 
     public boolean isBombActive() {
@@ -64,7 +66,7 @@ public class Bomb extends Trap
 
         FixtureDef fdef = new FixtureDef(); // Needed for collision detection
         CircleShape shape = new CircleShape();
-        shape.setRadius(24 / FinalStand.PPM);
+        shape.setRadius(5 / FinalStand.PPM);
 
         fdef.filter.categoryBits = FinalStand.BOMB_BIT;
         fdef.filter.maskBits = FinalStand.DEFAULT | FinalStand.CREEP_BIT | FinalStand.ROADBOUNDS_BIT;
@@ -72,6 +74,14 @@ public class Bomb extends Trap
         fdef.shape = shape;
         fdef.isSensor = true;
         b2Body.createFixture(fdef).setUserData(this);
+    }
+
+    public boolean isBombExploded() {
+        return isBombExploded;
+    }
+
+    public void setIsBombExploded(boolean isBombExploded) {
+        this.isBombExploded = isBombExploded;
     }
 
     public void update()
@@ -87,6 +97,14 @@ public class Bomb extends Trap
                 explode();
             }
         }
+
+        if(isBombExploded()) {
+            setExplosionDuration(getExplosionDuration() + 1);
+        }
+
+        if(getExplosionDuration() > 60) {
+            setIsDead(true);
+        }
     }
 
     protected void explode()
@@ -94,22 +112,8 @@ public class Bomb extends Trap
         image.setPosition(position.x - trapSize.x, position.y - trapSize.y);
         image.setSize(trapSize.x * 3, trapSize.y * 3);
         image.setTexture(texture2);
-//        if(explosionDuration < 60)
-//        {
-//            for(Creep c : creep)
-//            {
-//                if(Point2D.distance(position.x, position.y, c.position.x, c.position.y) < blastRadius)
-//                {
-//                    c.health--;
-//                }
-//            }
-//        }
-//        else
-//        {
-        PlayScreen.traps.remove(this); // ArrayList object removal
-//        }
 
-        explosionDuration++;
+        setIsBombExploded(true);
     }
 
     public void render()
@@ -143,7 +147,7 @@ public class Bomb extends Trap
     public void onCreepHit(Creep creep)
     {
         System.out.println("in creep hit bomb");
-        bombActive = true;
+        setBombActive(true);
         creep.setBombTriggered(true);
     }
 

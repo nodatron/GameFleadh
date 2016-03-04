@@ -29,6 +29,16 @@ public abstract class Trap extends Sprite
 
     protected int health;
 
+    protected static int damage;
+
+    public static int getDamage() {
+        return damage;
+    }
+
+    public static void setDamage(int d) {
+        damage = d;
+    }
+
     public Vector2 getPosition() {
         return position;
     }

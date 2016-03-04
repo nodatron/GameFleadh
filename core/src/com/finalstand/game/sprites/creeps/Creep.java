@@ -13,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.finalstand.game.FinalStand;
 import com.finalstand.game.Screens.PlayScreen;
+import com.finalstand.game.sprites.traps.Bomb;
 import com.finalstand.game.tools.Waypoint;
 
 /**
@@ -107,7 +108,7 @@ public class Creep extends Sprite{
         waypointHit = 0;
         speed = 1;
         initSpeed = speed;
-
+        bombTimer = 120;
     }
 
     /**
@@ -191,6 +192,15 @@ public class Creep extends Sprite{
     }
 
     public void update() {
+
+        if(isBombTriggered()) {
+            setBombTimer(getBombTimer() - 1);
+            if(getBombTimer() <= 0) {
+                setHealth(getHealth() - Bomb.getDamage());
+            }
+        } else {
+            setBombTimer(120);
+        }
 
         checkDir();
 
