@@ -24,13 +24,16 @@ public class Spike extends Trap
         image.setPosition(x, y);
         cost = 10;
         this.world = world;
+        damage = 20;
+
+        defineTrap();
     }
 
     public void defineTrap()
     {
         BodyDef bdef = new BodyDef();
         // this is temporary
-        bdef.position.set(10 / FinalStand.PPM, 355 / FinalStand.PPM);
+        bdef.position.set(getPosition().x + (getImage().getWidth() / 2), getPosition().y + (getImage().getHeight() / 2));
         bdef.type = BodyDef.BodyType.DynamicBody;
 
         b2Body = world.createBody(bdef);
@@ -40,11 +43,11 @@ public class Spike extends Trap
         shape.setRadius(5/ FinalStand.PPM);
 
         fdef.filter.categoryBits = FinalStand.SPIKE_BIT;
-        fdef.filter.maskBits = FinalStand.DEFAULT | FinalStand.RIGHT_BOUND_BIT | FinalStand.LEFT_BOUND_BIT
-                | FinalStand.TOP_BOUND_BIT | FinalStand.BOT_BOUND_BIT;
+        fdef.filter.maskBits = FinalStand.DEFAULT | FinalStand.CREEP_BIT | FinalStand.ROADBOUNDS_BIT;
 
         fdef.shape = shape;
-        b2Body.createFixture(fdef);
+        fdef.isSensor = true;
+        b2Body.createFixture(fdef).setUserData(this);
     }
 
     public void render()
@@ -65,25 +68,21 @@ public class Spike extends Trap
 
     public void update()
     {
-        //checkCollisions();
+        if(hits >= 5)
+        {
+            setIsDead(true);
+        }
     }
 
     @Override
     public void onCreepHit(Creep creep)
     {
-        creep.setHealth(creep.getHealth() - 1);
+        creep.setHealth(getHealth() - getDamage());
         hits++;
-
-        if(hits >= 300)
-        {
-            PlayScreen.traps.remove(this);
-            world.destroyBody(b2Body);
-        }
     }
 
     @Override
     public void onCreepRelease(Creep creep)
     {
-
     }
 }

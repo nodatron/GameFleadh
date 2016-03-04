@@ -51,6 +51,16 @@ public class Creep extends Sprite{
     protected boolean bombTriggered;
     protected int bombTimer;
 
+    protected int slowedTimer = 0;
+
+    public int getSlowedTimer() {
+        return slowedTimer;
+    }
+
+    public void setSlowedTimer(int getSlowedTimer) {
+        this.slowedTimer = getSlowedTimer;
+    }
+
     public int getBombTimer() {
         return bombTimer;
     }
@@ -217,6 +227,16 @@ public class Creep extends Sprite{
         } else if(movement[3]){
             //go down
             direction = new Vector2(0, - 50 / FinalStand.PPM);
+        }
+
+        if(isSlowed()) {
+            setSpeed(getSpeed());
+            setSlowedTimer(getSlowedTimer() + 1);
+        }
+
+        if(getSlowedTimer() > 180) {
+            setSpeed(getInitSpeed());
+            setSlowed(false);
         }
         direction.scl(speed);
 //        this.b2Body.applyLinearImpulse(direction, this.b2Body.getWorldCenter(), true);

@@ -13,6 +13,8 @@ import com.finalstand.game.sprites.projectiles.Projectile;
 import com.finalstand.game.sprites.towers.Tower;
 import com.finalstand.game.sprites.traps.Barricade;
 import com.finalstand.game.sprites.traps.Bomb;
+import com.finalstand.game.sprites.traps.Glue;
+import com.finalstand.game.sprites.traps.Spike;
 
 /**
  * Created by Niall PC on 18/02/2016.
@@ -130,6 +132,32 @@ public class WorldContactListener implements ContactListener {
                     ((Bomb) fixA.getUserData()).onCreepHit((Creep) fixB.getUserData());
                 }
             } break;
+
+            case FinalStand.CREEP_BIT | FinalStand.SPIKE_BIT: {
+//                Gdx.app.log("World Contact Listener", "tower, roadbounds hit right");
+                if(fixA.getFilterData().categoryBits == FinalStand.CREEP_BIT) {
+                    System.out.println(fixA.getUserData());
+                    System.out.println(fixB.getUserData());
+                    ((Spike) fixB.getUserData()).onCreepHit((Creep) fixA.getUserData());
+                } else {
+                    System.out.println(fixA.getUserData());
+                    System.out.println(fixB.getUserData());
+                    ((Spike) fixA.getUserData()).onCreepHit((Creep) fixB.getUserData());
+                }
+            } break;
+
+            case FinalStand.CREEP_BIT | FinalStand.GLUE_BIT: {
+//                Gdx.app.log("World Contact Listener", "tower, roadbounds hit right");
+                if(fixA.getFilterData().categoryBits == FinalStand.CREEP_BIT) {
+                    System.out.println(fixA.getUserData());
+                    System.out.println(fixB.getUserData());
+                    ((Glue) fixB.getUserData()).onCreepHit((Creep) fixA.getUserData());
+                } else {
+                    System.out.println(fixA.getUserData());
+                    System.out.println(fixB.getUserData());
+                    ((Glue) fixA.getUserData()).onCreepHit((Creep) fixB.getUserData());
+                }
+            } break;
         }
     }
 
@@ -205,6 +233,19 @@ public class WorldContactListener implements ContactListener {
                     System.out.println(fixA.getUserData());
                     System.out.println(fixB.getUserData());
                     ((Bomb) fixA.getUserData()).onCreepRelease((Creep) fixB.getUserData());
+                }
+            } break;
+
+            case FinalStand.CREEP_BIT | FinalStand.GLUE_BIT: {
+//                Gdx.app.log("World Contact Listener", "tower, roadbounds hit right");
+                if(fixA.getFilterData().categoryBits == FinalStand.CREEP_BIT) {
+                    System.out.println(fixA.getUserData());
+                    System.out.println(fixB.getUserData());
+                    ((Glue) fixB.getUserData()).onCreepRelease((Creep) fixA.getUserData());
+                } else {
+                    System.out.println(fixA.getUserData());
+                    System.out.println(fixB.getUserData());
+                    ((Glue) fixA.getUserData()).onCreepRelease((Creep) fixB.getUserData());
                 }
             } break;
         }

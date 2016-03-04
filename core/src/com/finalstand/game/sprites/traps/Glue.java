@@ -24,28 +24,29 @@ public class Glue extends Trap
         image.setPosition(x, y);
         cost = 20;
         this.world = world;
+
+        defineTrap();
     }
 
     public void defineTrap()
     {
         BodyDef bdef = new BodyDef();
         // this is temporary
-        bdef.position.set(10 / FinalStand.PPM, 355 / FinalStand.PPM);
+        bdef.position.set(getPosition().x + (getImage().getWidth() / 2), getPosition().y + (getImage().getHeight() / 2));
         bdef.type = BodyDef.BodyType.DynamicBody;
 
         b2Body = world.createBody(bdef);
 
         FixtureDef fdef = new FixtureDef(); // Needed for collision detection
         CircleShape shape = new CircleShape();
-        shape.setRadius(5 / FinalStand.PPM);
+        shape.setRadius(8 / FinalStand.PPM);
 
         fdef.filter.categoryBits = FinalStand.GLUE_BIT;
-        fdef.filter.maskBits = FinalStand.DEFAULT | FinalStand.RIGHT_BOUND_BIT | FinalStand.LEFT_BOUND_BIT
-                | FinalStand.TOP_BOUND_BIT | FinalStand.BOT_BOUND_BIT;
+        fdef.filter.maskBits = FinalStand.DEFAULT | FinalStand.CREEP_BIT | FinalStand.ROADBOUNDS_BIT;
 
         fdef.shape = shape;
-        b2Body.createFixture(fdef);
-
+        fdef.isSensor = true;
+        b2Body.createFixture(fdef).setUserData(this);
     }
 
     public void render()
@@ -67,29 +68,24 @@ public class Glue extends Trap
     public void update()
     {
         //checkCollisions();
-
+        if(hits > 5)
+        {
+            setIsDead(true);
+        }
 
     }
 
     @Override
     public void onCreepRelease(Creep creep)
     {
-
+        creep.setSlowed(true);
     }
 
     @Override
     public void onCreepHit(Creep creep)
     {
-        if(!creep.isSlowed())
-        {
-            hits++;
-            creep.setSlowed(true);
-        }
-
-        if(hits == 5)
-        {
-            PlayScreen.traps.remove(this);
-            world.destroyBody(b2Body);
-        }
+        creep.setInitSpeed(creep.getSpeed());
+        creep.setSpeed(creep.getSpeed() / 2);
+        setHits(getHits() + 1);
     }
 }

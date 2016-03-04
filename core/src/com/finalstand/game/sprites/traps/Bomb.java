@@ -33,7 +33,7 @@ public class Bomb extends Trap
         cost = 10;
         this.world = world;
         bombActive = false;
-        delay = 120; // two seconds @ 60fps
+        delay = 60; // two seconds @ 60fps
         blastRadius = 128.0f;
         explosionDuration = 0;
         defineTrap();
@@ -66,7 +66,7 @@ public class Bomb extends Trap
 
         FixtureDef fdef = new FixtureDef(); // Needed for collision detection
         CircleShape shape = new CircleShape();
-        shape.setRadius(5 / FinalStand.PPM);
+        shape.setRadius(24 / FinalStand.PPM);
 
         fdef.filter.categoryBits = FinalStand.BOMB_BIT;
         fdef.filter.maskBits = FinalStand.DEFAULT | FinalStand.CREEP_BIT | FinalStand.ROADBOUNDS_BIT;
@@ -102,7 +102,7 @@ public class Bomb extends Trap
             setExplosionDuration(getExplosionDuration() + 1);
         }
 
-        if(getExplosionDuration() > 60) {
+        if(getExplosionDuration() > 10) {
             setIsDead(true);
         }
     }
