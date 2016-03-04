@@ -74,7 +74,7 @@ public class LaserTower extends Tower{
     public void createProjectile()
     {
         Projectile p = new Laser(projectilePos.x, projectilePos.y, towerAngle, level,
-                                laserProjectileSize.x, laserProjectileSize.y);
+                                laserProjectileSize.x, laserProjectileSize.y, world);
         PlayScreen.projectiles.add(p);
     }
 }

@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 
 /**
  * Created by Niall on 09/02/2016.
@@ -14,7 +15,7 @@ public class HeavyCreep extends Creep {
     public HeavyCreep(float x, float y, World world) {
         super(world);
         position = new Vector2(x, y);
-        texture = new Texture("creeps/HeavyCreep.png");
+        texture = new Texture("creeps/heavycreep2.png");
         sprite = new Sprite(texture);
 
         defineCreep();
@@ -22,9 +23,6 @@ public class HeavyCreep extends Creep {
 //        setMovement();
 
         health = 100;
-        armour = 10;
-        status = new boolean[5];
-
     }
 
     public void dispose() {

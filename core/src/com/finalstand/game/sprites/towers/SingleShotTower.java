@@ -52,7 +52,7 @@ public class SingleShotTower extends Tower{
         if(level == 1 || level == 3) {
             Projectile p1 = new Bullet(midProjectilePos.x, midProjectilePos.y, towerAngle, level,
                     towerSprite.getWidth() / 5.0f,
-                    towerSprite.getHeight() / 5.0f);
+                    towerSprite.getHeight() / 5.0f, world);
             PlayScreen.projectiles.add(p1);
         }
 
@@ -60,12 +60,12 @@ public class SingleShotTower extends Tower{
         {
             Projectile p2 = new Bullet(leftProjectilePos.x, leftProjectilePos.y, towerAngle, level,
                     towerSprite.getWidth() / 5.0f,
-                    towerSprite.getHeight() / 5.0f);
+                    towerSprite.getHeight() / 5.0f, world);
             PlayScreen.projectiles.add(p2);
 
             Projectile p3 = new Bullet(rightProjectilePos.x, rightProjectilePos.y, towerAngle, level,
                     towerSprite.getWidth() / 5.0f,
-                    towerSprite.getHeight() / 5.0f);
+                    towerSprite.getHeight() / 5.0f, world);
             PlayScreen.projectiles.add(p3);
         }
     }
@@ -73,7 +73,7 @@ public class SingleShotTower extends Tower{
     @Override
     public boolean targetCreep()
     {
-        for(int counter = 0; counter < PlayScreen.spawnableCreeps.size; counter++) {
+        for(int counter = 0; counter < PlayScreen.spawnableCreeps.size(); counter++) {
             Vector2 creepPos = new Vector2(PlayScreen.spawnableCreeps.get(counter).getSprite().getX(),
                                             PlayScreen.spawnableCreeps.get(counter).getSprite().getY());
 

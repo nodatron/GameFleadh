@@ -12,7 +12,6 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.finalstand.game.FinalStand;
 import com.finalstand.game.sprites.creeps.Creep;
-import com.finalstand.game.sprites.towers.Tower;
 
 /**
  * Created by Niall on 2/15/2016.
@@ -48,7 +47,6 @@ public abstract class InteractiveTileObject {
     }
 
     public abstract void onRightHit(Creep creep);
-//    public abstract void onRightHit(Tower tower);
     public abstract void onLeftHit(Creep creep);
     public abstract void onTopHit(Creep creep);
     public abstract void onBottomHit(Creep creep);

@@ -1,24 +1,18 @@
 package com.finalstand.game.sprites.towers;
 
-import com.badlogic.gdx.Gdx;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
-import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.finalstand.game.FinalStand;
 import com.finalstand.game.Screens.PlayScreen;
 import com.finalstand.game.buttons.SellButton;
 import com.finalstand.game.buttons.UpgradeButton;
-import com.finalstand.game.sprites.projectiles.Projectile;
-import com.finalstand.game.Screens.PlayScreen;
 
 /**
  * Created by Keith on 09/02/2016.
@@ -65,6 +59,7 @@ public class Tower {
             elapsedTime = 0;
         }
     }
+
     public Texture getCurrentTexture(){return currentTexture;}
     public Vector2 getPosition(){return position;}
     public Sprite getTowerSprite() {
@@ -103,6 +98,7 @@ public class Tower {
         shape.setRadius(8 / FinalStand.PPM);
         fdef.filter.categoryBits = FinalStand.TOWER_BIT;
         fdef.filter.maskBits = FinalStand.DEFAULT | FinalStand.ROADBOUNDS_BIT;
+
         fdef.isSensor = true;
         fdef.shape = shape;
         b2Body.createFixture(fdef);
@@ -121,7 +117,7 @@ public class Tower {
 
     public boolean targetCreep()
     {
-        for(int counter = 0; counter < PlayScreen.spawnableCreeps.size; counter++) {
+        for(int counter = 0; counter < PlayScreen.spawnableCreeps.size(); counter++) {
             Vector2 creepPos = new Vector2(PlayScreen.spawnableCreeps.get(counter).getSprite().getX(),
                     PlayScreen.spawnableCreeps.get(counter).getSprite().getY());
 
@@ -133,3 +129,4 @@ public class Tower {
         return false;
     }
 }
+

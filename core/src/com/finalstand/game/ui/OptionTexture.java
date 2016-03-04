@@ -4,19 +4,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.World;
-import com.finalstand.game.FinalStand;
 import com.finalstand.game.Screens.PlayScreen;
-import com.finalstand.game.Screens.PlayScreen;
-import com.finalstand.game.sprites.towers.*;
-import com.finalstand.game.traps.Barricade;
-import com.finalstand.game.traps.Bomb;
-import com.finalstand.game.traps.Glue;
-import com.finalstand.game.traps.Spike;
-
-import javax.xml.soap.Text;
+import com.finalstand.game.sprites.traps.Barricade;
+import com.finalstand.game.sprites.traps.Bomb;
+import com.finalstand.game.sprites.traps.Glue;
+import com.finalstand.game.sprites.traps.Spike;
 
 /**
  * Created by Keith on 16/02/2016.

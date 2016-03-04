@@ -1,16 +1,16 @@
 package com.finalstand.game.ui;
 
-import com.badlogic.gdx.Gdx;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.finalstand.game.Screens.PlayScreen;
 import com.finalstand.game.Screens.PlayScreen;
 import com.finalstand.game.sprites.towers.AOETower;
 import com.finalstand.game.sprites.towers.DOTTower;
 import com.finalstand.game.sprites.towers.LaserTower;
 import com.finalstand.game.sprites.towers.SingleShotTower;
-import com.finalstand.game.traps.Trap;
+import com.finalstand.game.sprites.traps.Trap;
+
 
 /**
  * Created by Keith on 16/02/2016.

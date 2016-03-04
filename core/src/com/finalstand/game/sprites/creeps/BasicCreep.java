@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 
 
 /**
@@ -14,7 +15,8 @@ public class BasicCreep extends Creep {
     public BasicCreep(float x, float y, World world) {
         super(world);
         position = new Vector2(x, y);
-        texture = new Texture("creeps/BasicCreep.png");
+        System.out.println(position);
+        texture = new Texture("creeps/basiccreep2.png");
         sprite = new Sprite(texture);
 
         defineCreep();
@@ -22,9 +24,6 @@ public class BasicCreep extends Creep {
 //        setMovement();
 
         health = 100;
-        armour = 10;
-        status = new boolean[5];
-
     }
 
     public void dispose() {

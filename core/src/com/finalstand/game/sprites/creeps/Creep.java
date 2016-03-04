@@ -12,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.finalstand.game.FinalStand;
+import com.finalstand.game.Screens.PlayScreen;
 import com.finalstand.game.tools.Waypoint;
 
 /**
@@ -26,8 +27,7 @@ public class Creep extends Sprite{
     protected Vector2 position;
 
     protected int health;
-    protected int armour;
-    protected boolean[] status;
+    protected float speed;
 
     protected World world;
     protected Body b2Body;
@@ -43,17 +43,71 @@ public class Creep extends Sprite{
     protected Array<String> dir;
     protected int waypointHit;
 
+    protected boolean slowed;
+    protected int timer;
+    protected float initSpeed;
+
+    protected boolean bombTriggered;
+    protected int bombTimer;
+
+    public int getBombTimer() {
+        return bombTimer;
+    }
+
+    public void setBombTimer(int bombTimer) {
+        this.bombTimer = bombTimer;
+    }
+
+    public boolean isBombTriggered() {
+        return bombTriggered;
+    }
+
+    public void setBombTriggered(boolean bombTriggered) {
+        this.bombTriggered = bombTriggered;
+    }
+
+    public float getInitSpeed() {
+        return initSpeed;
+    }
+
+    public void setInitSpeed(float initSpeed) {
+        this.initSpeed = initSpeed;
+    }
+
+    public int getTimer() {
+        return timer;
+    }
+
+    public void setTimer(int timer) {
+        this.timer = timer;
+    }
+
+    public boolean isSlowed() {
+        return slowed;
+    }
+
+    public void setSlowed(boolean slowed) {
+        this.slowed = slowed;
+    }
+
     public Creep(World world) {
         this.world = world;
         movement = new boolean[4];
         movement[0] = true;
         setDirection = false;
-        direction = new Vector2(0.2f / FinalStand.PPM, 0);
+        direction = new Vector2(50 / FinalStand.PPM, 0);
         timeElapsed = 0;
-        dir = Waypoint.readWaypoints("map1.txt");
+        if(FinalStand.mapNumber == 1) {
+            dir = Waypoint.readWaypoints("map1.txt");
+        } else if(FinalStand.mapNumber == 2) {
+            dir = Waypoint.readWaypoints("map2.txt");
+        } else if(FinalStand.mapNumber == 3 || FinalStand.mapNumber == 4){
+            dir = Waypoint.readWaypoints("map3.txt");
+        }
         waypointHit = 0;
-//        texture = new Texture("BasicCreep.png");
-//        sprite = new Sprite(texture);
+        speed = 1;
+        initSpeed = speed;
+
     }
 
     /**
@@ -74,13 +128,18 @@ public class Creep extends Sprite{
         //setting what a creep can collide with and what bit it is
         fdef.filter.categoryBits = FinalStand.CREEP_BIT;
         fdef.filter.maskBits = FinalStand.DEFAULT | FinalStand.ROADBOUNDS_BIT | FinalStand.PROJECTILE_BIT
-                               | FinalStand.TRAP_BIT | FinalStand.BASE_BIT | FinalStand.WAYPOINT_BIT;
+                | FinalStand.BARRICADE_BIT | FinalStand.GLUE_BIT | FinalStand.BOMB_BIT
+                | FinalStand.SPIKE_BIT | FinalStand.WAYPOINT_BIT;
         fdef.shape = shape;
-        b2Body.createFixture(fdef);
+        fdef.isSensor = true;
+        b2Body.createFixture(fdef).setUserData(this);
 
         EdgeShape rightBound = new EdgeShape();
         rightBound.set(new Vector2(8 / FinalStand.PPM, 3 / FinalStand.PPM), new Vector2(8 / FinalStand.PPM, - 3 / FinalStand.PPM));
         fdef.filter.categoryBits = FinalStand.RIGHT_BOUND_BIT;
+        fdef.filter.maskBits = FinalStand.DEFAULT | FinalStand.ROADBOUNDS_BIT | FinalStand.PROJECTILE_BIT
+                                | FinalStand.BARRICADE_BIT | FinalStand.GLUE_BIT | FinalStand.BOMB_BIT
+                                | FinalStand.SPIKE_BIT | FinalStand.WAYPOINT_BIT;
         fdef.shape = rightBound;
         fdef.isSensor = true;
         b2Body.createFixture(fdef).setUserData(this);
@@ -88,6 +147,9 @@ public class Creep extends Sprite{
         EdgeShape leftBound = new EdgeShape();
         leftBound.set(new Vector2(-8 / FinalStand.PPM, 3 / FinalStand.PPM), new Vector2(-8 / FinalStand.PPM, - 3 / FinalStand.PPM));
         fdef.filter.categoryBits = FinalStand.LEFT_BOUND_BIT;
+        fdef.filter.maskBits = FinalStand.DEFAULT | FinalStand.ROADBOUNDS_BIT | FinalStand.PROJECTILE_BIT
+                | FinalStand.BARRICADE_BIT | FinalStand.GLUE_BIT | FinalStand.BOMB_BIT
+                | FinalStand.SPIKE_BIT | FinalStand.WAYPOINT_BIT;
         fdef.shape = leftBound;
         fdef.isSensor = true;
         b2Body.createFixture(fdef).setUserData(this);
@@ -95,6 +157,9 @@ public class Creep extends Sprite{
         EdgeShape topBound = new EdgeShape();
         topBound.set(new Vector2(3 / FinalStand.PPM, 8 / FinalStand.PPM), new Vector2(- 3 / FinalStand.PPM, 8 / FinalStand.PPM));
         fdef.filter.categoryBits = FinalStand.TOP_BOUND_BIT;
+        fdef.filter.maskBits = FinalStand.DEFAULT | FinalStand.ROADBOUNDS_BIT | FinalStand.PROJECTILE_BIT
+                | FinalStand.BARRICADE_BIT | FinalStand.GLUE_BIT | FinalStand.BOMB_BIT
+                | FinalStand.SPIKE_BIT | FinalStand.WAYPOINT_BIT;
         fdef.shape = topBound;
         fdef.isSensor = true;
         b2Body.createFixture(fdef).setUserData(this);
@@ -102,6 +167,9 @@ public class Creep extends Sprite{
         EdgeShape bottomBound = new EdgeShape();
         bottomBound.set(new Vector2(3 / FinalStand.PPM, - 8 / FinalStand.PPM), new Vector2(- 3 / FinalStand.PPM, -8 / FinalStand.PPM));
         fdef.filter.categoryBits = FinalStand.BOT_BOUND_BIT;
+        fdef.filter.maskBits = FinalStand.DEFAULT | FinalStand.ROADBOUNDS_BIT | FinalStand.PROJECTILE_BIT
+                | FinalStand.BARRICADE_BIT | FinalStand.GLUE_BIT | FinalStand.BOMB_BIT
+                | FinalStand.SPIKE_BIT | FinalStand.WAYPOINT_BIT;
         fdef.shape = bottomBound;
         fdef.isSensor = true;
         b2Body.createFixture(fdef).setUserData(this);
@@ -123,30 +191,24 @@ public class Creep extends Sprite{
     }
 
     public void update() {
-        //speeds will be held by variables
-        //this.b2body.getLinearVelocity().x/.y - gets the speed the object is moving at
-        // This moves the creep in positive x direction
-//        this.b2Body.applyLinearImpulse(new Vector2(0.2f / FinalStand.PPM, 0), this.b2Body.getWorldCenter(), true);
-//        if(timeElapsed > 100) {
-//            setDirection = true;
-//        }
 
         checkDir();
 
         //set the way to go
         if(movement[0]) {
             // go right
-            direction = new Vector2(100f / FinalStand.PPM, 0);
+            direction = new Vector2(50 / FinalStand.PPM, 0);
         } else if(movement[1]) {
             // go left
-            direction = new Vector2(- 100f / FinalStand.PPM, 0);
+            direction = new Vector2(- 50 / FinalStand.PPM, 0);
         } else if(movement[2]) {
             // go up
-            direction = new Vector2(0, 100f / FinalStand.PPM);
+            direction = new Vector2(0, 50 / FinalStand.PPM);
         } else if(movement[3]){
             //go down
-            direction = new Vector2(0, - 100f / FinalStand.PPM);
+            direction = new Vector2(0, - 50 / FinalStand.PPM);
         }
+        direction.scl(speed);
 //        this.b2Body.applyLinearImpulse(direction, this.b2Body.getWorldCenter(), true);
         this.b2Body.setLinearVelocity(direction);
 //        timeElapsed++;
@@ -171,46 +233,49 @@ public class Creep extends Sprite{
         movement[index] = false;
     }
 
-    public void setSetDirection(boolean value) {
-        setDirection = value;
-    }
-
     public void setWaypointHit() { waypointHit++; }
 
     public int getWaypointHit() { return waypointHit; }
 
     public void checkDir() {
-        if(dir.get(getWaypointHit()).equals("right")) {
-            setMovement(0);
-            unsetMovement(1);
-            unsetMovement(2);
-            unsetMovement(3);
-        } else if(dir.get(getWaypointHit()).equals("left")) {
-            setMovement(1);
-            unsetMovement(0);
-            unsetMovement(2);
-            unsetMovement(3);
-        } else if(dir.get(getWaypointHit()).equals("up")) {
-            setMovement(2);
-            unsetMovement(1);
-            unsetMovement(0);
-            unsetMovement(3);
-        } else if(dir.get(getWaypointHit()).equals("down")) {
-            setMovement(3);
-            unsetMovement(1);
-            unsetMovement(2);
-            unsetMovement(0);
+//        System.out.println(dir.get(getWaypointHit()));
+        if(getWaypointHit() == dir.size) {
+            reachedEnd();
+        } else {
+            if (dir.get(getWaypointHit()).equals("right")) {
+                setMovement(0);
+                unsetMovement(1);
+                unsetMovement(2);
+                unsetMovement(3);
+            } else if (dir.get(getWaypointHit()).equals("left")) {
+                setMovement(1);
+                unsetMovement(0);
+                unsetMovement(2);
+                unsetMovement(3);
+            } else if (dir.get(getWaypointHit()).equals("up")) {
+                setMovement(2);
+                unsetMovement(1);
+                unsetMovement(0);
+                unsetMovement(3);
+            } else if (dir.get(getWaypointHit()).equals("down")) {
+                setMovement(3);
+                unsetMovement(1);
+                unsetMovement(2);
+                unsetMovement(0);
+            }
         }
     }
 
 
-    public void reachedEnd(int index) {
-        if(getWaypointHit() == dir.size + 1) {
-            //creep has reached the base of the player
-
-        }
+    public void reachedEnd() {
+//        PlayScreen.creeps.remove(this);
+        PlayScreen.spawnableCreeps.remove(this);
+//        world.destroyBody(b2Body);
     }
 
+    public Body getB2Body() {
+        return b2Body;
+    }
 
     void dispose() {
 
@@ -218,5 +283,21 @@ public class Creep extends Sprite{
 
     public Sprite getSprite() {
         return sprite;
+    }
+
+    public float getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(float speed) {
+        this.speed = speed;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
     }
 }
