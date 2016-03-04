@@ -12,23 +12,41 @@ import com.finalstand.game.sprites.creeps.Creep;
  */
 public class Laser extends Projectile{
 
+    private int creepHits;
+    private int maxCreepHits;
+
     public Laser(float x, float y, float angle, int level, float w, float h, World world)
     {
         super(x, y, angle, level, 8 / FinalStand.PPM, world, w, h);
         if(level < 3) {
             projectileSprite = new Sprite(new Texture("projectiles/laser_projectile_level1.png"));
+            maxCreepHits = 3;
+            if(level == 1)
+            {
+                damage = 1;
+            }
+            else
+            {
+                damage = 2;
+            }
         }
         else {
             projectileSprite = new Sprite(new Texture("projectiles/laser_projectile_level3.png"));
+            maxCreepHits = 6;
+            damage = 2;
         }
         projectileSprite.setSize(w, h);
         projectileSprite.setPosition(x, y);
-        damage = 1;
+        creepHits = 0;
     }
 
     public void onCreepProjHit(Creep creep)
     {
+        System.out.println("Laser hitting creep");
         creep.setHealth(creep.getHealth() - damage);
-        PlayScreen.projectiles.remove(this);
+        creepHits++;
+        if(creepHits >= maxCreepHits) {
+            isDead = true;
+        }
     }
 }

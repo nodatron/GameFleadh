@@ -26,7 +26,5 @@ public class Bullet extends Projectile{
         System.out.println("Bullet hitting creep");
         creep.setHealth(creep.getHealth() - damage);
         isDead = true;
-//        PlayScreen.projectiles.remove(this);
-//        world.destroyBody(b2Body);
     }
 }

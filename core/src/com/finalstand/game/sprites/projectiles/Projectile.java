@@ -84,6 +84,11 @@ public class Projectile extends Sprite{
         boxForward.scl(FinalStand.PPM / 2 + 10);
         projectileSprite.setPosition(position.x, position.y);
         b2Body.setLinearVelocity(boxForward);
+        if(position.x > FinalStand.V_WIDTH / FinalStand.PPM || position.x < 0 ||
+                position.y > FinalStand.V_HEIGHT / FinalStand.PPM || position.y < 0)
+        {
+            this.isDead = true;
+        }
     }
 
     public void onCreepProjHit(Creep creep, Projectile projectile) {
@@ -113,14 +118,6 @@ public class Projectile extends Sprite{
         }
 
     }
-
-//    public void checkCollision()
-//    {
-//        for(int counter = 0; counter < PlayScreen.spawnableCreeps.size(); counter ++)
-//        {
-//            if()
-//        }
-//    }
 
     public Vector2 getPosition() {
         return position;
