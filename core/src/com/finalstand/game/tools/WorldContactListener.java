@@ -92,7 +92,7 @@ public class WorldContactListener implements ContactListener {
             } break;
 
             case FinalStand.TOWER_BIT | FinalStand.ROADBOUNDS_BIT:{
-                Gdx.app.log("World Contact Listener", "tower, roadbounds hit right");
+//                Gdx.app.log("World Contact Listener", "tower, roadbounds hit right");
                 if(fixA.getFilterData().categoryBits == FinalStand.TOWER_BIT) {
                     ((RoadBounds) fixB.getUserData()).onTowerHit((Tower) fixA.getUserData());
                 } else {
@@ -103,12 +103,12 @@ public class WorldContactListener implements ContactListener {
             case FinalStand.CREEP_BIT | FinalStand.PROJECTILE_BIT: {
 //                Gdx.app.log("World Contact Listener", "tower, roadbounds hit right");
                 if(fixA.getFilterData().categoryBits == FinalStand.CREEP_BIT) {
-                    System.out.println(fixA.getUserData());
-                    System.out.println(fixB.getUserData());
+//                    System.out.println(fixA.getUserData());
+//                    System.out.println(fixB.getUserData());
                     ((Projectile) fixB.getUserData()).onCreepProjHit((Creep) fixA.getUserData(), (Projectile) fixB.getUserData());
                 } else {
-                    System.out.println(fixA.getUserData());
-                    System.out.println(fixB.getUserData());
+//                    System.out.println(fixA.getUserData());
+//                    System.out.println(fixB.getUserData());
                     ((Projectile) fixA.getUserData()).onCreepProjHit((Creep) fixB.getUserData(), (Projectile) fixB.getUserData());
                 }
             } break;
