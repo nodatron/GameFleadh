@@ -52,7 +52,7 @@ public class SingleShotTower extends Tower{
         if(level == 1 || level == 3) {
             Projectile p1 = new Bullet(midProjectilePos.x, midProjectilePos.y, towerAngle, level,
                     towerSprite.getWidth() / 5.0f,
-                    towerSprite.getHeight() / 5.0f);
+                    towerSprite.getHeight() / 5.0f, world);
             PlayScreen.projectiles.add(p1);
         }
 
@@ -60,12 +60,12 @@ public class SingleShotTower extends Tower{
         {
             Projectile p2 = new Bullet(leftProjectilePos.x, leftProjectilePos.y, towerAngle, level,
                     towerSprite.getWidth() / 5.0f,
-                    towerSprite.getHeight() / 5.0f);
+                    towerSprite.getHeight() / 5.0f, world);
             PlayScreen.projectiles.add(p2);
 
             Projectile p3 = new Bullet(rightProjectilePos.x, rightProjectilePos.y, towerAngle, level,
                     towerSprite.getWidth() / 5.0f,
-                    towerSprite.getHeight() / 5.0f);
+                    towerSprite.getHeight() / 5.0f, world);
             PlayScreen.projectiles.add(p3);
         }
     }

@@ -49,7 +49,7 @@ public class BossCreep extends Creep {
                 | FinalStand.BARRICADE_BIT | FinalStand.GLUE_BIT | FinalStand.BOMB_BIT
                 | FinalStand.SPIKE_BIT | FinalStand.WAYPOINT_BIT;
         fdef.shape = shape;
-        b2Body.createFixture(fdef);
+        b2Body.createFixture(fdef).setUserData(this);
 
         EdgeShape rightBound = new EdgeShape();
         rightBound.set(new Vector2(8 / FinalStand.PPM, 3 / FinalStand.PPM), new Vector2(8 / FinalStand.PPM, - 3 / FinalStand.PPM));

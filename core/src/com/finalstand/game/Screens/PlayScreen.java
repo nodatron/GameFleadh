@@ -283,10 +283,16 @@ public class PlayScreen implements Screen {
 
                 //rendering projectiles
                 for (int counter = 0; counter < projectiles.size(); counter++) {
-                    projectiles.get(counter).getSprite().setOriginCenter();
-                    projectiles.get(counter).getSprite().setRotation(projectiles.get(counter).getAngle() - 180);
-                    projectiles.get(counter).getSprite().draw(game.batch);
-                    projectiles.get(counter).update();
+                    if(!projectiles.get(counter).isDead()) {
+                        projectiles.get(counter).getSprite().setOriginCenter();
+                        projectiles.get(counter).getSprite().setRotation(projectiles.get(counter).getAngle() - 180);
+                        projectiles.get(counter).getSprite().draw(game.batch);
+                        projectiles.get(counter).update();
+                    } else
+                    {
+                        world.destroyBody(projectiles.get(counter).getB2Body());
+                        projectiles.remove(counter);
+                    }
                 }
 
                 //rendering towers
