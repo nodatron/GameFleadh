@@ -106,6 +106,7 @@ public class Creep extends Sprite{
         }
         waypointHit = 0;
         speed = 1;
+        initSpeed = speed;
 
     }
 
@@ -130,6 +131,7 @@ public class Creep extends Sprite{
                 | FinalStand.BARRICADE_BIT | FinalStand.GLUE_BIT | FinalStand.BOMB_BIT
                 | FinalStand.SPIKE_BIT | FinalStand.WAYPOINT_BIT;
         fdef.shape = shape;
+        fdef.isSensor = true;
         b2Body.createFixture(fdef).setUserData(this);
 
         EdgeShape rightBound = new EdgeShape();

@@ -38,7 +38,7 @@ public class AOETower extends Tower{
     @Override
     public void createProjectile()
     {
-        Projectile p = new AOERing(projectilePos.x, projectilePos.y, towerAngle, level);
+        Projectile p = new AOERing(projectilePos.x, projectilePos.y, towerAngle, level, world);
         PlayScreen.projectiles.add(p);
     }
 }

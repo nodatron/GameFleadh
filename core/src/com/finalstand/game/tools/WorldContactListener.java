@@ -9,7 +9,10 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import com.finalstand.game.FinalStand;
 import com.finalstand.game.sprites.RoadBounds;
 import com.finalstand.game.sprites.creeps.Creep;
+import com.finalstand.game.sprites.projectiles.Projectile;
 import com.finalstand.game.sprites.towers.Tower;
+import com.finalstand.game.sprites.traps.Barricade;
+import com.finalstand.game.sprites.traps.Bomb;
 
 /**
  * Created by Niall PC on 18/02/2016.
@@ -97,6 +100,44 @@ public class WorldContactListener implements ContactListener {
                 }
             } break;
 
+            case FinalStand.CREEP_BIT | FinalStand.PROJECTILE_BIT: {
+//                Gdx.app.log("World Contact Listener", "tower, roadbounds hit right");
+                if(fixA.getFilterData().categoryBits == FinalStand.CREEP_BIT) {
+                    System.out.println(fixA.getUserData());
+                    System.out.println(fixB.getUserData());
+                    ((Projectile) fixB.getUserData()).onCreepProjHit((Creep) fixA.getUserData(), (Projectile) fixB.getUserData());
+                } else {
+                    System.out.println(fixA.getUserData());
+                    System.out.println(fixB.getUserData());
+                    ((Projectile) fixA.getUserData()).onCreepProjHit((Creep) fixB.getUserData(), (Projectile) fixB.getUserData());
+                }
+            } break;
+
+            case FinalStand.CREEP_BIT | FinalStand.BARRICADE_BIT: {
+//                Gdx.app.log("World Contact Listener", "tower, roadbounds hit right");
+                if(fixA.getFilterData().categoryBits == FinalStand.CREEP_BIT) {
+                    System.out.println(fixA.getUserData());
+                    System.out.println(fixB.getUserData());
+                    ((Barricade) fixB.getUserData()).onCreepHit((Creep) fixA.getUserData());
+                } else {
+                    System.out.println(fixA.getUserData());
+                    System.out.println(fixB.getUserData());
+                    ((Barricade) fixA.getUserData()).onCreepHit((Creep) fixB.getUserData());
+                }
+            } break;
+
+            case FinalStand.CREEP_BIT | FinalStand.BOMB_BIT: {
+//                Gdx.app.log("World Contact Listener", "tower, roadbounds hit right");
+                if(fixA.getFilterData().categoryBits == FinalStand.CREEP_BIT) {
+                    System.out.println(fixA.getUserData());
+                    System.out.println(fixB.getUserData());
+                    ((Bomb) fixB.getUserData()).onCreepHit((Creep) fixA.getUserData());
+                } else {
+                    System.out.println(fixA.getUserData());
+                    System.out.println(fixB.getUserData());
+                    ((Bomb) fixA.getUserData()).onCreepHit((Creep) fixB.getUserData());
+                }
+            } break;
         }
     }
 
@@ -137,6 +178,28 @@ public class WorldContactListener implements ContactListener {
                     ((RoadBounds) fixB.getUserData()).onBottomRelease((Creep) fixA.getUserData());
                 } else {
                     ((RoadBounds) fixA.getUserData()).onBottomRelease((Creep) fixB.getUserData());
+                }
+            } break;
+
+            case FinalStand.CREEP_BIT | FinalStand.PROJECTILE_BIT: {
+//                Gdx.app.log("World Contact Listener", "tower, roadbounds hit right");
+                if(fixA.getFilterData().categoryBits == FinalStand.CREEP_BIT) {
+                    ((Projectile) fixB.getUserData()).onCreepProjRelease((Creep) fixA.getUserData(), (Projectile) fixB.getUserData());
+                } else {
+                    ((Projectile) fixA.getUserData()).onCreepProjRelease((Creep) fixB.getUserData(), (Projectile) fixB.getUserData());
+                }
+            } break;
+
+            case FinalStand.CREEP_BIT | FinalStand.BARRICADE_BIT: {
+//                Gdx.app.log("World Contact Listener", "tower, roadbounds hit right");
+                if(fixA.getFilterData().categoryBits == FinalStand.CREEP_BIT) {
+                    System.out.println(fixA.getUserData());
+                    System.out.println(fixB.getUserData());
+                    ((Barricade) fixB.getUserData()).onCreepRelease((Creep) fixA.getUserData());
+                } else {
+                    System.out.println(fixA.getUserData());
+                    System.out.println(fixB.getUserData());
+                    ((Barricade) fixA.getUserData()).onCreepRelease((Creep) fixB.getUserData());
                 }
             } break;
         }

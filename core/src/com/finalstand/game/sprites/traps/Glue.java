@@ -1,4 +1,4 @@
-package com.finalstand.game.traps;
+package com.finalstand.game.sprites.traps;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
