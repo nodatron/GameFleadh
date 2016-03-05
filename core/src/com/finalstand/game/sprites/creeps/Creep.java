@@ -212,7 +212,7 @@ public class Creep extends Sprite{
     }
 
     public void update() {
-        System.out.println(getHealth());
+//        System.out.println(getHealth());
         if(getHealth() <= 0) {
             setIsDead(true);
         }

@@ -10,6 +10,15 @@ public class FinalStand extends Game {
 	//height and width of the gamecamera
 	public static final int V_WIDTH = 800;
 	public static final int V_HEIGHT = 400;
+
+	public static int getHealth() {
+		return health;
+	}
+
+	public static void setHealth(int health) {
+		FinalStand.health = health;
+	}
+
 	//pixels per metre needed because of box2d scaling
 	public static final float PPM = 100;
 

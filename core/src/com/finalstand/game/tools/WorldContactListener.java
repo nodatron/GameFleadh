@@ -107,7 +107,7 @@ public class WorldContactListener implements ContactListener {
                 if(fixA.getFilterData().categoryBits == FinalStand.CREEP_BIT) {
                     ((Projectile) fixB.getUserData()).onCreepProjHit((Creep) fixA.getUserData(), (Projectile) fixB.getUserData());
                 } else {
-                    ((Projectile) fixA.getUserData()).onCreepProjHit((Creep) fixB.getUserData(), (Projectile) fixB.getUserData());
+                    ((Projectile) fixA.getUserData()).onCreepProjHit((Creep) fixB.getUserData(), (Projectile) fixA.getUserData());
                 }
             } break;
 
@@ -123,12 +123,8 @@ public class WorldContactListener implements ContactListener {
             case FinalStand.CREEP_BIT | FinalStand.BOMB_BIT: {
 //                Gdx.app.log("World Contact Listener", "tower, roadbounds hit right");
                 if(fixA.getFilterData().categoryBits == FinalStand.CREEP_BIT) {
-                    System.out.println(fixA.getUserData());
-                    System.out.println(fixB.getUserData());
                     ((Bomb) fixB.getUserData()).onCreepHit((Creep) fixA.getUserData());
                 } else {
-                    System.out.println(fixA.getUserData());
-                    System.out.println(fixB.getUserData());
                     ((Bomb) fixA.getUserData()).onCreepHit((Creep) fixB.getUserData());
                 }
             } break;
@@ -217,7 +213,7 @@ public class WorldContactListener implements ContactListener {
                 if(fixA.getFilterData().categoryBits == FinalStand.CREEP_BIT) {
                     ((Projectile) fixB.getUserData()).onCreepProjRelease((Creep) fixA.getUserData(), (Projectile) fixB.getUserData());
                 } else {
-                    ((Projectile) fixA.getUserData()).onCreepProjRelease((Creep) fixB.getUserData(), (Projectile) fixB.getUserData());
+                    ((Projectile) fixA.getUserData()).onCreepProjRelease((Creep) fixB.getUserData(), (Projectile) fixA.getUserData());
                 }
             } break;
 

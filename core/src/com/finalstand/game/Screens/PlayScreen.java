@@ -186,8 +186,10 @@ public class PlayScreen implements Screen {
             play = new Sprite(new Texture("screens/play.png"));
             pause = new Sprite(new Texture("screens/pause.png"));
 
-            play.setPosition(5 / FinalStand.PPM, (FinalStand.V_HEIGHT / 4) / FinalStand.PPM);
-            pause.setPosition(5 / FinalStand.PPM, (FinalStand.V_HEIGHT / 4) / FinalStand.PPM);
+            play.setPosition(((FinalStand.V_WIDTH / 2) + 20) / FinalStand.PPM, (FinalStand.V_HEIGHT / 10) / FinalStand.PPM);
+            play.setSize(20 / FinalStand.PPM, 10 / FinalStand.PPM);
+            pause.setPosition(((FinalStand.V_WIDTH / 2) + 40) / FinalStand.PPM, (FinalStand.V_HEIGHT / 10) / FinalStand.PPM);
+            pause.setSize(20 / FinalStand.PPM, 10 / FinalStand.PPM);
 
 
             base = new Texture("base.png");
@@ -238,6 +240,12 @@ public class PlayScreen implements Screen {
 //                    update();
                 if(Gdx.input.justTouched()) {
                     Vector3 mouse = getWorldMousePos();
+                    if (mouse.x > play.getX() && mouse.x < play.getX() + play.getWidth() &&
+                            mouse.y > play.getY() && mouse.y < play.getY() + play.getHeight()) {
+                        plannignPhaseCounter = 1000;
+                        run = true;
+                    }
+
                     if (mouse.x > pause.getX() && mouse.x < pause.getX() + 20 / FinalStand.PPM &&
                             mouse.y > pause.getY() && mouse.y < pause.getY() + 10 / FinalStand.PPM) {
                         setGameState(State.PAUSE);
@@ -251,29 +259,29 @@ public class PlayScreen implements Screen {
                 renderer.render();
                 b2dr.render(world, gameCam.combined);
                 game.batch.setProjectionMatrix(gameCam.combined);
-                game.batch.begin();
                 handleInput();
                 world.step(1 / 60f, 6, 2);
                 gameCam.update();
                 renderer.setView(gameCam);
+                game.batch.begin();
 
 //                game.batch.begin();
                 world.getBodies(bodies);
-                for(Body body : bodies) {
-                    if(body.getUserData() != null && body.getUserData() instanceof Sprite) {
-                        Sprite sprite = (Sprite) body.getUserData();
-                        sprite.setPosition(body.getPosition().x - sprite.getWidth() / 2, body.getPosition().y - sprite.getHeight() / 2);
+                for(int i = 0 ; i < bodies.size ; i ++) {
+                    if(bodies.get(i).getUserData() != null && bodies.get(i).getUserData() instanceof Sprite) {
+                        Sprite sprite = (Sprite) bodies.get(i).getUserData();
+                        sprite.setPosition(bodies.get(i).getPosition().x - sprite.getWidth() / 2, bodies.get(i).getPosition().y - sprite.getHeight() / 2);
                         sprite.draw(game.batch);
                     }
                 }
-                for (int i = 0 ; i < spawnableCreeps.size() ; i ++) {
-                    if(spawnableCreeps.get(i).isDead()) {
-                        world.destroyBody(spawnableCreeps.get(i).getB2Body());
-                        spawnableCreeps.remove(i);
-                    } else {
-                        spawnableCreeps.get(i).update();
-                    }
-                }
+//                for (int i = 0 ; i < spawnableCreeps.size() ; i ++) {
+//                    if(spawnableCreeps.get(i).isDead()) {
+//                        world.destroyBody(spawnableCreeps.get(i).getB2Body());
+//                        spawnableCreeps.remove(i);
+//                    } else {
+//                        spawnableCreeps.get(i).update();
+//                    }
+//                }
 
                 if (keepSpawning && elapsed > 40) {
 //                    System.out.println("Before spawnCreep " + creepsSpawned);
@@ -288,35 +296,35 @@ public class PlayScreen implements Screen {
 
                 //rendering projectiles
                 for (int counter = 0; counter < projectiles.size(); counter++) {
-                    if(!projectiles.get(counter).isDead()) {
+//                    if(!projectiles.get(counter).isDead()) {
                         projectiles.get(counter).getSprite().setOriginCenter();
                         projectiles.get(counter).getSprite().setRotation(projectiles.get(counter).getAngle() - 180);
                         projectiles.get(counter).getSprite().draw(game.batch);
-                        projectiles.get(counter).update();
-                    } else
-                    {
-                        world.destroyBody(projectiles.get(counter).getB2Body());
-                        projectiles.remove(counter);
-                    }
+//                        projectiles.get(counter).update();
+//                    } else
+//                    {
+//                        world.destroyBody(projectiles.get(counter).getB2Body());
+//                        projectiles.remove(counter);
+//                    }
                 }
 
                 //rendering towers
                 for(Tower tower: towers)
                 {
-                    tower.update();
+//                    tower.update();
                     tower.getTowerSprite().setOriginCenter();
                     tower.getTowerSprite().setRotation(tower.getTowerAngle() - 180);
                     tower.getTowerSprite().draw(game.batch);
                 }
 
                 for(int i = 0 ; i < traps.size() ; i ++) {
-                    if(traps.get(i).isDead()) {
-                        world.destroyBody(traps.get(i).getB2Body());
-                        traps.remove(i);
-                    } else {
+//                    if(traps.get(i).isDead()) {
+//                        world.destroyBody(traps.get(i).getB2Body());
+//                        traps.remove(i);
+//                    } else {
                         traps.get(i).getImage().draw(game.batch);
-                        traps.get(i).update();
-                    }
+//                        traps.get(i).update();
+//                    }
                 }
 
                 //render UI
@@ -332,8 +340,8 @@ public class PlayScreen implements Screen {
 
                 if(displayButtons == true)
                 {
-                    upgradeButton.update();
-                    sellButton.update();
+//                    upgradeButton.update();
+//                    sellButton.update();
 
                     upgradeButton.getButtonSprite().draw(game.batch);
                     sellButton.getButtonSprite().draw(game.batch);
@@ -360,6 +368,48 @@ public class PlayScreen implements Screen {
 
                 if(spawnableCreeps.size() == 0) {
                     firstRoundDone = true;
+                }
+
+                for (int i = 0 ; i < spawnableCreeps.size() ; i ++) {
+                    if(spawnableCreeps.get(i).isDead()) {
+                        world.destroyBody(spawnableCreeps.get(i).getB2Body());
+                        spawnableCreeps.remove(i);
+                    } else {
+                        spawnableCreeps.get(i).update();
+                    }
+                }
+
+                for (int counter = 0; counter < projectiles.size(); counter++) {
+                    if(!projectiles.get(counter).isDead()) {
+//                        projectiles.get(counter).getSprite().setOriginCenter();
+//                        projectiles.get(counter).getSprite().setRotation(projectiles.get(counter).getAngle() - 180);
+//                        projectiles.get(counter).getSprite().draw(game.batch);
+                        projectiles.get(counter).update();
+                    } else
+                    {
+                        world.destroyBody(projectiles.get(counter).getB2Body());
+                        projectiles.remove(counter);
+                    }
+                }
+
+                for(Tower tower: towers) {
+                    tower.update();
+                }
+
+                for(int i = 0 ; i < traps.size() ; i ++) {
+                    if(traps.get(i).isDead()) {
+                        world.destroyBody(traps.get(i).getB2Body());
+                        traps.remove(i);
+                    } else {
+//                        traps.get(i).getImage().draw(game.batch);
+                        traps.get(i).update();
+                    }
+                }
+
+
+                if(displayButtons == true) {
+                    upgradeButton.update();
+                    sellButton.update();
                 }
 
                 elapsed++;
@@ -391,11 +441,21 @@ public class PlayScreen implements Screen {
             case PLANNING_PHASE: {
                 if(Gdx.input.justTouched()) {
                     Vector3 mouse = getWorldMousePos();
-                    if (mouse.x > play.getX() && mouse.x < play.getX() + 20 / FinalStand.PPM &&
-                            mouse.y > play.getY() && mouse.y < play.getY() + 10 / FinalStand.PPM) {
-
+                    System.out.println(mouse);
+                    System.out.println(play.getX());
+                    System.out.println(pause.getX());
+                    System.out.println(play.getY() + play.getWidth());
+                    System.out.println(pause.getY() + play.getHeight());
+                    //TODO fix the hit box on this it is not working
+                    if (mouse.x > play.getX() && mouse.x < play.getX() + play.getWidth() &&
+                            mouse.y > play.getY() && mouse.y < play.getY() + play.getHeight()) {
                         plannignPhaseCounter = 1000;
                         run = true;
+                    }
+
+                    if (mouse.x > pause.getX() && mouse.x < pause.getX() + 20 / FinalStand.PPM &&
+                            mouse.y > pause.getY() && mouse.y < pause.getY() + 10 / FinalStand.PPM) {
+                        setGameState(State.PAUSE);
                     }
                 }
                 Gdx.gl.glClearColor(1, 0, 0, 1);
@@ -412,7 +472,8 @@ public class PlayScreen implements Screen {
                 renderer.setView(gameCam);
                 game.batch.draw(base, basePos.x / FinalStand.PPM, (basePos.y - 16) / FinalStand.PPM, baseDimensions.x * 3, baseDimensions.y * 3);
                 elapsed++;
-                game.batch.draw(play.getTexture(), play.getX(), play.getY(), 20 / FinalStand.PPM, 10 / FinalStand.PPM);
+                game.batch.draw(play.getTexture(), play.getX(), play.getY(), play.getWidth(), play.getHeight());
+                game.batch.draw(pause.getTexture(), pause.getX(), pause.getY(), pause.getWidth(), pause.getHeight());
                 //rendering projectiles
                 for (int counter = 0; counter < projectiles.size(); counter++) {
                     projectiles.get(counter).getSprite().setOriginCenter();
@@ -486,20 +547,33 @@ public class PlayScreen implements Screen {
             case PAUSE: {
                 if(Gdx.input.justTouched()) {
                     Vector3 mouse = getWorldMousePos();
-                    if (mouse.x > play.getX() && mouse.x < play.getX() + 20 / FinalStand.PPM &&
-                            mouse.y > play.getY() && mouse.y < play.getY() + 10 / FinalStand.PPM) {
-                        setGameState(State.RUN);
+                    if (mouse.x > play.getX() && mouse.x < play.getX() + play.getWidth() &&
+                            mouse.y > play.getY() && mouse.y < play.getY() + play.getHeight()) {
+                        plannignPhaseCounter = 1000;
+                        run = true;
+                    }
+
+                    if (mouse.x > pause.getX() && mouse.x < pause.getX() + 20 / FinalStand.PPM &&
+                            mouse.y > pause.getY() && mouse.y < pause.getY() + 10 / FinalStand.PPM) {
+                        setGameState(State.PAUSE);
                     }
                 }
 
                 game.batch.begin();
-                game.batch.draw(play.getTexture(), play.getX(), play.getY(), 20 / FinalStand.PPM, 10 / FinalStand.PPM);
+                game.batch.draw(play.getTexture(), play.getX(), play.getY(), play.getWidth(), play.getHeight());
+                game.batch.draw(pause.getTexture(), pause.getX(), pause.getY(), pause.getWidth(), pause.getHeight());
                 game.batch.end();
-            }
+            } break;
 
             case BOSS: {
                 if(Gdx.input.justTouched()) {
                     Vector3 mouse = getWorldMousePos();
+                    if (mouse.x > play.getX() && mouse.x < play.getX() + play.getWidth() &&
+                            mouse.y > play.getY() && mouse.y < play.getY() + play.getHeight()) {
+                        plannignPhaseCounter = 1000;
+                        run = true;
+                    }
+
                     if (mouse.x > pause.getX() && mouse.x < pause.getX() + 20 / FinalStand.PPM &&
                             mouse.y > pause.getY() && mouse.y < pause.getY() + 10 / FinalStand.PPM) {
                         setGameState(State.PAUSE);
@@ -513,7 +587,7 @@ public class PlayScreen implements Screen {
                 renderer.render();
 
                 //renders the debug lines for box2d
-        b2dr.render(world, gameCam.combined);
+            b2dr.render(world, gameCam.combined);
 
 
                 game.batch.setProjectionMatrix(gameCam.combined);
@@ -530,7 +604,8 @@ public class PlayScreen implements Screen {
 //        player.update();
                 renderer.setView(gameCam);
 
-                game.batch.draw(pause.getTexture(), pause.getX(), pause.getY(), 20 / FinalStand.PPM, 10 / FinalStand.PPM);
+                game.batch.draw(play.getTexture(), play.getX(), play.getY(), play.getWidth(), play.getHeight());
+                game.batch.draw(pause.getTexture(), pause.getX(), pause.getY(), pause.getWidth(), pause.getHeight());
 
                 elapsed++;
 
@@ -598,8 +673,6 @@ public class PlayScreen implements Screen {
                 game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
                 hud.update(game.round, game.mapNumber, game.health, game.score);
                 hud.stage.draw();
-
-
 
                 if(FinalStand.gameOver) {
                     game.setScreen(new FailureScreen(game));
