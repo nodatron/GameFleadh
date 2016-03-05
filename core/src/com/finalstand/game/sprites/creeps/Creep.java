@@ -53,6 +53,16 @@ public class Creep extends Sprite{
 
     protected int slowedTimer = 0;
 
+    protected boolean isDead = false;
+
+    public boolean isDead() {
+        return isDead;
+    }
+
+    public void setIsDead(boolean isDead) {
+        this.isDead = isDead;
+    }
+
     public int getSlowedTimer() {
         return slowedTimer;
     }
@@ -202,6 +212,10 @@ public class Creep extends Sprite{
     }
 
     public void update() {
+        System.out.println(getHealth());
+        if(getHealth() <= 0) {
+            setIsDead(true);
+        }
 
         if(isBombTriggered()) {
             setBombTimer(getBombTimer() - 1);

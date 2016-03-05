@@ -158,6 +158,17 @@ public class WorldContactListener implements ContactListener {
                     ((Glue) fixA.getUserData()).onCreepHit((Creep) fixB.getUserData());
                 }
             } break;
+
+//            case FinalStand.ROADBOUNDS_BIT | FinalStand.BARRICADE_BIT:
+//            case FinalStand.ROADBOUNDS_BIT | FinalStand.BOMB_BIT:
+//            case FinalStand.ROADBOUNDS_BIT | FinalStand.SPIKE_BIT:
+//            case FinalStand.ROADBOUNDS_BIT | FinalStand.GLUE_BIT: {
+//                if(fixA.getFilterData().categoryBits == FinalStand.ROADBOUNDS_BIT) {
+//                    ((Glue) fixB.getUserData()).onCreepRelease((Creep) fixA.getUserData());
+//                } else {
+//                    ((Glue) fixA.getUserData()).onCreepRelease((Creep) fixB.getUserData());
+//                }
+//            } break;
         }
     }
 
@@ -226,12 +237,8 @@ public class WorldContactListener implements ContactListener {
             case FinalStand.CREEP_BIT | FinalStand.BOMB_BIT: {
 //                Gdx.app.log("World Contact Listener", "tower, roadbounds hit right");
                 if(fixA.getFilterData().categoryBits == FinalStand.CREEP_BIT) {
-                    System.out.println(fixA.getUserData());
-                    System.out.println(fixB.getUserData());
                     ((Bomb) fixB.getUserData()).onCreepRelease((Creep) fixA.getUserData());
                 } else {
-                    System.out.println(fixA.getUserData());
-                    System.out.println(fixB.getUserData());
                     ((Bomb) fixA.getUserData()).onCreepRelease((Creep) fixB.getUserData());
                 }
             } break;
@@ -239,15 +246,13 @@ public class WorldContactListener implements ContactListener {
             case FinalStand.CREEP_BIT | FinalStand.GLUE_BIT: {
 //                Gdx.app.log("World Contact Listener", "tower, roadbounds hit right");
                 if(fixA.getFilterData().categoryBits == FinalStand.CREEP_BIT) {
-                    System.out.println(fixA.getUserData());
-                    System.out.println(fixB.getUserData());
                     ((Glue) fixB.getUserData()).onCreepRelease((Creep) fixA.getUserData());
                 } else {
-                    System.out.println(fixA.getUserData());
-                    System.out.println(fixB.getUserData());
                     ((Glue) fixA.getUserData()).onCreepRelease((Creep) fixB.getUserData());
                 }
             } break;
+
+
         }
     }
 

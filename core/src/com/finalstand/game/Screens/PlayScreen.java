@@ -267,9 +267,12 @@ public class PlayScreen implements Screen {
                     }
                 }
                 for (int i = 0 ; i < spawnableCreeps.size() ; i ++) {
-//                    spawnableCreeps.get(i).render(game.batch);
-                    spawnableCreeps.get(i).update();
-//                    spawnableCreeps.get(i).render(game.batch);
+                    if(spawnableCreeps.get(i).isDead()) {
+                        world.destroyBody(spawnableCreeps.get(i).getB2Body());
+                        spawnableCreeps.remove(i);
+                    } else {
+                        spawnableCreeps.get(i).update();
+                    }
                 }
 
                 if (keepSpawning && elapsed > 40) {
