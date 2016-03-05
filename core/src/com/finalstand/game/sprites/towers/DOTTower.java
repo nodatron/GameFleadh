@@ -50,6 +50,8 @@ public class DOTTower extends Tower{
         {
             level3rightAngle = 90;
         }
+
+        defineTower();
     }
 
     @Override

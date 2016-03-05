@@ -39,6 +39,8 @@ public class LaserTower extends Tower{
         projectilePos =  new Vector2(x + (towerSprite.getWidth() / 2.5f), y);
         laserProjectileSize = new Vector2(towerSprite.getWidth() / 4.0f, towerSprite.getHeight());
         towerRange = (getCurrentTexture().getHeight() * 2.0f) / FinalStand.PPM;
+
+        defineTower();
     }
 
     @Override

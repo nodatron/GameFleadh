@@ -48,6 +48,10 @@ public class Spike extends Trap
         fdef.shape = shape;
         fdef.isSensor = true;
         b2Body.createFixture(fdef).setUserData(this);
+
+        getImage().setSize(trapSize.x, trapSize.y);
+        getImage().setOrigin(getImage().getWidth() / 2, getImage().getHeight() / 2);
+        b2Body.setUserData(getImage());
     }
 
     public void render()

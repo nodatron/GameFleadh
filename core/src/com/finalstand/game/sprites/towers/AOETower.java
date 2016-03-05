@@ -33,6 +33,8 @@ public class AOETower extends Tower{
         projectilePos = new Vector2(x + (getTowerSprite().getWidth() / 2),
                                     y + (getTowerSprite().getHeight() / 2));
         towerRange = (getCurrentTexture().getHeight() * 2.0f) / FinalStand.PPM;
+
+        defineTower();
     }
 
     @Override

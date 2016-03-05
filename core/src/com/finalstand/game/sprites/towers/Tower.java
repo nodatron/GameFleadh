@@ -101,7 +101,10 @@ public class Tower {
 
         fdef.isSensor = true;
         fdef.shape = shape;
-        b2Body.createFixture(fdef);
+        b2Body.createFixture(fdef).setUserData(this);
+
+//        b2Body.setUserData(towerSprite);
+
     }
 
     public void createProjectile()

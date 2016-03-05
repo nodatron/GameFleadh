@@ -317,15 +317,15 @@ public class PlayScreen implements Screen {
                     tower.getTowerSprite().draw(game.batch);
                 }
 
-                for(int i = 0 ; i < traps.size() ; i ++) {
-//                    if(traps.get(i).isDead()) {
-//                        world.destroyBody(traps.get(i).getB2Body());
-//                        traps.remove(i);
-//                    } else {
-                        traps.get(i).getImage().draw(game.batch);
-//                        traps.get(i).update();
-//                    }
-                }
+//                for(int i = 0 ; i < traps.size() ; i ++) {
+////                    if(traps.get(i).isDead()) {
+////                        world.destroyBody(traps.get(i).getB2Body());
+////                        traps.remove(i);
+////                    } else {
+//                        traps.get(i).getImage().draw(game.batch);
+////                        traps.get(i).update();
+////                    }
+//                }
 
                 //render UI
                 game.batch.draw(ui.getBackground(), ui.getPosition().x, ui.getPosition().y, ui.getWidth(), ui.getHeight());
