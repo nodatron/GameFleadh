@@ -14,6 +14,8 @@ public class AOERing extends Projectile{
     private float counter;
     private float maxSize;
     private boolean flameActive;
+    private int DOTTime;
+    private int fireDamage;
 
     public AOERing(float x, float y, float angle, int level, World world)
     {
@@ -34,6 +36,8 @@ public class AOERing extends Projectile{
             projectileSprite = new Sprite(new Texture("projectiles/aoe_projectile_level3.png"));
             flameActive = true;
             damage = 2;
+            fireDamage = 1;
+            DOTTime = 100;
         }
         projectileSprite.setSize(1, 1);
         projectileSprite.setCenter(x, y);
@@ -59,7 +63,7 @@ public class AOERing extends Projectile{
         creep.setHealth(creep.getHealth() - damage);
         if(flameActive == true)
         {
-            creep.setDOTActive();
+            creep.setDOTActive(DOTTime, fireDamage);
         }
     }
 }

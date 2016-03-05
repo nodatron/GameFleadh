@@ -52,6 +52,7 @@ public class Creep extends Sprite{
 
     protected boolean DOTActive;
     protected float DOTTimer;
+    protected int DOTDamage;
 
     public int getBombTimer() {
         return bombTimer;
@@ -93,9 +94,10 @@ public class Creep extends Sprite{
         this.slowed = slowed;
     }
 
-    public void setDOTActive() {
+    public void setDOTActive(int time, int DOTDamage) {
         this.DOTActive = true;
-        DOTTimer = 100;
+        DOTTimer = time;
+        this.DOTDamage = DOTDamage;
     }
 
     public Creep(World world) {
@@ -227,12 +229,14 @@ public class Creep extends Sprite{
         {
             if(DOTTimer % 20 == 0)
             {
-                setHealth(getHealth() - 1);
+                setHealth(getHealth() - DOTDamage);
             }
             this.DOTTimer--;
             if(DOTTimer <= 0)
             {
                 this.DOTActive = false;
+                DOTTimer = 0;
+                DOTDamage = 0;
             }
         }
     }

@@ -18,8 +18,10 @@ public class DOTGas extends Projectile{
     private Vector2 initialPos;
     private float range;
     private float angle;
+    private int DOTTime;
+    private int DOTDamage;
 
-    public DOTGas(float x, float y, float angle, int level, float w, float h, World world)
+    public DOTGas(float x, float y, float angle, int level, float w, float h, World world, float range)
     {
         super(x, y, angle, level, 2 / FinalStand.PPM, world, w, h);
         this.angle = angle;
@@ -29,8 +31,21 @@ public class DOTGas extends Projectile{
         initialPos = new Vector2(x, y);
         counter = 0.0f;
         removeTime = 1.5f;
-        range = DOTTower.size.y;
-        damage = 1;
+        this.range = range;
+
+        if(level == 1)
+        {
+            DOTTime = 60;
+            damage = 1;
+        } else if(level == 2)
+        {
+            DOTTime = 100;
+            damage = 1;
+        } else
+        {
+            DOTTime = 140;
+            damage = 2;
+        }
     }
 
     @Override
@@ -81,6 +96,6 @@ public class DOTGas extends Projectile{
 
     public void onCreepProjHit(Creep creep)
     {
-        creep.setHealth(creep.getHealth() - damage);
+        creep.setDOTActive(DOTTime, damage);
     }
 }

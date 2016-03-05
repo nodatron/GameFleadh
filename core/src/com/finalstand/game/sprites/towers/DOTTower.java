@@ -81,15 +81,15 @@ public class DOTTower extends Tower{
     public void createProjectile()
     {
         Projectile p1 = new DOTGas(projectilePos.x, projectilePos.y, towerAngle, level,
-                                  DOTProjectileSize.x, DOTProjectileSize.y, world);
+                                  DOTProjectileSize.x, DOTProjectileSize.y, world, DOTTower.size.y - 1 / FinalStand.PPM);
         PlayScreen.projectiles.add(p1);
 
         if(level == 3)
         {
             Projectile p2 = new DOTGas(projectilePos.x, projectilePos.y, level3rightAngle, level,
-                                       DOTProjectileSize.x, DOTProjectileSize.y, world);
+                                       DOTProjectileSize.x, DOTProjectileSize.y, world, DOTTower.size.y + 2 / FinalStand.PPM);
             Projectile p3 = new DOTGas(projectilePos.x, projectilePos.y, level3leftAngle, level,
-                                       DOTProjectileSize.x, DOTProjectileSize.y, world);
+                                       DOTProjectileSize.x, DOTProjectileSize.y, world, DOTTower.size.y + 2 / FinalStand.PPM);
 
             PlayScreen.projectiles.add(p2);
             PlayScreen.projectiles.add(p3);
