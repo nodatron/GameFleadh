@@ -11,15 +11,20 @@ import com.finalstand.game.sprites.creeps.Creep;
  * Created by Keith on 14/02/2016.
  */
 public class AOERing extends Projectile{
+    //used for increasing the size of the projectile
     private float counter;
+    //max size the projectile can be before being removed
     private float maxSize;
+    //if level 3, cause a dot effect
     private boolean flameActive;
     private int DOTTime;
+    //the damage of the dot effect
     private int fireDamage;
 
     public AOERing(float x, float y, float angle, int level, World world)
     {
         super(x, y, angle, level, 6 / FinalStand.PPM, world, 1, 1);
+        //if shot from a level 1 or 2 tower
         if(level < 3) {
             projectileSprite = new Sprite(new Texture("projectiles/aoe_projectile_level1.png"));
             flameActive = false;
@@ -27,6 +32,7 @@ public class AOERing extends Projectile{
             {
                 damage = 1;
             }
+            //if level 2
             else
             {
                 damage = 2;
@@ -49,9 +55,12 @@ public class AOERing extends Projectile{
     @Override
     public void update()
     {
+        //set the origin to the center so it will expand from the middle
         projectileSprite.setOriginCenter();
         counter += 0.03f;
+        //increase the size of the projectile
         projectileSprite.setScale(counter);
+        //when its reached its max size, remove it
         if(counter > maxSize)
         {
             isDead = true;
@@ -61,6 +70,7 @@ public class AOERing extends Projectile{
     public void onCreepProjHit(Creep creep)
     {
         creep.setHealth(creep.getHealth() - damage);
+        //apply dot effect if level 3
         if(flameActive == true)
         {
             creep.setDOTActive(DOTTime, fireDamage);

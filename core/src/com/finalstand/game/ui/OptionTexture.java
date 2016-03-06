@@ -16,9 +16,11 @@ import com.finalstand.game.sprites.traps.Spike;
  * Created by Keith on 16/02/2016.
  */
 public class OptionTexture {
+    //the sprite that follows the mouse when an option is pressed
     private Sprite sprite;
     private Vector3 position;
 
+    //the option that was clicked
     private int towerOption;
     private float rotation;
 
@@ -33,7 +35,9 @@ public class OptionTexture {
 
     public void update()
     {
+        //rotate the sprite 90 degrees
         if(Gdx.input.isKeyJustPressed(Input.Keys.R)) {
+            //set to rotate around the center
             sprite.setOriginCenter();
             rotation += 90;
             if(rotation == 360)
@@ -43,14 +47,17 @@ public class OptionTexture {
             sprite.setRotation(rotation);
         }
         position = PlayScreen.getWorldMousePos();
+        //makes it so the mouse is on the center of the texture
         position.x -= sprite.getWidth() / 2;
         position.y -= sprite.getHeight() / 2;
         sprite.setPosition(position.x, position.y);
 
+        //when the mouse is clicked
         if(Gdx.input.justTouched())
         {
             PlayScreen.optionChosen = false;
 
+            //create an instance of the class in relation to the option chosen
             switch (towerOption) {
                 case 0: {
                     PlayScreen.towers.add(new com.finalstand.game.sprites.towers.SingleShotTower(position.x, position.y, world, rotation - 180));
@@ -88,6 +95,7 @@ public class OptionTexture {
         }
     }
 
+    //getters and setters
     public Sprite getSprite(){ return sprite; }
 
     public Vector3 getPosition() {

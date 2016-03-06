@@ -23,8 +23,9 @@ public class Bullet extends Projectile{
 
     public void onCreepProjHit(Creep creep)
     {
-        System.out.println("Bullet hitting creep");
+        //damage creep
         creep.setHealth(creep.getHealth() - damage);
+        //remove projectile
         isDead = true;
     }
 }

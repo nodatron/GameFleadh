@@ -16,21 +16,25 @@ import com.finalstand.game.sprites.projectiles.Projectile;
  */
 public class LaserTower extends Tower{
 
+    //default size of laser tower
     public static Vector2 size = new Vector2(16 / FinalStand.PPM, 32 / FinalStand.PPM);
+    //seperate texture switched to when level 3 tower is firing
     private Texture level3Firing;
+    //used for resizing the sprite only once when upgrading to level 3
     private boolean adjustlevel3 = false;
     private Vector2 laserProjectileSize;
 
     public LaserTower(float x, float y, World world, float angle)
     {
         super(x, y, world, angle);
+        //set the time between firing projectile
         maxTime = 80.0f;
 
+        //loading in the different textures for the different levels
         level1 = new Texture("towers/laserTower_level1.png");
         level2 = new Texture("towers/laserTower_level2.png");
         level3 = new Texture("towers/laserTower_level3_notFiring.png");
         level3Firing = new Texture("towers/laserTower_level3_firing.png");
-
         currentTexture = level1;
         towerSprite = new Sprite(currentTexture);
         towerSprite.setPosition(x, y);
@@ -45,6 +49,7 @@ public class LaserTower extends Tower{
     public void update(){
         if(targetCreep() && elapsedTime == maxTime / 2)
         {
+            //change to firing texture
             if(level == 3)
             {
                 towerSprite.setTexture(level3Firing);
@@ -56,12 +61,14 @@ public class LaserTower extends Tower{
         if(elapsedTime > maxTime)
         {
             elapsedTime = 0;
+            //return to the non firing texture
             if(level == 3)
             {
                 towerSprite.setTexture(level3);
             }
         }
 
+        //when tower is upgraded to level 3, resize it and reposition it to keep its original position
         if(level == 3 && adjustlevel3 == false)
         {
             towerSprite.setSize(48 / FinalStand.PPM, 32 / FinalStand.PPM);
