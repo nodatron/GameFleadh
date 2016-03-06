@@ -14,7 +14,7 @@ import com.finalstand.game.sprites.creeps.Creep;
  */
 public abstract class Trap extends Sprite
 {
-    int hits;
+    protected int hits;
     protected Vector2 position;
     protected Texture texture;
     protected Sprite image;
@@ -103,7 +103,6 @@ public abstract class Trap extends Sprite
 
     public abstract void update();
     public abstract void render();
-    protected abstract void checkCollisions();
 
     public abstract void onCreepHit(Creep creep);
     public abstract void onCreepRelease(Creep creep);

@@ -23,7 +23,6 @@ public class Creep extends Sprite{
 
     protected Texture texture;
     protected Sprite sprite;
-    protected SpriteBatch batch;
 
     protected Vector2 position;
 
@@ -54,6 +53,15 @@ public class Creep extends Sprite{
     protected int slowedTimer = 0;
 
     protected boolean isDead = false;
+    protected boolean isNeeded = false;
+
+    public boolean isNeeded() {
+        return isNeeded;
+    }
+
+    public void setIsNeeded(boolean isNeeded) {
+        this.isNeeded = isNeeded;
+    }
 
     public boolean isDead() {
         return isDead;
@@ -226,22 +234,29 @@ public class Creep extends Sprite{
             setBombTimer(120);
         }
 
-        checkDir();
-
-        //set the way to go
-        if(movement[0]) {
-            // go right
-            direction = new Vector2(50 / FinalStand.PPM, 0);
-        } else if(movement[1]) {
-            // go left
-            direction = new Vector2(- 50 / FinalStand.PPM, 0);
-        } else if(movement[2]) {
-            // go up
-            direction = new Vector2(0, 50 / FinalStand.PPM);
-        } else if(movement[3]){
-            //go down
-            direction = new Vector2(0, - 50 / FinalStand.PPM);
+        if(isNeeded()) {
+            checkDir();
+            //set the way to go
+            if (movement[0]) {
+                // go right
+                direction.x = 50 / FinalStand.PPM;
+                direction.y = 0;
+            } else if (movement[1]) {
+                // go left
+                direction.x = -50 / FinalStand.PPM;
+                direction.y = 0;
+            } else if (movement[2]) {
+                // go up
+                direction.x = 0;
+                direction.y = 50 / FinalStand.PPM;
+            } else if (movement[3]) {
+                //go down
+                direction.x = 0;
+                direction.y = -50 / FinalStand.PPM;
+            }
+            setIsNeeded(false);
         }
+
 
         if(isSlowed()) {
             setSpeed(getSpeed());
@@ -305,8 +320,8 @@ public class Creep extends Sprite{
 
     public void reachedEnd() {
 //        PlayScreen.creeps.remove(this);
-        PlayScreen.spawnableCreeps.remove(this);
-//        world.destroyBody(b2Body);
+        setIsDead(true);
+        FinalStand.setHealth(FinalStand.getHealth() - 1);
     }
 
     public Body getB2Body() {
@@ -314,7 +329,7 @@ public class Creep extends Sprite{
     }
 
     void dispose() {
-
+        sprite.getTexture().dispose();
     }
 
     public Sprite getSprite() {

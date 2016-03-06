@@ -41,44 +41,48 @@ public class Waypoint extends InteractiveTileObject{
     public void onRightHit(Creep creep) {
 //        Gdx.app.log("Collison", "Waypoint right hit");
         creep.setWaypointHit();
+        creep.setIsNeeded(true);
     }
 
     @Override
     public void onLeftHit(Creep creep) {
 //        Gdx.app.log("Collison", "Waypoint left hit");
         creep.setWaypointHit();
+        creep.setIsNeeded(true);
     }
 
     @Override
     public void onTopHit(Creep creep) {
 //        Gdx.app.log("Collison", "Waypoint top hit");
         creep.setWaypointHit();
+        creep.setIsNeeded(true);
     }
 
     @Override
     public void onBottomHit(Creep creep) {
 //        Gdx.app.log("Collison", "Waypoint bottom hit");
         creep.setWaypointHit();
+        creep.setIsNeeded(true);
     }
 
     @Override
     public void onRightRelease(Creep creep) {
-        Gdx.app.log("Collison", "Waypoint right release");
+
     }
 
     @Override
     public void onLeftRelease(Creep creep) {
-        Gdx.app.log("Collison", "Waypoint left release");
+
     }
 
     @Override
     public void onTopRelease(Creep creep) {
-        Gdx.app.log("Collison", "Waypoint top release");
+
     }
 
     @Override
     public void onBottomRelease(Creep creep) {
-        Gdx.app.log("Collison", "Waypoint bottom release");
+
     }
 
     public static Array<String> readWaypoints(String filename) {

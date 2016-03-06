@@ -219,111 +219,22 @@ public class PlayScreen implements Screen {
             }
         }
 
-        if(firstRoundDone) {
-            update();
-        }
+        update();
+
 
         if(game.health <= 0) {
             game.setScreen(new FailureScreen(game));
         }
 
-        handleInput();
+
 
         switch (state) {
             case RUN: {
-
-                //renders the map
-                renderer.render();
-//                b2dr.render(world, gameCam.combined);
-                game.batch.setProjectionMatrix(gameCam.combined);
-                world.step(1 / 60f, 6, 2);
-                gameCam.update();
-                renderer.setView(gameCam);
-
-                game.batch.begin();
-                game.batch.draw(play.getTexture(), play.getX(), play.getY(), play.getWidth(), play.getHeight());
-                game.batch.draw(pause.getTexture(), pause.getX(), pause.getY(), pause.getWidth(), pause.getHeight());
-                game.batch.draw(base, basePos.x / FinalStand.PPM, (basePos.y - 16) / FinalStand.PPM, baseDimensions.x * 3, baseDimensions.y * 3);
-
-                world.getBodies(bodies);
-                for(int i = 0 ; i < bodies.size ; i ++) {
-                    if(bodies.get(i).getUserData() != null && bodies.get(i).getUserData() instanceof Sprite) {
-                        Sprite sprite = (Sprite) bodies.get(i).getUserData();
-                        sprite.setPosition(bodies.get(i).getPosition().x - sprite.getWidth() / 2, bodies.get(i).getPosition().y - sprite.getHeight() / 2);
-                        sprite.draw(game.batch);
-                    }
-                }
-
+                renderGame();
                 if (keepSpawning && elapsed > 40) {
                     spawnNewCreep();
                     elapsed = 0;
                 }
-
-                //rendering projectiles
-                for (int counter = 0; counter < projectiles.size(); counter++) {
-                    if(!projectiles.get(counter).isDead()) {
-                        projectiles.get(counter).getSprite().setOriginCenter();
-                        projectiles.get(counter).getSprite().setRotation(projectiles.get(counter).getAngle() - 180);
-                        projectiles.get(counter).getSprite().draw(game.batch);
-                        projectiles.get(counter).update();
-                    } else
-                    {
-                        world.destroyBody(projectiles.get(counter).getB2Body());
-                        projectiles.remove(counter);
-                    }
-                }
-
-                //rendering towers
-                for(Tower tower: towers)
-                {
-                    tower.update();
-                    tower.getTowerSprite().setOriginCenter();
-                    tower.getTowerSprite().setRotation(tower.getTowerAngle() - 180);
-                    tower.getTowerSprite().draw(game.batch);
-                }
-
-                //render UI
-                game.batch.draw(ui.getBackground(), ui.getPosition().x, ui.getPosition().y, ui.getWidth(), ui.getHeight());
-                game.batch.draw(ui.getOption1Texture(), ui.getOption1Pos().x, ui.getOption1Pos().y, SingleShotTower.size.x, SingleShotTower.size.y);
-                game.batch.draw(ui.getOption2Texture(), ui.getOption2Pos().x, ui.getOption2Pos().y, AOETower.size.x, AOETower.size.y);
-                game.batch.draw(ui.getOption3Texture(), ui.getOption3Pos().x, ui.getOption3Pos().y, DOTTower.size.x, DOTTower.size.y);
-                game.batch.draw(ui.getOption4Texture(), ui.getOption4Pos().x, ui.getOption4Pos().y, LaserTower.size.x, LaserTower.size.y);
-                game.batch.draw(ui.getOption5Texture(), ui.getOption5Pos().x, ui.getOption5Pos().y, Trap.trapSize.x * 2, Trap.trapSize.y * 2);
-                game.batch.draw(ui.getOption6Texture(), ui.getOption6Pos().x, ui.getOption6Pos().y, Trap.trapSize.x * 2, Trap.trapSize.y * 2);
-                game.batch.draw(ui.getOption7Texture(), ui.getOption7Pos().x, ui.getOption7Pos().y, Trap.trapSize.x * 2, Trap.trapSize.y * 2);
-                game.batch.draw(ui.getOption8Texture(), ui.getOption8Pos().x, ui.getOption8Pos().y, Trap.trapSize.x * 2, Trap.trapSize.y * 2);
-
-                if(displayButtons == true)
-                {
-                    upgradeButton.update();
-                    sellButton.update();
-
-                    upgradeButton.getButtonSprite().draw(game.batch);
-                    sellButton.getButtonSprite().draw(game.batch);
-                }
-                checkTowerPressed();
-
-                if(optionChosen == true)
-                {
-                    optionTexture.update();
-                    optionTexture.getSprite().draw(game.batch);
-                }
-
-                game.batch.end();
-
-                if(Gdx.input.justTouched())
-                {
-                    ui.optionClicked(getWorldMousePos());
-                }
-
-                game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
-                hud.stage.draw();
-
-                if(creeps.size() == 0) {
-                    firstRoundDone = true;
-                }
-
-                System.out.println(creeps.size() + " and creepsSpawned " + creepsSpawned);
 
                 for (int i = 0 ; i < creepsSpawned ; i ++) {
                     if(creeps.get(i).isDead()) {
@@ -334,20 +245,8 @@ public class PlayScreen implements Screen {
                         creeps.get(i).update();
                     }
                 }
-
-                for(int i = 0 ; i < traps.size() ; i ++) {
-                    if(traps.get(i).isDead()) {
-                        world.destroyBody(traps.get(i).getB2Body());
-                        traps.remove(i);
-                    } else {
-                        traps.get(i).update();
-                    }
-                }
-                elapsed++;
             } break;
 
-            // TODO(niall) Make the positions of the button look right but the functionality is done
-            // TODO(niall) add a exit to mainmenu option
             case EXIT_GAME_CONFIRMATION: {
                 game.batch.setProjectionMatrix(gameCam.combined);
                 game.batch.begin();
@@ -359,186 +258,23 @@ public class PlayScreen implements Screen {
 
             //During this phase of the game the player will be aloud to place towers and traps before the creeps start to spawn
             case PLANNING_PHASE: {
-
-                //renders the map
-                renderer.render();
-                //renders the debug lines for box2d
-                game.batch.setProjectionMatrix(gameCam.combined);
-                world.step(1 / 60f, 6, 2);
-                gameCam.update();
-                renderer.setView(gameCam);
-                game.batch.begin();
-                game.batch.draw(base, basePos.x / FinalStand.PPM, (basePos.y - 16) / FinalStand.PPM, baseDimensions.x * 3, baseDimensions.y * 3);
-                elapsed++;
-                game.batch.draw(play.getTexture(), play.getX(), play.getY(), play.getWidth(), play.getHeight());
-                game.batch.draw(pause.getTexture(), pause.getX(), pause.getY(), pause.getWidth(), pause.getHeight());
-                //rendering projectiles
-                for (int counter = 0; counter < projectiles.size(); counter++) {
-                    projectiles.get(counter).getSprite().setOriginCenter();
-                    projectiles.get(counter).getSprite().setRotation(projectiles.get(counter).getAngle() - 180);
-                    projectiles.get(counter).getSprite().draw(game.batch);
-                    projectiles.get(counter).update();
-                }
-
-                //rendering towers
-                for(Tower tower: towers)
-                {
-                    tower.update();
-                    tower.getTowerSprite().setOriginCenter();
-                    tower.getTowerSprite().setRotation(tower.getTowerAngle() - 180);
-                    tower.getTowerSprite().draw(game.batch);
-                }
-
-                for(int i = 0 ; i < traps.size() ; i ++) {
-                    if(traps.get(i).isDead()) {
-                        world.destroyBody(traps.get(i).getB2Body());
-                        traps.remove(i);
-                    } else {
-                        traps.get(i).getImage().draw(game.batch);
-                        traps.get(i).update();
-                    }
-                }
-
-                //render UI
-                game.batch.draw(ui.getBackground(), ui.getPosition().x, ui.getPosition().y, ui.getWidth(), ui.getHeight());
-                game.batch.draw(ui.getOption1Texture(), ui.getOption1Pos().x, ui.getOption1Pos().y, SingleShotTower.size.x, SingleShotTower.size.y);
-                game.batch.draw(ui.getOption2Texture(), ui.getOption2Pos().x, ui.getOption2Pos().y, AOETower.size.x, AOETower.size.y);
-                game.batch.draw(ui.getOption3Texture(), ui.getOption3Pos().x, ui.getOption3Pos().y, DOTTower.size.x, DOTTower.size.y);
-                game.batch.draw(ui.getOption4Texture(), ui.getOption4Pos().x, ui.getOption4Pos().y, LaserTower.size.x, LaserTower.size.y);
-                game.batch.draw(ui.getOption5Texture(), ui.getOption5Pos().x, ui.getOption5Pos().y, Trap.trapSize.x * 2, Trap.trapSize.y * 2);
-                game.batch.draw(ui.getOption6Texture(), ui.getOption6Pos().x, ui.getOption6Pos().y, Trap.trapSize.x * 2, Trap.trapSize.y * 2);
-                game.batch.draw(ui.getOption7Texture(), ui.getOption7Pos().x, ui.getOption7Pos().y, Trap.trapSize.x * 2, Trap.trapSize.y * 2);
-                game.batch.draw(ui.getOption8Texture(), ui.getOption8Pos().x, ui.getOption8Pos().y, Trap.trapSize.x * 2, Trap.trapSize.y * 2);
-
-                if(displayButtons == true)
-                {
-                    upgradeButton.update();
-                    sellButton.update();
-
-                    upgradeButton.getButtonSprite().draw(game.batch);
-                    sellButton.getButtonSprite().draw(game.batch);
-                }
-                checkTowerPressed();
-
-                if(optionChosen == true)
-                {
-                    optionTexture.update();
-                    optionTexture.getSprite().draw(game.batch);
-                }
-//                game.batch.draw(base, 100 / FinalStand.PPM, 100 / FinalStand.PPM, baseDimensions.x, baseDimensions.y);
-                game.batch.end();
-
-                if(Gdx.input.justTouched())
-                {
-                    ui.optionClicked(getWorldMousePos());
-                }
-                game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
-                hud.stage.draw();
+                renderGame();
                 plannignPhaseCounter++;
-
-
             } break;
 
             case PAUSE: {
-                game.batch.begin();
-                game.batch.draw(play.getTexture(), play.getX(), play.getY(), play.getWidth(), play.getHeight());
-                game.batch.draw(pause.getTexture(), pause.getX(), pause.getY(), pause.getWidth(), pause.getHeight());
-                game.batch.end();
+                game.setScreen(new MenuScreen(game, this));
+                setGameState(State.RUN);
             } break;
 
             case BOSS: {
-                if(Gdx.input.justTouched()) {
-                    Vector3 mouse = getWorldMousePos();
-                    if (mouse.x > play.getX() && mouse.x < play.getX() + play.getWidth() &&
-                            mouse.y > play.getY() && mouse.y < play.getY() + play.getHeight()) {
-                        plannignPhaseCounter = 1000;
-                        run = true;
-                    }
-
-                    if (mouse.x > pause.getX() && mouse.x < pause.getX() + 20 / FinalStand.PPM &&
-                            mouse.y > pause.getY() && mouse.y < pause.getY() + 10 / FinalStand.PPM) {
-                        setGameState(State.PAUSE);
-                    }
+                renderGame();
+                if(bossCreep.isDead()) {
+                    world.destroyBody(bossCreep.getB2Body());
+                } else {
+                    bossCreep.update();
                 }
 
-                //renders the map
-                renderer.render();
-
-                world.step(1 / 60f, 6, 2);
-                gameCam.update();
-                bossCreep.update();
-                renderer.setView(gameCam);
-                game.batch.setProjectionMatrix(gameCam.combined);
-                game.batch.begin();
-
-
-                game.batch.draw(play.getTexture(), play.getX(), play.getY(), play.getWidth(), play.getHeight());
-                game.batch.draw(pause.getTexture(), pause.getX(), pause.getY(), pause.getWidth(), pause.getHeight());
-
-                elapsed++;
-
-                //rendering projectiles
-                for (int counter = 0; counter < projectiles.size(); counter++) {
-                    projectiles.get(counter).getSprite().setOriginCenter();
-                    projectiles.get(counter).getSprite().setRotation(projectiles.get(counter).getAngle() - 180);
-                    projectiles.get(counter).getSprite().draw(game.batch);
-                    projectiles.get(counter).update();
-                }
-
-                //rendering towers
-                for(Tower tower: towers)
-                {
-                    tower.update();
-                    tower.getTowerSprite().setOriginCenter();
-                    tower.getTowerSprite().setRotation(tower.getTowerAngle() - 180);
-                    tower.getTowerSprite().draw(game.batch);
-                }
-
-                for(Trap trap : traps) {
-                    trap.getImage().draw(game.batch);
-                    trap.update();
-                }
-
-                //render UI
-                game.batch.draw(ui.getBackground(), ui.getPosition().x, ui.getPosition().y, ui.getWidth(), ui.getHeight());
-                game.batch.draw(ui.getOption1Texture(), ui.getOption1Pos().x, ui.getOption1Pos().y, SingleShotTower.size.x, SingleShotTower.size.y);
-                game.batch.draw(ui.getOption2Texture(), ui.getOption2Pos().x, ui.getOption2Pos().y, AOETower.size.x, AOETower.size.y);
-                game.batch.draw(ui.getOption3Texture(), ui.getOption3Pos().x, ui.getOption3Pos().y, DOTTower.size.x, DOTTower.size.y);
-                game.batch.draw(ui.getOption4Texture(), ui.getOption4Pos().x, ui.getOption4Pos().y, LaserTower.size.x, LaserTower.size.y);
-                game.batch.draw(ui.getOption5Texture(), ui.getOption5Pos().x, ui.getOption5Pos().y, Trap.trapSize.x * 2, Trap.trapSize.y * 2);
-                game.batch.draw(ui.getOption6Texture(), ui.getOption6Pos().x, ui.getOption6Pos().y, Trap.trapSize.x * 2, Trap.trapSize.y * 2);
-                game.batch.draw(ui.getOption7Texture(), ui.getOption7Pos().x, ui.getOption7Pos().y, Trap.trapSize.x * 2, Trap.trapSize.y * 2);
-                game.batch.draw(ui.getOption8Texture(), ui.getOption8Pos().x, ui.getOption8Pos().y, Trap.trapSize.x * 2, Trap.trapSize.y * 2);
-
-                if(displayButtons == true)
-                {
-                    upgradeButton.update();
-                    sellButton.update();
-
-                    upgradeButton.getButtonSprite().draw(game.batch);
-                    sellButton.getButtonSprite().draw(game.batch);
-                }
-                checkTowerPressed();
-
-                if(optionChosen == true)
-                {
-                    optionTexture.update();
-                    optionTexture.getSprite().draw(game.batch);
-                }
-                game.batch.end();
-
-                if(Gdx.input.justTouched())
-                {
-                    ui.optionClicked(getWorldMousePos());
-                }
-
-
-                game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
-                hud.stage.draw();
-
-                if(FinalStand.gameOver) {
-                    game.setScreen(new FailureScreen(game));
-                }
             } break;
         }
     }
@@ -694,21 +430,16 @@ public class PlayScreen implements Screen {
 
 
     public void update() {
+        handleInput();
+
         // there is no more creeps in the wave
         if(game.round == game.roundsPerMap) {
-            // Move to a new map
-            System.out.println("i am here");
             game.mapNumber ++;
             game.round = 1;
             firstRoundDone = false;
-            waypoints.clear();
+            waypoints.clear(); //TODO add in code to destroy box2d stuff
             towers.clear();
-            for(Creep c : creeps) {
-                world.destroyBody(c.getB2Body());
-            }
-            spawnableCreeps.clear();
             creeps.clear();
-
         }
 
         if(creeps.size() == 0) {
@@ -717,16 +448,114 @@ public class PlayScreen implements Screen {
             System.out.println(game.round);
             elapsed = 0;
             creeps.clear();
+            projectiles.clear();
             challengerRating = game.mapNumber * 10 + game.round;
 
             randomCreeps(challengerRating);
-//            spawnableCreeps.add(creeps.get(0));
-
-//            creepsSpawned = 0;
             keepSpawning = true;
             plannignPhaseCounter = 0;
 
             setGameState(State.PLANNING_PHASE);
+        }
+    }
+
+    public void renderGame() {
+        renderer.render();
+        game.batch.setProjectionMatrix(gameCam.combined);
+        world.step(1 / 60f, 6, 2);
+        gameCam.update();
+        renderer.setView(gameCam);
+
+        game.batch.begin();
+        game.batch.draw(play.getTexture(), play.getX(), play.getY(), play.getWidth(), play.getHeight());
+        game.batch.draw(pause.getTexture(), pause.getX(), pause.getY(), pause.getWidth(), pause.getHeight());
+        game.batch.draw(base, basePos.x / FinalStand.PPM, (basePos.y - 16) / FinalStand.PPM, baseDimensions.x * 3, baseDimensions.y * 3);
+
+        world.getBodies(bodies);
+        for(int i = 0 ; i < bodies.size ; i ++) {
+            if(bodies.get(i).getUserData() != null && bodies.get(i).getUserData() instanceof Sprite) {
+                Sprite sprite = (Sprite) bodies.get(i).getUserData();
+                sprite.setPosition(bodies.get(i).getPosition().x - sprite.getWidth() / 2, bodies.get(i).getPosition().y - sprite.getHeight() / 2);
+                sprite.draw(game.batch);
+            }
+        }
+
+        //rendering projectiles
+        for (int counter = 0; counter < projectiles.size(); counter++) {
+            if(!projectiles.get(counter).isDead()) {
+                projectiles.get(counter).getSprite().setOriginCenter();
+                projectiles.get(counter).getSprite().setRotation(projectiles.get(counter).getAngle() - 180);
+                projectiles.get(counter).getSprite().draw(game.batch);
+                projectiles.get(counter).update();
+            } else
+            {
+                world.destroyBody(projectiles.get(counter).getB2Body());
+                projectiles.remove(counter);
+            }
+        }
+
+        //rendering towers
+        for(Tower tower: towers)
+        {
+            tower.update();
+            tower.getTowerSprite().setOriginCenter();
+            tower.getTowerSprite().setRotation(tower.getTowerAngle() - 180);
+            tower.getTowerSprite().draw(game.batch);
+        }
+
+        //render UI
+        game.batch.draw(ui.getBackground(), ui.getPosition().x, ui.getPosition().y, ui.getWidth(), ui.getHeight());
+        game.batch.draw(ui.getOption1Texture(), ui.getOption1Pos().x, ui.getOption1Pos().y, SingleShotTower.size.x, SingleShotTower.size.y);
+        game.batch.draw(ui.getOption2Texture(), ui.getOption2Pos().x, ui.getOption2Pos().y, AOETower.size.x, AOETower.size.y);
+        game.batch.draw(ui.getOption3Texture(), ui.getOption3Pos().x, ui.getOption3Pos().y, DOTTower.size.x, DOTTower.size.y);
+        game.batch.draw(ui.getOption4Texture(), ui.getOption4Pos().x, ui.getOption4Pos().y, LaserTower.size.x, LaserTower.size.y);
+        game.batch.draw(ui.getOption5Texture(), ui.getOption5Pos().x, ui.getOption5Pos().y, Trap.trapSize.x * 2, Trap.trapSize.y * 2);
+        game.batch.draw(ui.getOption6Texture(), ui.getOption6Pos().x, ui.getOption6Pos().y, Trap.trapSize.x * 2, Trap.trapSize.y * 2);
+        game.batch.draw(ui.getOption7Texture(), ui.getOption7Pos().x, ui.getOption7Pos().y, Trap.trapSize.x * 2, Trap.trapSize.y * 2);
+        game.batch.draw(ui.getOption8Texture(), ui.getOption8Pos().x, ui.getOption8Pos().y, Trap.trapSize.x * 2, Trap.trapSize.y * 2);
+
+        if(displayButtons == true)
+        {
+            upgradeButton.update();
+            sellButton.update();
+
+            upgradeButton.getButtonSprite().draw(game.batch);
+            sellButton.getButtonSprite().draw(game.batch);
+        }
+        checkTowerPressed();
+
+        if(optionChosen == true)
+        {
+            optionTexture.update();
+            optionTexture.getSprite().draw(game.batch);
+        }
+
+        game.batch.end();
+
+        if(Gdx.input.justTouched())
+        {
+            ui.optionClicked(getWorldMousePos());
+        }
+
+        game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
+        hud.stage.draw();
+
+        for(int i = 0 ; i < traps.size() ; i ++) {
+            if(traps.get(i).isDead()) {
+                world.destroyBody(traps.get(i).getB2Body());
+                traps.remove(i);
+            } else {
+                traps.get(i).update();
+            }
+        }
+        elapsed++;
+
+        if(FinalStand.getHealth() <= 0) {
+            FinalStand.gameOver = true;
+        }
+
+        if(FinalStand.gameOver) {
+            game.setScreen(new FailureScreen(game));
         }
     }
 }

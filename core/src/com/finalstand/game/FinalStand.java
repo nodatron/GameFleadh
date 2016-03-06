@@ -30,6 +30,7 @@ public class FinalStand extends Game {
 	public static final int roundsPerMap = 11;
 
 	public static boolean gameOver = false;
+	public static boolean victory = false;
 	public static int score = 1000;
 	public static int health = 10;
 
