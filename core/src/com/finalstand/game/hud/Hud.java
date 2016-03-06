@@ -36,9 +36,7 @@ public class Hud {
         this.map = map;
         viewport = new FitViewport(FinalStand.V_WIDTH, FinalStand.V_HEIGHT, new OrthographicCamera());
 
-    }
 
-    public void update(Integer mapNumber, Integer round, Integer health, Integer score) {
         Label healthLabel;
         Label scoreLabel;
         Label mapLabel;

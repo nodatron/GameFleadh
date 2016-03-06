@@ -6,7 +6,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -15,7 +14,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -37,7 +35,6 @@ import com.finalstand.game.sprites.towers.LaserTower;
 import com.finalstand.game.sprites.towers.SingleShotTower;
 import com.finalstand.game.sprites.towers.Tower;
 import com.finalstand.game.tools.B2WorldCreator;
-import com.finalstand.game.tools.MapManager;
 import com.finalstand.game.tools.Waypoint;
 import com.finalstand.game.tools.WorldContactListener;
 import com.finalstand.game.sprites.traps.Trap;
@@ -50,7 +47,6 @@ import java.util.ArrayList;
  * Created by Niall PC on 20/02/2016.
  */
 public class PlayScreen implements Screen {
-        private MapManager mapManager;
         private World world;
         private Box2DDebugRenderer b2dr;
 
@@ -135,14 +131,9 @@ public class PlayScreen implements Screen {
             gameCam = new OrthographicCamera();
             viewport = new FitViewport(FinalStand.V_WIDTH / FinalStand.PPM, FinalStand.V_HEIGHT / FinalStand.PPM, gameCam);
             waypoints = new Array<Waypoint>();
-//            mapManager = new MapManager(MapManager.getMapFileName(game.mapNumber),
-//                                        MapManager.getWaypointFileName(game.mapNumber), world);
             mapLoader = new TmxMapLoader();
             map = mapLoader.load("map1c.tmx");
-//            map = mapManager.getMap();
             renderer = new OrthogonalTiledMapRenderer(map, 1 / FinalStand.PPM);
-//            startingPos = mapManager.mapStartLocation(game.mapNumber);
-//            System.out.println(startingPos);
             // centers the camera
             gameCam.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
 
@@ -167,9 +158,7 @@ public class PlayScreen implements Screen {
                 bossCreep = new BossCreep(10 , 360, world);
             }
             creeps = new ArrayList<Creep>();
-            creeps = randomCreeps(challengerRating);
-            spawnableCreeps = new ArrayList<Creep>();
-            spawnableCreeps.add(creeps.get(0));
+            randomCreeps(challengerRating);
             creepsSpawned = 0;
             keepSpawning = true;
 
@@ -219,6 +208,7 @@ public class PlayScreen implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
         if(plannignPhaseCounter >= 1000) {
             if(game.mapNumber == 4) {
                 setGameState(State.BOSS);
@@ -237,25 +227,10 @@ public class PlayScreen implements Screen {
             game.setScreen(new FailureScreen(game));
         }
 
+        handleInput();
+
         switch (state) {
             case RUN: {
-//                    update();
-                if(Gdx.input.justTouched()) {
-                    Vector3 mouse = getWorldMousePos();
-                    if (mouse.x > play.getX() && mouse.x < play.getX() + play.getWidth() &&
-                            mouse.y > play.getY() && mouse.y < play.getY() + play.getHeight()) {
-                        plannignPhaseCounter = 1000;
-                        run = true;
-                    }
-
-                    if (mouse.x > pause.getX() && mouse.x < pause.getX() + 20 / FinalStand.PPM &&
-                            mouse.y > pause.getY() && mouse.y < pause.getY() + 10 / FinalStand.PPM) {
-                        setGameState(State.PAUSE);
-                    }
-                }
-                handleInput();
-
-                // Clearing the screen
 
                 //renders the map
                 renderer.render();
@@ -264,8 +239,10 @@ public class PlayScreen implements Screen {
                 world.step(1 / 60f, 6, 2);
                 gameCam.update();
                 renderer.setView(gameCam);
+
                 game.batch.begin();
-                game.batch.draw(pause.getTexture(), pause.getX(), pause.getY(), 20 / FinalStand.PPM, 10 / FinalStand.PPM);
+                game.batch.draw(play.getTexture(), play.getX(), play.getY(), play.getWidth(), play.getHeight());
+                game.batch.draw(pause.getTexture(), pause.getX(), pause.getY(), pause.getWidth(), pause.getHeight());
                 game.batch.draw(base, basePos.x / FinalStand.PPM, (basePos.y - 16) / FinalStand.PPM, baseDimensions.x * 3, baseDimensions.y * 3);
 
                 world.getBodies(bodies);
@@ -276,56 +253,34 @@ public class PlayScreen implements Screen {
                         sprite.draw(game.batch);
                     }
                 }
-//                for (int i = 0 ; i < spawnableCreeps.size() ; i ++) {
-//                    if(spawnableCreeps.get(i).isDead()) {
-//                        world.destroyBody(spawnableCreeps.get(i).getB2Body());
-//                        spawnableCreeps.remove(i);
-//                    } else {
-//                        spawnableCreeps.get(i).update();
-//                    }
-//                }
 
                 if (keepSpawning && elapsed > 40) {
-//                    System.out.println("Before spawnCreep " + creepsSpawned);
                     spawnNewCreep();
                     elapsed = 0;
                 }
-//                game.batch.end();
-//                renderGame();
-
 
                 //rendering projectiles
                 for (int counter = 0; counter < projectiles.size(); counter++) {
-//                    if(!projectiles.get(counter).isDead()) {
+                    if(!projectiles.get(counter).isDead()) {
                         projectiles.get(counter).getSprite().setOriginCenter();
                         projectiles.get(counter).getSprite().setRotation(projectiles.get(counter).getAngle() - 180);
                         projectiles.get(counter).getSprite().draw(game.batch);
-//                        projectiles.get(counter).update();
-//                    } else
-//                    {
-//                        world.destroyBody(projectiles.get(counter).getB2Body());
-//                        projectiles.remove(counter);
-//                    }
+                        projectiles.get(counter).update();
+                    } else
+                    {
+                        world.destroyBody(projectiles.get(counter).getB2Body());
+                        projectiles.remove(counter);
+                    }
                 }
 
                 //rendering towers
                 for(Tower tower: towers)
                 {
-//                    tower.update();
+                    tower.update();
                     tower.getTowerSprite().setOriginCenter();
                     tower.getTowerSprite().setRotation(tower.getTowerAngle() - 180);
                     tower.getTowerSprite().draw(game.batch);
                 }
-
-//                for(int i = 0 ; i < traps.size() ; i ++) {
-////                    if(traps.get(i).isDead()) {
-////                        world.destroyBody(traps.get(i).getB2Body());
-////                        traps.remove(i);
-////                    } else {
-//                        traps.get(i).getImage().draw(game.batch);
-////                        traps.get(i).update();
-////                    }
-//                }
 
                 //render UI
                 game.batch.draw(ui.getBackground(), ui.getPosition().x, ui.getPosition().y, ui.getWidth(), ui.getHeight());
@@ -340,12 +295,11 @@ public class PlayScreen implements Screen {
 
                 if(displayButtons == true)
                 {
-//                    upgradeButton.update();
-//                    sellButton.update();
+                    upgradeButton.update();
+                    sellButton.update();
 
                     upgradeButton.getButtonSprite().draw(game.batch);
                     sellButton.getButtonSprite().draw(game.batch);
-
                 }
                 checkTowerPressed();
 
@@ -354,7 +308,7 @@ public class PlayScreen implements Screen {
                     optionTexture.update();
                     optionTexture.getSprite().draw(game.batch);
                 }
-//                game.batch.draw(base, 100 / FinalStand.PPM, 100 / FinalStand.PPM, baseDimensions.x, baseDimensions.y);
+
                 game.batch.end();
 
                 if(Gdx.input.justTouched())
@@ -363,7 +317,6 @@ public class PlayScreen implements Screen {
                 }
 
                 game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
-//                hud.update(game.round, game.mapNumber, game.health, game.score);
                 hud.stage.draw();
 
                 if(creeps.size() == 0) {
@@ -382,101 +335,39 @@ public class PlayScreen implements Screen {
                     }
                 }
 
-//                for (int i = 0 ; i < spawnableCreeps.size() ; i ++) {
-//                    if(spawnableCreeps.get(i).isDead()) {
-//                        world.destroyBody(spawnableCreeps.get(i).getB2Body());
-//                        spawnableCreeps.remove(i);
-//                    } else {
-//                        spawnableCreeps.get(i).update();
-//                    }
-//                }
-
-                for (int counter = 0; counter < projectiles.size(); counter++) {
-                    if(!projectiles.get(counter).isDead()) {
-//                        projectiles.get(counter).getSprite().setOriginCenter();
-//                        projectiles.get(counter).getSprite().setRotation(projectiles.get(counter).getAngle() - 180);
-//                        projectiles.get(counter).getSprite().draw(game.batch);
-                        projectiles.get(counter).update();
-                    } else
-                    {
-                        world.destroyBody(projectiles.get(counter).getB2Body());
-                        projectiles.remove(counter);
-                    }
-                }
-
-                for(Tower tower: towers) {
-                    tower.update();
-                }
-
                 for(int i = 0 ; i < traps.size() ; i ++) {
                     if(traps.get(i).isDead()) {
                         world.destroyBody(traps.get(i).getB2Body());
                         traps.remove(i);
                     } else {
-//                        traps.get(i).getImage().draw(game.batch);
                         traps.get(i).update();
                     }
                 }
-
-
-                if(displayButtons == true) {
-                    upgradeButton.update();
-                    sellButton.update();
-                }
-
                 elapsed++;
             } break;
 
             // TODO(niall) Make the positions of the button look right but the functionality is done
             // TODO(niall) add a exit to mainmenu option
             case EXIT_GAME_CONFIRMATION: {
-                if(Gdx.input.justTouched()) {
-                    Vector3 mouse = getWorldMousePos();
-                    if (mouse.x > resumeButton.getPosition().x && mouse.x < resumeButton.getPosition().x + resumeButton.getPosition().x &&
-                            mouse.y > resumeButton.getPosition().y && mouse.y < resumeButton.getPosition().y + resumeButton.getHeight()) {
-                        setGameState(State.RUN);
-                        run = true;
-                    }
-                }
-                exitButton.update();
-
                 game.batch.setProjectionMatrix(gameCam.combined);
                 game.batch.begin();
                 game.batch.draw(getBackground(), getExitConfPosition().x - 50 / FinalStand.PPM, getExitConfPosition().y - 100 / FinalStand.PPM,  100 / FinalStand.PPM, 200 / FinalStand.PPM);
                 game.batch.draw(resumeButton.getButtonTexture(), resumeButton.getPosition().x - 50 / FinalStand.PPM, resumeButton.getPosition().y, resumeButton.getWidth(), resumeButton.getHeight());
                 game.batch.draw(exitButton.getButtonTexture(), exitButton.getPosition().x, exitButton.getPosition().y, exitButton.getWidth(), exitButton.getHeight());
                 game.batch.end();
-
             } break;
 
             //During this phase of the game the player will be aloud to place towers and traps before the creeps start to spawn
             case PLANNING_PHASE: {
-                if(Gdx.input.justTouched()) {
-                    Vector3 mouse = getWorldMousePos();
-                    //TODO fix the hit box on this it is not working
-                    if (mouse.x > play.getX() && mouse.x < play.getX() + play.getWidth() &&
-                            mouse.y > play.getY() && mouse.y < play.getY() + play.getHeight()) {
-                        plannignPhaseCounter = 1000;
-                        run = true;
-                    }
 
-                    if (mouse.x > pause.getX() && mouse.x < pause.getX() + 20 / FinalStand.PPM &&
-                            mouse.y > pause.getY() && mouse.y < pause.getY() + 10 / FinalStand.PPM) {
-                        setGameState(State.PAUSE);
-                    }
-                }
-//                Gdx.gl.glClearColor(1, 0, 0, 1);
-//                Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
                 //renders the map
                 renderer.render();
                 //renders the debug lines for box2d
-                b2dr.render(world, gameCam.combined);
                 game.batch.setProjectionMatrix(gameCam.combined);
-                game.batch.begin();
-                handleInput();
                 world.step(1 / 60f, 6, 2);
                 gameCam.update();
                 renderer.setView(gameCam);
+                game.batch.begin();
                 game.batch.draw(base, basePos.x / FinalStand.PPM, (basePos.y - 16) / FinalStand.PPM, baseDimensions.x * 3, baseDimensions.y * 3);
                 elapsed++;
                 game.batch.draw(play.getTexture(), play.getX(), play.getY(), play.getWidth(), play.getHeight());
@@ -526,10 +417,6 @@ public class PlayScreen implements Screen {
 
                     upgradeButton.getButtonSprite().draw(game.batch);
                     sellButton.getButtonSprite().draw(game.batch);
-
-//            upgradeButton.getButtonLabel().draw(game.batch, 1);
-
-//            upgradeButton.getBitmapFonttext().draw(game.batch, "hello", upgradeButton.getPosition().x, upgradeButton.getPosition().y);
                 }
                 checkTowerPressed();
 
@@ -546,7 +433,6 @@ public class PlayScreen implements Screen {
                     ui.optionClicked(getWorldMousePos());
                 }
                 game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
-                hud.update(game.round, game.mapNumber, game.health, game.score);
                 hud.stage.draw();
                 plannignPhaseCounter++;
 
@@ -554,20 +440,6 @@ public class PlayScreen implements Screen {
             } break;
 
             case PAUSE: {
-                if(Gdx.input.justTouched()) {
-                    Vector3 mouse = getWorldMousePos();
-                    if (mouse.x > play.getX() && mouse.x < play.getX() + play.getWidth() &&
-                            mouse.y > play.getY() && mouse.y < play.getY() + play.getHeight()) {
-                        plannignPhaseCounter = 1000;
-                        run = true;
-                    }
-
-                    if (mouse.x > pause.getX() && mouse.x < pause.getX() + 20 / FinalStand.PPM &&
-                            mouse.y > pause.getY() && mouse.y < pause.getY() + 10 / FinalStand.PPM) {
-                        setGameState(State.PAUSE);
-                    }
-                }
-
                 game.batch.begin();
                 game.batch.draw(play.getTexture(), play.getX(), play.getY(), play.getWidth(), play.getHeight());
                 game.batch.draw(pause.getTexture(), pause.getX(), pause.getY(), pause.getWidth(), pause.getHeight());
@@ -588,30 +460,17 @@ public class PlayScreen implements Screen {
                         setGameState(State.PAUSE);
                     }
                 }
-                // Clearing the screen
-//                Gdx.gl.glClearColor(1, 0, 0, 1);
-//                Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
                 //renders the map
                 renderer.render();
 
-                //renders the debug lines for box2d
-            b2dr.render(world, gameCam.combined);
-
-
+                world.step(1 / 60f, 6, 2);
+                gameCam.update();
+                bossCreep.update();
+                renderer.setView(gameCam);
                 game.batch.setProjectionMatrix(gameCam.combined);
                 game.batch.begin();
-                handleInput();
 
-                world.step(1 / 60f, 6, 2);
-
-                gameCam.update();
-
-//                bossCreep.render(game.batch);
-                bossCreep.update();
-
-//        player.update();
-                renderer.setView(gameCam);
 
                 game.batch.draw(play.getTexture(), play.getX(), play.getY(), play.getWidth(), play.getHeight());
                 game.batch.draw(pause.getTexture(), pause.getX(), pause.getY(), pause.getWidth(), pause.getHeight());
@@ -658,10 +517,6 @@ public class PlayScreen implements Screen {
 
                     upgradeButton.getButtonSprite().draw(game.batch);
                     sellButton.getButtonSprite().draw(game.batch);
-
-//            upgradeButton.getButtonLabel().draw(game.batch, 1);
-
-//            upgradeButton.getBitmapFonttext().draw(game.batch, "hello", upgradeButton.getPosition().x, upgradeButton.getPosition().y);
                 }
                 checkTowerPressed();
 
@@ -670,7 +525,6 @@ public class PlayScreen implements Screen {
                     optionTexture.update();
                     optionTexture.getSprite().draw(game.batch);
                 }
-//                game.batch.draw(base, 100 / FinalStand.PPM, 100 / FinalStand.PPM, baseDimensions.x, baseDimensions.y);
                 game.batch.end();
 
                 if(Gdx.input.justTouched())
@@ -680,7 +534,6 @@ public class PlayScreen implements Screen {
 
 
                 game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
-                hud.update(game.round, game.mapNumber, game.health, game.score);
                 hud.stage.draw();
 
                 if(FinalStand.gameOver) {
@@ -713,7 +566,7 @@ public class PlayScreen implements Screen {
     @Override
     public void dispose() {
         map.dispose();
-//        background.dispose();
+        background.dispose();
     }
 
     public Texture getBackground() {
@@ -725,6 +578,7 @@ public class PlayScreen implements Screen {
     }
 
     public void handleInput() {
+        Vector3 mouse = getWorldMousePos();
         if(Gdx.input.isKeyPressed(Input.Keys.M)) {
             game.setScreen(new MenuScreen(game, this));
 //            dispose();
@@ -734,6 +588,33 @@ public class PlayScreen implements Screen {
             setGameState(State.EXIT_GAME_CONFIRMATION);
 //            game.setScreen(new MenuScreen(game, this));
         }
+
+        if(state == State.RUN || state == State.PLANNING_PHASE || state == State.BOSS ||
+                state == State.PAUSE) {
+            if (Gdx.input.justTouched()) {
+                if (mouse.x > play.getX() && mouse.x < play.getX() + play.getWidth() &&
+                        mouse.y > play.getY() && mouse.y < play.getY() + play.getHeight()) {
+                    plannignPhaseCounter = 1000;
+                    run = true;
+                }
+
+                if (mouse.x > pause.getX() && mouse.x < pause.getX() + 20 / FinalStand.PPM &&
+                        mouse.y > pause.getY() && mouse.y < pause.getY() + 10 / FinalStand.PPM) {
+                    setGameState(State.PAUSE);
+                }
+            }
+        }
+
+        if(state == State.EXIT_GAME_CONFIRMATION) {
+            if(Gdx.input.justTouched()) {
+                if (mouse.x > resumeButton.getPosition().x && mouse.x < resumeButton.getPosition().x + resumeButton.getPosition().x &&
+                        mouse.y > resumeButton.getPosition().y && mouse.y < resumeButton.getPosition().y + resumeButton.getHeight()) {
+                    setGameState(State.RUN);
+                    run = true;
+                }
+            }
+            exitButton.update();
+        }
     }
 
     public void spawnNewCreep() {
@@ -741,7 +622,6 @@ public class PlayScreen implements Screen {
             keepSpawning = false;
             return;
         }
-//        spawnableCreeps.add(creeps.get(creepsSpawned));
         creepsSpawned++;
     }
 
@@ -750,8 +630,7 @@ public class PlayScreen implements Screen {
     }
 
 
-    public ArrayList<Creep> randomCreeps(float challengeRating) {
-        ArrayList<Creep> levelCreeps = new ArrayList<Creep>();
+    public void randomCreeps(float challengeRating) {
         int randomNumber = 0;
         float currentChallengeRating = 0;
 
@@ -759,30 +638,28 @@ public class PlayScreen implements Screen {
             randomNumber = randomWithinRange(0, 100);
             if(challengeRating - currentChallengeRating > 1) {
                 if(randomNumber <= 55) {
-                    levelCreeps.add(new BasicCreep(10, 360, world));
+                    creeps.add(new BasicCreep(10, 360, world));
                     currentChallengeRating += 0.25f;
                 } else if(randomNumber <= 85 && randomNumber > 55) {
-                    levelCreeps.add(new MediumCreep(10, 360, world));
+                    creeps.add(new MediumCreep(10, 360, world));
                     currentChallengeRating += 0.75f;
                 } else {
-                    levelCreeps.add(new HeavyCreep(10, 360, world));
+                    creeps.add(new HeavyCreep(10, 360, world));
                     currentChallengeRating += 1.0f;
                 }
             } else if(challengeRating - currentChallengeRating >= 0.75) {
                 if(randomNumber <= 65) {
-                    levelCreeps.add(new BasicCreep(10, 360, world));
+                    creeps.add(new BasicCreep(10, 360, world));
                     currentChallengeRating += 0.25f;
                 } else if(randomNumber > 65) {
-                    levelCreeps.add(new MediumCreep(10, 360, world));
+                    creeps.add(new MediumCreep(10, 360, world));
                     currentChallengeRating += 0.75f;
                 }
             } else {
-                levelCreeps.add(new BasicCreep(10, 360, world));
+                creeps.add(new BasicCreep(10, 360, world));
                 currentChallengeRating += 0.25f;
             }
         }
-
-        return levelCreeps;
     }
 
     public int randomWithinRange(int min, int max) {
@@ -835,17 +712,14 @@ public class PlayScreen implements Screen {
         }
 
         if(creeps.size() == 0) {
-
+            System.out.println(game.round);
             game.round ++;
+            System.out.println(game.round);
             elapsed = 0;
-            for(Creep c : creeps) {
-                world.destroyBody(c.getB2Body());
-            }
             creeps.clear();
-            spawnableCreeps.clear();
             challengerRating = game.mapNumber * 10 + game.round;
 
-            creeps = randomCreeps(challengerRating);
+            randomCreeps(challengerRating);
 //            spawnableCreeps.add(creeps.get(0));
 
 //            creepsSpawned = 0;
