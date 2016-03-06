@@ -124,15 +124,25 @@ public class Creep extends Sprite{
         movement = new boolean[4];
         movement[0] = true;
         setDirection = false;
-        direction = new Vector2(50 / FinalStand.PPM, 0);
         timeElapsed = 0;
-        if(FinalStand.mapNumber == 1) {
-            dir = Waypoint.readWaypoints("map1.txt");
-        } else if(FinalStand.mapNumber == 2) {
-            dir = Waypoint.readWaypoints("map2.txt");
-        } else if(FinalStand.mapNumber == 3 || FinalStand.mapNumber == 4){
-            dir = Waypoint.readWaypoints("map3.txt");
+        System.out.println(FinalStand.mapNumber);
+        switch(FinalStand.mapNumber) {
+            case 1: {
+                dir = Waypoint.readWaypoints("map1.txt");
+                direction = new Vector2(50 / FinalStand.PPM, 0);
+            } break;
+
+            case 2: {
+                dir = Waypoint.readWaypoints("map2.txt");
+                direction = new Vector2(0, - 50 / FinalStand.PPM);
+            } break;
+
+            case 3: {
+                dir = Waypoint.readWaypoints("map3.txt");
+                direction = new Vector2(0, - 50 / FinalStand.PPM);
+            } break;
         }
+
         waypointHit = 0;
         speed = 1;
         initSpeed = speed;

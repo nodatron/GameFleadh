@@ -55,7 +55,7 @@ public class Hud {
 
 
         table.add(mapLabel).expandX().padTop(5);
-        table.add(healthLabelHeading).padTop(5);
+        table.add(healthLabelHeading).expandX().padTop(5);
         table.add(healthLabel).expandX().padTop(5);
         table.add(scoreLabel).expandX().padTop(5);
         mapLabel = new Label(String.format("%02d", map), new Label.LabelStyle(new BitmapFont(), Color.BLUE));

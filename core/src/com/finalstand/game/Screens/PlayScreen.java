@@ -121,18 +121,21 @@ public class PlayScreen implements Screen {
         public static ArrayList<Trap> traps;
 
         private Vector2 startingPos;
+        private String mapFileName;
+
 
         public PlayScreen(FinalStand game) {
             this.game = game;
             run = false;
+            mapFileName = findMapFile(FinalStand.mapNumber);
             state = State.PLANNING_PHASE;
             firstRoundDone = false;
             world = new World(new Vector2(0, 0), true);
             gameCam = new OrthographicCamera();
             viewport = new FitViewport(FinalStand.V_WIDTH / FinalStand.PPM, FinalStand.V_HEIGHT / FinalStand.PPM, gameCam);
-            waypoints = new Array<Waypoint>();
             mapLoader = new TmxMapLoader();
-            map = mapLoader.load("map1c.tmx");
+            map = mapLoader.load(mapFileName);
+            System.out.println(FinalStand.mapNumber);
             renderer = new OrthogonalTiledMapRenderer(map, 1 / FinalStand.PPM);
             // centers the camera
             gameCam.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
@@ -149,13 +152,14 @@ public class PlayScreen implements Screen {
             hud = new Hud(game.round, game.mapNumber, game.health, game.score);
 
             challengerRating = game.mapNumber * 10 + game.round;
+            startingPos = findCreepStartingPos(FinalStand.mapNumber);
             if(FinalStand.mapNumber == 1) {
-                bossCreep = new BossCreep(10 , 360, world);
+                bossCreep = new BossCreep(startingPos.x, startingPos.y, world);
             } else if(FinalStand.mapNumber == 2) {
-                bossCreep = new BossCreep(10, 360, world);
+                bossCreep = new BossCreep(startingPos.x, startingPos.y, world);
             }
             else if (FinalStand.mapNumber == 3 || FinalStand.mapNumber == 4){
-                bossCreep = new BossCreep(10 , 360, world);
+                bossCreep = new BossCreep(startingPos.x, startingPos.y, world);
             }
             creeps = new ArrayList<Creep>();
             randomCreeps(challengerRating);
@@ -200,7 +204,7 @@ public class PlayScreen implements Screen {
     @Override
     public void show() {
         mapLoader = new TmxMapLoader();
-        map = mapLoader.load("map1c.tmx");
+        map = mapLoader.load(mapFileName);
         renderer = new OrthogonalTiledMapRenderer(map, 1 / FinalStand.PPM);
     }
 
@@ -374,25 +378,25 @@ public class PlayScreen implements Screen {
             randomNumber = randomWithinRange(0, 100);
             if(challengeRating - currentChallengeRating > 1) {
                 if(randomNumber <= 55) {
-                    creeps.add(new BasicCreep(10, 360, world));
+                    creeps.add(new BasicCreep(startingPos.x, startingPos.y, world));
                     currentChallengeRating += 0.25f;
                 } else if(randomNumber <= 85 && randomNumber > 55) {
-                    creeps.add(new MediumCreep(10, 360, world));
+                    creeps.add(new MediumCreep(startingPos.x, startingPos.y, world));
                     currentChallengeRating += 0.75f;
                 } else {
-                    creeps.add(new HeavyCreep(10, 360, world));
+                    creeps.add(new HeavyCreep(startingPos.x, startingPos.y, world));
                     currentChallengeRating += 1.0f;
                 }
             } else if(challengeRating - currentChallengeRating >= 0.75) {
                 if(randomNumber <= 65) {
-                    creeps.add(new BasicCreep(10, 360, world));
+                    creeps.add(new BasicCreep(startingPos.x, startingPos.y, world));
                     currentChallengeRating += 0.25f;
                 } else if(randomNumber > 65) {
-                    creeps.add(new MediumCreep(10, 360, world));
+                    creeps.add(new MediumCreep(startingPos.x, startingPos.y, world));
                     currentChallengeRating += 0.75f;
                 }
             } else {
-                creeps.add(new BasicCreep(10, 360, world));
+                creeps.add(new BasicCreep(startingPos.x, startingPos.y, world));
                 currentChallengeRating += 0.25f;
             }
         }
@@ -440,6 +444,11 @@ public class PlayScreen implements Screen {
             waypoints.clear(); //TODO add in code to destroy box2d stuff
             towers.clear();
             creeps.clear();
+
+            mapFileName = findMapFile(game.mapNumber);
+            startingPos = findCreepStartingPos(game.mapNumber);
+            basePos = waypoints.get(waypoints.size - 1).getPos();
+            baseDimensions = waypoints.get(waypoints.size - 1).getBaseDimensions();
         }
 
         if(creeps.size() == 0) {
@@ -557,5 +566,29 @@ public class PlayScreen implements Screen {
         if(FinalStand.gameOver) {
             game.setScreen(new FailureScreen(game));
         }
+
+        if(FinalStand.victory) {
+            game.setScreen(new VictoryScreen(game));
+        }
+    }
+
+    public String findMapFile(int mapNumber) {
+        String mapFileName = "";
+        switch(mapNumber) {
+            case 1: { mapFileName =  "map1c.tmx"; } break;
+            case 2: { mapFileName =  "map2.tmx"; } break;
+            case 3: { mapFileName =  "map3.tmx"; } break;
+        }
+        return mapFileName;
+    }
+
+    public Vector2 findCreepStartingPos(int mapNumber) {
+        Vector2 pos = null;
+        switch(mapNumber) {
+            case 1: { pos = new Vector2(10, 360); } break;
+            case 2: { pos = new Vector2(648, 392); } break;
+            case 3: { pos = new Vector2(552, 392); } break;
+        }
+        return pos;
     }
 }
