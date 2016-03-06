@@ -1,6 +1,7 @@
 package com.finalstand.game;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.finalstand.game.Screens.SplashScreen;
 
@@ -51,9 +52,10 @@ public class FinalStand extends Game {
 
 	@Override
 	public void create () {
-		batch = new SpriteBatch();
+		batch = new SpriteBatch(30);
 
 		setScreen(new SplashScreen(this));
+//		System.out.println(Gdx.graphics.isGL30Available());
 	}
 
 	@Override

@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -216,7 +217,8 @@ public class PlayScreen implements Screen {
 
     @Override
     public void render(float delta) {
-
+        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         if(plannignPhaseCounter >= 1000) {
             if(game.mapNumber == 4) {
                 setGameState(State.BOSS);
@@ -251,21 +253,21 @@ public class PlayScreen implements Screen {
                         setGameState(State.PAUSE);
                     }
                 }
+                handleInput();
 
                 // Clearing the screen
-                Gdx.gl.glClearColor(0, 0, 0, 1);
-                Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
                 //renders the map
                 renderer.render();
-                b2dr.render(world, gameCam.combined);
+//                b2dr.render(world, gameCam.combined);
                 game.batch.setProjectionMatrix(gameCam.combined);
-                handleInput();
                 world.step(1 / 60f, 6, 2);
                 gameCam.update();
                 renderer.setView(gameCam);
                 game.batch.begin();
+                game.batch.draw(pause.getTexture(), pause.getX(), pause.getY(), 20 / FinalStand.PPM, 10 / FinalStand.PPM);
+                game.batch.draw(base, basePos.x / FinalStand.PPM, (basePos.y - 16) / FinalStand.PPM, baseDimensions.x * 3, baseDimensions.y * 3);
 
-//                game.batch.begin();
                 world.getBodies(bodies);
                 for(int i = 0 ; i < bodies.size ; i ++) {
                     if(bodies.get(i).getUserData() != null && bodies.get(i).getUserData() instanceof Sprite) {
@@ -290,8 +292,6 @@ public class PlayScreen implements Screen {
                 }
 //                game.batch.end();
 //                renderGame();
-                game.batch.draw(pause.getTexture(), pause.getX(), pause.getY(), 20 / FinalStand.PPM, 10 / FinalStand.PPM);
-                game.batch.draw(base, basePos.x / FinalStand.PPM, (basePos.y - 16) / FinalStand.PPM, baseDimensions.x * 3, baseDimensions.y * 3);
 
 
                 //rendering projectiles
@@ -366,18 +366,30 @@ public class PlayScreen implements Screen {
 //                hud.update(game.round, game.mapNumber, game.health, game.score);
                 hud.stage.draw();
 
-                if(spawnableCreeps.size() == 0) {
+                if(creeps.size() == 0) {
                     firstRoundDone = true;
                 }
 
-                for (int i = 0 ; i < spawnableCreeps.size() ; i ++) {
-                    if(spawnableCreeps.get(i).isDead()) {
-                        world.destroyBody(spawnableCreeps.get(i).getB2Body());
-                        spawnableCreeps.remove(i);
+                System.out.println(creeps.size() + " and creepsSpawned " + creepsSpawned);
+
+                for (int i = 0 ; i < creepsSpawned ; i ++) {
+                    if(creeps.get(i).isDead()) {
+                        world.destroyBody(creeps.get(i).getB2Body());
+                        creeps.remove(i);
+                        creepsSpawned --;
                     } else {
-                        spawnableCreeps.get(i).update();
+                        creeps.get(i).update();
                     }
                 }
+
+//                for (int i = 0 ; i < spawnableCreeps.size() ; i ++) {
+//                    if(spawnableCreeps.get(i).isDead()) {
+//                        world.destroyBody(spawnableCreeps.get(i).getB2Body());
+//                        spawnableCreeps.remove(i);
+//                    } else {
+//                        spawnableCreeps.get(i).update();
+//                    }
+//                }
 
                 for (int counter = 0; counter < projectiles.size(); counter++) {
                     if(!projectiles.get(counter).isDead()) {
@@ -441,11 +453,6 @@ public class PlayScreen implements Screen {
             case PLANNING_PHASE: {
                 if(Gdx.input.justTouched()) {
                     Vector3 mouse = getWorldMousePos();
-                    System.out.println(mouse);
-                    System.out.println(play.getX());
-                    System.out.println(pause.getX());
-                    System.out.println(play.getY() + play.getWidth());
-                    System.out.println(pause.getY() + play.getHeight());
                     //TODO fix the hit box on this it is not working
                     if (mouse.x > play.getX() && mouse.x < play.getX() + play.getWidth() &&
                             mouse.y > play.getY() && mouse.y < play.getY() + play.getHeight()) {
@@ -458,8 +465,8 @@ public class PlayScreen implements Screen {
                         setGameState(State.PAUSE);
                     }
                 }
-                Gdx.gl.glClearColor(1, 0, 0, 1);
-                Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+//                Gdx.gl.glClearColor(1, 0, 0, 1);
+//                Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
                 //renders the map
                 renderer.render();
                 //renders the debug lines for box2d
@@ -542,6 +549,8 @@ public class PlayScreen implements Screen {
                 hud.update(game.round, game.mapNumber, game.health, game.score);
                 hud.stage.draw();
                 plannignPhaseCounter++;
+
+
             } break;
 
             case PAUSE: {
@@ -580,8 +589,8 @@ public class PlayScreen implements Screen {
                     }
                 }
                 // Clearing the screen
-                Gdx.gl.glClearColor(1, 0, 0, 1);
-                Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+//                Gdx.gl.glClearColor(1, 0, 0, 1);
+//                Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
                 //renders the map
                 renderer.render();
@@ -732,7 +741,7 @@ public class PlayScreen implements Screen {
             keepSpawning = false;
             return;
         }
-        spawnableCreeps.add(creeps.get(creepsSpawned));
+//        spawnableCreeps.add(creeps.get(creepsSpawned));
         creepsSpawned++;
     }
 
@@ -825,7 +834,7 @@ public class PlayScreen implements Screen {
 
         }
 
-        if(spawnableCreeps.size() == 0) {
+        if(creeps.size() == 0) {
 
             game.round ++;
             elapsed = 0;
@@ -837,9 +846,9 @@ public class PlayScreen implements Screen {
             challengerRating = game.mapNumber * 10 + game.round;
 
             creeps = randomCreeps(challengerRating);
-            spawnableCreeps.add(creeps.get(0));
+//            spawnableCreeps.add(creeps.get(0));
 
-            creepsSpawned = 0;
+//            creepsSpawned = 0;
             keepSpawning = true;
             plannignPhaseCounter = 0;
 
