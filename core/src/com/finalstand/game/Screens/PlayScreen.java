@@ -3,6 +3,7 @@ package com.finalstand.game.Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -85,6 +86,8 @@ public class PlayScreen implements Screen {
         public static UI ui;
         public static OptionTexture optionTexture;
         public static boolean optionChosen;
+
+        Music backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("backgroundMusic.wav"));
 
         public enum State {
             EXIT_GAME_CONFIRMATION,
@@ -205,6 +208,8 @@ public class PlayScreen implements Screen {
 
     @Override
     public void show() {
+        backgroundMusic.play();
+        backgroundMusic.setLooping(true);
         mapLoader = new TmxMapLoader();
         map = mapLoader.load("map1c.tmx");
         renderer = new OrthogonalTiledMapRenderer(map, 1 / FinalStand.PPM);
@@ -625,6 +630,7 @@ public class PlayScreen implements Screen {
     @Override
     public void dispose() {
         map.dispose();
+        backgroundMusic.dispose();
 //        background.dispose();
     }
 
