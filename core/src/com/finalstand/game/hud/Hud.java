@@ -36,12 +36,6 @@ public class Hud {
         this.map = map;
         viewport = new FitViewport(FinalStand.V_WIDTH, FinalStand.V_HEIGHT, new OrthographicCamera());
 
-
-        Label healthLabel;
-        Label scoreLabel;
-        Label mapLabel;
-        Label roundLabel;
-
         Table table = new Table();
         table.top();
         table.setFillParent(true);

@@ -95,6 +95,8 @@ public class Waypoint extends InteractiveTileObject{
             while((line = br.readLine()) != null) {
                 direction.add(line);
             }
+
+            br.close();
         } catch (IOException e) {
             System.out.println(e);
             e.printStackTrace();

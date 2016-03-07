@@ -14,6 +14,7 @@ import com.finalstand.game.FinalStand;
 import com.finalstand.game.buttons.ControlButton;
 import com.finalstand.game.buttons.ExitButton;
 import com.finalstand.game.buttons.ResumeButton;
+import com.finalstand.game.hud.Controls;
 
 import javafx.scene.control.MenuButton;
 import sun.text.resources.cldr.ia.FormatData_ia;
@@ -58,6 +59,8 @@ public class MenuScreen implements Screen {
     private float width;
     private float height;
 
+    private Controls controls;
+
     public MenuScreen(FinalStand game, Screen play){
 
         this.game = game;
@@ -94,6 +97,8 @@ public class MenuScreen implements Screen {
         backToMenuPos = new Vector2((FinalStand.V_WIDTH / FinalStand.PPM) * 0.85f, (FinalStand.V_HEIGHT / FinalStand.PPM) * 0.005f);
         width = (FinalStand.V_WIDTH / FinalStand.PPM) * 0.1f;
         height = (FinalStand.V_WIDTH / FinalStand.PPM) * 0.05f;
+
+        controls = new Controls("controls.txt");
     }
 
     @Override
@@ -206,6 +211,9 @@ public class MenuScreen implements Screen {
                 game.batch.draw(background, 0, 0, 800 / FinalStand.PPM, 400 / FinalStand.PPM);
                 game.batch.draw(backToMenu, backToMenuPos.x, backToMenuPos.y, width, height);
                 game.batch.end();
+
+                game.batch.setProjectionMatrix(controls.stage.getCamera().combined);
+                controls.stage.draw();
             } break;
         }
     }

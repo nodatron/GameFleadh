@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.finalstand.game.FinalStand;
 import com.finalstand.game.buttons.BackButton;
 import com.finalstand.game.buttons.PlayButton;
+import com.finalstand.game.hud.Controls;
 
 /**
  * Created by Niall PC on 25/02/2016.
@@ -24,6 +25,7 @@ public class ControlScreen implements Screen {
     private Viewport viewport;
     private static OrthographicCamera gameCam;
     private Texture background;
+    private Controls controls;
 
     private PlayButton playButton;
     private BackButton backButton;
@@ -42,6 +44,7 @@ public class ControlScreen implements Screen {
                 (FinalStand.V_WIDTH / FinalStand.PPM) *0.1f, (FinalStand.V_HEIGHT / FinalStand.PPM) *0.1f);
         backButton = new BackButton("screens/backbutton.png", (FinalStand.V_WIDTH / FinalStand.PPM) * 0.6f, (FinalStand.V_HEIGHT / FinalStand.PPM) *0.04f,
                 (FinalStand.V_WIDTH / FinalStand.PPM) *0.1f, (FinalStand.V_HEIGHT / FinalStand.PPM) *0.1f);
+        controls = new Controls("controls.txt");
 
         playButtonPressed = false;
         backButtonPressed = false;
@@ -67,6 +70,9 @@ public class ControlScreen implements Screen {
         game.batch.draw(playButton.getButtonTexture(), playButton.getPosition().x, playButton.getPosition().y, playButton.getWidth(), playButton.getHeight());
         game.batch.draw(backButton.getButtonTexture(), backButton.getPosition().x, backButton.getPosition().y, backButton.getWidth(), backButton.getHeight());
         game.batch.end();
+
+        game.batch.setProjectionMatrix(controls.stage.getCamera().combined);
+        controls.stage.draw();
 
         if(playButtonPressed) {
             game.setScreen(new PlayScreen(game));

@@ -1,0 +1,4 @@
+Controls for the game Final Stand
+Click on UI images then click where you want to place them
+Press M in the game to go to the menu screen
+Click on the buttons in the menu to go to the option clicked
