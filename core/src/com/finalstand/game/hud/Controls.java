@@ -1,8 +1,10 @@
 package com.finalstand.game.hud;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -26,23 +28,23 @@ public class Controls {
     private Viewport viewport;
 
     private ArrayList<Label> labels;
-    private BitmapFont font;
+    private BitmapFont font32;
 
 
     public Controls(String filename) {
         labels = new ArrayList<Label>();
         stage = new Stage();
         viewport = new FitViewport(FinalStand.V_WIDTH / FinalStand.PPM, FinalStand.V_HEIGHT / FinalStand.PPM, new OrthographicCamera());
-        font = new BitmapFont();
-        fontX = 1;
-        fontY = 2;
-        font.getData().setScale(fontX, fontY);
+//        font = new BitmapFont();
+//        fontX = 1;
+//        fontY = 2;
+//        font.getData().setScale(fontX, fontY);
 
-//        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/myfont.ttf"));
-//        FreeTypeFontParameter parameter = new FreeTypeFontParameter();
-//        parameter.size = 12;
-//        BitmapFont font12 = generator.generateFont(parameter); // font size 12 pixels
-//        generator.dispose(); // don't forget to dispose to avoid memory leaks!
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("OpenSans-Regular.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = 32;
+        font32 = generator.generateFont(parameter); // font size 12 pixels
+
 
         readControls(filename);
         Table table = new Table();
@@ -50,11 +52,12 @@ public class Controls {
         table.setFillParent(true);
 
         for (int i = 0 ; i < labels.size() ; i ++) {
-            table.add(labels.get(i)).expandX().padTop(fontY);
+            table.add(labels.get(i)).expandX();
             table.row();
         }
 
         stage.addActor(table);
+        generator.dispose();
     }
 
     public void readControls(String filename) {
@@ -63,7 +66,7 @@ public class Controls {
 
             String line;
             while((line = br.readLine()) != null) {
-                Label l = new Label(line, new Label.LabelStyle(font, Color.BLACK));
+                Label l = new Label(line, new Label.LabelStyle(font32, Color.BLACK));
                 labels.add(l);
             }
 
