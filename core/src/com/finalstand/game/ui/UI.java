@@ -46,6 +46,15 @@ public class UI {
     private Vector2 option7Pos;
     private Vector2 option8Pos;
 
+    //pricetag textures
+    private Texture tag50;
+    private Texture tag100;
+    private Texture tag150;
+    private Texture tag200;
+    private Texture tag250;
+    private Texture tag400;
+    private float tagHeight;
+
     //the bounds size around each option
     private float boundsHeight;
     private float boundsWidth;
@@ -71,14 +80,23 @@ public class UI {
         boundsHeight = height;
 
         //setting option positions
-        option1Pos = new Vector2(boundsWidth / 4, boundsHeight / 6);
-        option2Pos = new Vector2((boundsWidth / 6) + boundsWidth, boundsHeight / 6);
-        option3Pos = new Vector2((boundsWidth / 6) + (boundsWidth * 2), boundsHeight / 6);
-        option4Pos = new Vector2((boundsWidth / 6) + (boundsWidth * 3), boundsHeight / 6);
-        option5Pos = new Vector2((boundsWidth / 6) + (boundsWidth * 4), boundsHeight / 6);
-        option6Pos = new Vector2((boundsWidth / 6) + (boundsWidth * 5), boundsHeight / 6);
-        option7Pos = new Vector2((boundsWidth / 6) + (boundsWidth * 6), boundsHeight / 6);
-        option8Pos = new Vector2((boundsWidth / 6) + (boundsWidth * 7), boundsHeight / 6);
+        option1Pos = new Vector2(boundsWidth / 4, boundsHeight / 3);
+        option2Pos = new Vector2((boundsWidth / 6) + boundsWidth, boundsHeight / 3);
+        option3Pos = new Vector2((boundsWidth / 6) + (boundsWidth * 2), boundsHeight / 3);
+        option4Pos = new Vector2((boundsWidth / 6) + (boundsWidth * 3), boundsHeight / 3);
+        option5Pos = new Vector2((boundsWidth / 6) + (boundsWidth * 4), boundsHeight / 3);
+        option6Pos = new Vector2((boundsWidth / 6) + (boundsWidth * 5), boundsHeight / 3);
+        option7Pos = new Vector2((boundsWidth / 6) + (boundsWidth * 6), boundsHeight / 3);
+        option8Pos = new Vector2((boundsWidth / 6) + (boundsWidth * 7), boundsHeight / 3);
+
+        //pricetag textures
+        tag50 = new Texture("price_tags/50tag.png");
+        tag100 = new Texture("price_tags/100tag.png");
+        tag150 = new Texture("price_tags/150tag.png");
+        tag200 = new Texture("price_tags/200tag.png");
+        tag250 = new Texture("price_tags/250tag.png");
+        tag400 = new Texture("price_tags/400tag.png");
+        tagHeight = boundsHeight / 4;
     }
 
     //when a option is clicked
@@ -202,5 +220,33 @@ public class UI {
 
     public float getBoundsWidth() {
         return boundsWidth;
+    }
+
+    public Texture getTag50() {
+        return tag50;
+    }
+
+    public Texture getTag100() {
+        return tag100;
+    }
+
+    public Texture getTag150() {
+        return tag150;
+    }
+
+    public Texture getTag200() {
+        return tag200;
+    }
+
+    public Texture getTag250() {
+        return tag250;
+    }
+
+    public Texture getTag400() {
+        return tag400;
+    }
+
+    public float getTagHeight() {
+        return tagHeight;
     }
 }

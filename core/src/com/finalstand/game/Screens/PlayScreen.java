@@ -203,7 +203,6 @@ public class PlayScreen implements Screen {
             optionChosen = false;
 
             traps = new ArrayList<Trap>();
-
     }
 
     @Override
@@ -329,6 +328,15 @@ public class PlayScreen implements Screen {
                 game.batch.draw(ui.getOption7Texture(), ui.getOption7Pos().x, ui.getOption7Pos().y, Trap.trapSize.x * 2, Trap.trapSize.y * 2);
                 game.batch.draw(ui.getOption8Texture(), ui.getOption8Pos().x, ui.getOption8Pos().y, Trap.trapSize.x * 2, Trap.trapSize.y * 2);
 
+                game.batch.draw(ui.getTag100(), ui.getBoundsWidth() * 0, 0, ui.getBoundsWidth(), ui.getTagHeight());
+                game.batch.draw(ui.getTag200(), ui.getBoundsWidth() * 1, 0, ui.getBoundsWidth(), ui.getTagHeight());
+                game.batch.draw(ui.getTag250(), ui.getBoundsWidth() * 2, 0, ui.getBoundsWidth(), ui.getTagHeight());
+                game.batch.draw(ui.getTag400(), ui.getBoundsWidth() * 3, 0, ui.getBoundsWidth(), ui.getTagHeight());
+                game.batch.draw(ui.getTag50(), ui.getBoundsWidth() * 4, 0, ui.getBoundsWidth(), ui.getTagHeight());
+                game.batch.draw(ui.getTag100(), ui.getBoundsWidth() * 5, 0, ui.getBoundsWidth(), ui.getTagHeight());
+                game.batch.draw(ui.getTag100(), ui.getBoundsWidth() * 6, 0, ui.getBoundsWidth(), ui.getTagHeight());
+                game.batch.draw(ui.getTag150(), ui.getBoundsWidth() * 7, 0, ui.getBoundsWidth(), ui.getTagHeight());
+
                 if(displayButtons == true)
                 {
                     upgradeButton.update();
@@ -450,6 +458,15 @@ public class PlayScreen implements Screen {
                 game.batch.draw(ui.getOption7Texture(), ui.getOption7Pos().x, ui.getOption7Pos().y, Trap.trapSize.x * 2, Trap.trapSize.y * 2);
                 game.batch.draw(ui.getOption8Texture(), ui.getOption8Pos().x, ui.getOption8Pos().y, Trap.trapSize.x * 2, Trap.trapSize.y * 2);
 
+                game.batch.draw(ui.getTag100(), ui.getBoundsWidth() * 0, 0, ui.getBoundsWidth(), ui.getTagHeight());
+                game.batch.draw(ui.getTag200(), ui.getBoundsWidth() * 1, 0, ui.getBoundsWidth(), ui.getTagHeight());
+                game.batch.draw(ui.getTag250(), ui.getBoundsWidth() * 2, 0, ui.getBoundsWidth(), ui.getTagHeight());
+                game.batch.draw(ui.getTag400(), ui.getBoundsWidth() * 3, 0, ui.getBoundsWidth(), ui.getTagHeight());
+                game.batch.draw(ui.getTag50(), ui.getBoundsWidth() * 4, 0, ui.getBoundsWidth(), ui.getTagHeight());
+                game.batch.draw(ui.getTag100(), ui.getBoundsWidth() * 5, 0, ui.getBoundsWidth(), ui.getTagHeight());
+                game.batch.draw(ui.getTag100(), ui.getBoundsWidth() * 6, 0, ui.getBoundsWidth(), ui.getTagHeight());
+                game.batch.draw(ui.getTag150(), ui.getBoundsWidth() * 7, 0, ui.getBoundsWidth(), ui.getTagHeight());
+
                 if(displayButtons == true)
                 {
                     upgradeButton.update();
@@ -565,6 +582,15 @@ public class PlayScreen implements Screen {
                 game.batch.draw(ui.getOption6Texture(), ui.getOption6Pos().x, ui.getOption6Pos().y, Trap.trapSize.x * 2, Trap.trapSize.y * 2);
                 game.batch.draw(ui.getOption7Texture(), ui.getOption7Pos().x, ui.getOption7Pos().y, Trap.trapSize.x * 2, Trap.trapSize.y * 2);
                 game.batch.draw(ui.getOption8Texture(), ui.getOption8Pos().x, ui.getOption8Pos().y, Trap.trapSize.x * 2, Trap.trapSize.y * 2);
+
+                game.batch.draw(ui.getTag100(), ui.getBoundsWidth() * 0, 0, ui.getBoundsWidth(), ui.getTagHeight());
+                game.batch.draw(ui.getTag200(), ui.getBoundsWidth() * 1, 0, ui.getBoundsWidth(), ui.getTagHeight());
+                game.batch.draw(ui.getTag250(), ui.getBoundsWidth() * 2, 0, ui.getBoundsWidth(), ui.getTagHeight());
+                game.batch.draw(ui.getTag400(), ui.getBoundsWidth() * 3, 0, ui.getBoundsWidth(), ui.getTagHeight());
+                game.batch.draw(ui.getTag50(), ui.getBoundsWidth() * 4, 0, ui.getBoundsWidth(), ui.getTagHeight());
+                game.batch.draw(ui.getTag100(), ui.getBoundsWidth() * 5, 0, ui.getBoundsWidth(), ui.getTagHeight());
+                game.batch.draw(ui.getTag100(), ui.getBoundsWidth() * 6, 0, ui.getBoundsWidth(), ui.getTagHeight());
+                game.batch.draw(ui.getTag150(), ui.getBoundsWidth() * 7, 0, ui.getBoundsWidth(), ui.getTagHeight());
 
                 if(displayButtons == true)
                 {
