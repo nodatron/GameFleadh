@@ -27,6 +27,13 @@ public class Tower {
     protected Texture currentTexture;
     protected Sprite towerSprite;
 
+    //prices
+    protected int level1cost;
+    protected int level2cost;
+    protected int level3cost;
+    protected int upgradeCost;  //stores the value of the next upgrade cost
+    protected int sellPrice;
+
     //box2d for checking if tower can be placed
     protected Body b2Body;
     protected World world;
@@ -75,6 +82,15 @@ public class Tower {
     public float getTowerAngle() {
         return towerAngle;
     }
+    public int getLevel1cost() {
+        return level1cost;
+    }
+    public int getUpgradeCost() {
+        return upgradeCost;
+    }
+    public int getSellPrice() {
+        return sellPrice;
+    }
 
     //tower upgrade
     public void upgrade()
@@ -87,11 +103,13 @@ public class Tower {
         if(level == 2)
         {
             currentTexture = level2;
+            upgradeCost = level3cost;
         }
         //if it leveled up to level 3
         if(level == 3)
         {
             currentTexture = level3;
+            upgradeCost = 0;
         }
         //set the tower's texture
         towerSprite.setTexture(currentTexture);
@@ -123,8 +141,8 @@ public class Tower {
     //displaying options when a tower is clicked
     public void TowerOptions()
     {
-        PlayScreen.upgradeButton = new UpgradeButton(100, this);
-        PlayScreen.sellButton = new SellButton(200, this);
+        PlayScreen.upgradeButton = new UpgradeButton(upgradeCost, this);
+        PlayScreen.sellButton = new SellButton(sellPrice, this);
         PlayScreen.displayButtons = true;
     }
 

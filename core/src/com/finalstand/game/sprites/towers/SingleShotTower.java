@@ -33,6 +33,14 @@ public class SingleShotTower extends Tower{
         level2 = new Texture("towers/singleshot_level2.png");
         level3 = new Texture("towers/singleshot_level3.png");
         currentTexture = level1;
+
+        level1cost = 100;
+        level2cost = 100;
+        level3cost = 150;
+        upgradeCost = level2cost;
+        sellPrice = level1cost / 2;
+        FinalStand.score -= level1cost;
+
         //creating the tower sprite
         towerSprite = new Sprite(currentTexture);
         towerSprite.setPosition(x, y);

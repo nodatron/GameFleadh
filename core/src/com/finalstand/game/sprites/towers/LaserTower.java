@@ -40,6 +40,13 @@ public class LaserTower extends Tower{
         towerSprite.setPosition(x, y);
         towerSprite.setSize(size.x, size.y);
 
+        level1cost = 400;
+        level2cost = 200;
+        level3cost = 250;
+        upgradeCost = level2cost;
+        sellPrice = level1cost / 2;
+        FinalStand.score -= level1cost;
+
         projectilePos =  new Vector2(x + (towerSprite.getWidth() / 2.5f), y);
         laserProjectileSize = new Vector2(towerSprite.getWidth() / 4.0f, towerSprite.getHeight());
         towerRange = (getCurrentTexture().getHeight() * 2.0f) / FinalStand.PPM;

@@ -49,7 +49,7 @@ public class AOERing extends Projectile{
         projectileSprite.setCenter(x, y);
         counter = 0.0f;
         projectileSprite.setScale(counter);
-        maxSize = 1.5f;
+        maxSize = 1.1f;
     }
 
     @Override

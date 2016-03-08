@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.World;
 import com.finalstand.game.Screens.PlayScreen;
+import com.finalstand.game.sprites.towers.SingleShotTower;
 import com.finalstand.game.sprites.traps.Barricade;
 import com.finalstand.game.sprites.traps.Bomb;
 import com.finalstand.game.sprites.traps.Glue;

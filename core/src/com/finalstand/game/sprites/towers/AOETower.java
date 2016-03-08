@@ -33,6 +33,13 @@ public class AOETower extends Tower{
         towerSprite.setPosition(x, y);
         towerSprite.setSize(size.x, size.y);
 
+        level1cost = 200;
+        level2cost = 200;
+        level3cost = 350;
+        upgradeCost = level2cost;
+        sellPrice = level1cost / 2;
+        FinalStand.score -= level1cost;
+
         projectilePos = new Vector2(x + (getTowerSprite().getWidth() / 2),
                                     y + (getTowerSprite().getHeight() / 2));
         towerRange = (getCurrentTexture().getHeight() * 2.0f) / FinalStand.PPM;
