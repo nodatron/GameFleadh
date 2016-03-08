@@ -3,13 +3,16 @@ package com.finalstand.game.hud;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.finalstand.game.FinalStand;
+import com.badlogic.gdx.scenes.scene2d.ui.Cell;
+
 
 /**
  * Created by Niall PC on 23/02/2016.
@@ -29,6 +32,7 @@ public class Hud {
     private Label roundLabel;
     private Label healthLabelHeading;
     private Label MapRoundLabelHeading;
+    private Table table;
 
     public Hud(Integer round, Integer map, Integer health, Integer score) {
         stage = new Stage();
@@ -36,7 +40,7 @@ public class Hud {
         this.map = map;
         viewport = new FitViewport(FinalStand.V_WIDTH, FinalStand.V_HEIGHT, new OrthographicCamera());
 
-        Table table = new Table();
+        table = new Table();
         table.top();
         table.setFillParent(true);
 
@@ -61,6 +65,19 @@ public class Hud {
         table.add(roundLabel).expandX();
 
         stage.addActor(table);
+    }
+
+    //updates the hud
+    public void update() {
+        Array<Actor> t = stage.getActors();
+        if(t.get(0) instanceof Table) {
+            Array<Cell> c = ((Table) t.get(0)).getCells();
+            for (Cell ce : c) {
+                if (ce.getActor() instanceof Label)
+                    ((Label) ce.getActor()).setText("newTexthere");
+            }
+            ((Table)t.get(0)).invalidate();
+        }
     }
 
 }
