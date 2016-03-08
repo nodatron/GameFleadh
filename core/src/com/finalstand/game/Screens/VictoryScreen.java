@@ -44,8 +44,9 @@ public class VictoryScreen implements Screen {
         Table table = new Table();
         table.center();
         table.setFillParent(true);
-        Label text = new Label("Failure", new Label.LabelStyle(font48, Color.BLACK));
+        Label text = new Label("Victory", new Label.LabelStyle(font48, Color.BLACK));
         table.add(text).expandX();
+        stage.addActor(table);
         generator.dispose();
     }
 

@@ -1,8 +1,10 @@
 package com.finalstand.game.hud;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -34,49 +36,52 @@ public class Hud {
     private Label MapRoundLabelHeading;
     private Table table;
 
+    private BitmapFont font;
+
     public Hud(Integer round, Integer map, Integer health, Integer score) {
         stage = new Stage();
-        this.round = round;
         this.map = map;
         viewport = new FitViewport(FinalStand.V_WIDTH, FinalStand.V_HEIGHT, new OrthographicCamera());
+
+
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("OpenSans-Regular.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = 32;
+        font = generator.generateFont(parameter);
 
         table = new Table();
         table.top();
         table.setFillParent(true);
 
-        scoreLabel = new Label(String.format("%06d", score), new Label.LabelStyle(new BitmapFont(), Color.BLUE));
-        healthLabel = new Label(String.format("%03d", health), new Label.LabelStyle(new BitmapFont(), Color.BLUE));
-        roundLabel = new Label(String.format("%02d", round), new Label.LabelStyle(new BitmapFont(), Color.BLUE));
-        mapLabel = new Label(String.format("%03d", map), new Label.LabelStyle(new BitmapFont(), Color.BLUE));
-        healthLabelHeading = new Label("Health", new Label.LabelStyle(new BitmapFont(), Color.BLUE));
-        MapRoundLabelHeading = new Label("Map/Round", new Label.LabelStyle(new BitmapFont(), Color.BLUE));
-
+        scoreLabel = new Label(String.format("Score: %06d", FinalStand.score), new Label.LabelStyle(font, Color.BLUE));
+        healthLabel = new Label(String.format("Health: %03d", FinalStand.health), new Label.LabelStyle(font, Color.BLUE));
+        roundLabel = new Label(String.format("Round: %02d", FinalStand.round), new Label.LabelStyle(font, Color.BLUE));
+        mapLabel = new Label(String.format("Map: %03d", FinalStand.mapNumber), new Label.LabelStyle(font, Color.BLUE));
 
         table.add(mapLabel).expandX().padTop(5);
-        table.add(healthLabelHeading).expandX().padTop(5);
+        table.add(roundLabel).expandX().padTop(5);
         table.add(healthLabel).expandX().padTop(5);
         table.add(scoreLabel).expandX().padTop(5);
-        mapLabel = new Label(String.format("%02d", map), new Label.LabelStyle(new BitmapFont(), Color.BLUE));
-
-        table.add(mapLabel).expandX().padTop(10);
-        table.add(healthLabel).expandX().padTop(10);
-        table.add(scoreLabel).expandX().padTop(10);
-        table.row();
-        table.add(roundLabel).expandX();
-
         stage.addActor(table);
     }
 
     //updates the hud
     public void update() {
         Array<Actor> t = stage.getActors();
+        Array<Label> l = new Array<Label>();
         if(t.get(0) instanceof Table) {
             Array<Cell> c = ((Table) t.get(0)).getCells();
             for (Cell ce : c) {
-                if (ce.getActor() instanceof Label)
-                    ((Label) ce.getActor()).setText("newTexthere");
+                if (ce.getActor() instanceof Label) {
+                    l.add(((Label) ce.getActor()));
+                }
             }
-            ((Table)t.get(0)).invalidate();
+            l.get(2).setText(String.format("Map: %03d", FinalStand.mapNumber));
+            l.get(3).setText(String.format("Round: %02d", FinalStand.round));
+            l.get(1).setText(String.format("Health: %03d", FinalStand.health));
+            l.get(0).setText(String.format("Score: %06d", FinalStand.score));
+//            ((Label) c.getActor()).setText("newTexthere");
+//            ((Table)t.get(0)).invalidate();
         }
     }
 

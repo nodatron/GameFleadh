@@ -24,7 +24,7 @@ public class Spike extends Trap
         image.setPosition(x, y);
         cost = 10;
         this.world = world;
-        damage = 20;
+        damage = 100;
 
         defineTrap();
     }
@@ -81,7 +81,7 @@ public class Spike extends Trap
     @Override
     public void onCreepHit(Creep creep)
     {
-        creep.setHealth(getHealth() - getDamage());
+        creep.setHealth(creep.getHealth() - getDamage());
         hits++;
     }
 

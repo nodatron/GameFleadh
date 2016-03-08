@@ -548,7 +548,7 @@ public class PlayScreen implements Screen {
 
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
-        hud.update();
+
 
         for(int i = 0 ; i < traps.size() ; i ++) {
             if(traps.get(i).isDead()) {
@@ -571,6 +571,8 @@ public class PlayScreen implements Screen {
         if(FinalStand.victory) {
             game.setScreen(new VictoryScreen(game));
         }
+
+        hud.update();
     }
 
     public String findMapFile(int mapNumber) {

@@ -27,7 +27,7 @@ public class FinalStand extends Game {
 	public SpriteBatch batch;
 
 	public static Integer round = 1;
-	public static Integer mapNumber = 3;
+	public static Integer mapNumber = 1;
 	public static final int roundsPerMap = 11;
 
 	public static boolean gameOver = false;
@@ -56,7 +56,7 @@ public class FinalStand extends Game {
 	public void create () {
 		batch = new SpriteBatch(30);
 
-		setScreen(new FailureScreen(this));
+		setScreen(new SplashScreen(this));
 //		System.out.println(Gdx.graphics.isGL30Available());
 	}
 
