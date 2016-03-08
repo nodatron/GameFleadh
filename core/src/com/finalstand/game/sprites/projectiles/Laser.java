@@ -12,23 +12,47 @@ import com.finalstand.game.sprites.creeps.Creep;
  */
 public class Laser extends Projectile{
 
+    //keep track of the number of creeps hit by the projectile
+    private int creepHits;
+    //the max number of creeps the projectile can hit before being removed
+    private int maxCreepHits;
+
     public Laser(float x, float y, float angle, int level, float w, float h, World world)
     {
-        super(x, y, angle, level, 8 / FinalStand.PPM, world, w, h);
+        super(x, y + (h/2), angle, level, 8 / FinalStand.PPM, world, w, h);
+        position.x = x;
+        position.y = y;
+        //if shot from a level 1 or 2 tower
         if(level < 3) {
             projectileSprite = new Sprite(new Texture("projectiles/laser_projectile_level1.png"));
+            maxCreepHits = 3;
+            if(level == 1)
+            {
+                damage = 1;
+            }
+            //if level 2
+            else
+            {
+                damage = 2;
+            }
         }
         else {
             projectileSprite = new Sprite(new Texture("projectiles/laser_projectile_level3.png"));
+            maxCreepHits = 6;
+            damage = 2;
         }
         projectileSprite.setSize(w, h);
         projectileSprite.setPosition(x, y);
-        damage = 1;
+        creepHits = 0;
     }
 
     public void onCreepProjHit(Creep creep)
     {
         creep.setHealth(creep.getHealth() - damage);
-        PlayScreen.projectiles.remove(this);
+        creepHits++;
+        //when max number of creeps have been hit, remove the projectile
+        if(creepHits >= maxCreepHits) {
+            isDead = true;
+        }
     }
 }

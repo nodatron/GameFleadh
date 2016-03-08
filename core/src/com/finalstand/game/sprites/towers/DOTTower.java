@@ -16,17 +16,23 @@ import com.finalstand.game.sprites.projectiles.Projectile;
  */
 public class DOTTower extends Tower{
 
+    //default size of damage over time tower
     public static Vector2 size = new Vector2(32 / FinalStand.PPM, 32 / FinalStand.PPM);
+    //default size for the projectile
     private Vector2 DOTProjectileSize;
+    //used for resizing the sprite only once when upgrading to level 3
     private boolean adjustlevel3 = false;
+    //the angles for the level 3's left and right opening for shooting projectiles
     private float level3leftAngle;
     private float level3rightAngle;
 
     public DOTTower(float x, float y, World world, float angle)
     {
         super(x, y, world, angle);
+        //set the time between firing projectile
         maxTime = 200.0f;
 
+        //loading in the different textures for the different levels
         level1 = new Texture("towers/dot_level1.png");
         level2 = new Texture("towers/dot_level2.png");
         level3 = new Texture("towers/dot_level3.png");
@@ -41,6 +47,7 @@ public class DOTTower extends Tower{
         level3leftAngle = towerAngle + 90;
         level3rightAngle = towerAngle - 90;
 
+        //if the angle is over 180 it will be changed to -180 as we are working with -180 to 180
         if(level3leftAngle >= 180)
         {
             level3leftAngle = -180;
@@ -65,12 +72,9 @@ public class DOTTower extends Tower{
         if(elapsedTime > maxTime)
         {
             elapsedTime = 0;
-            if(level == 3)
-            {
-                towerSprite.setTexture(level3);
-            }
         }
 
+        //when tower is upgraded to level 3, resize it and reposition it to keep its original position
         if(level == 3 && adjustlevel3 == false)
         {
             towerSprite.setSize(48 / FinalStand.PPM, 32 / FinalStand.PPM);
@@ -83,15 +87,16 @@ public class DOTTower extends Tower{
     public void createProjectile()
     {
         Projectile p1 = new DOTGas(projectilePos.x, projectilePos.y, towerAngle, level,
-                                  DOTProjectileSize.x, DOTProjectileSize.y, world);
+                                  DOTProjectileSize.x, DOTProjectileSize.y, world, DOTTower.size.y - 1 / FinalStand.PPM);
         PlayScreen.projectiles.add(p1);
 
+        //level 3 shoots projectiles to the left and right as well as forward
         if(level == 3)
         {
             Projectile p2 = new DOTGas(projectilePos.x, projectilePos.y, level3rightAngle, level,
-                                       DOTProjectileSize.x, DOTProjectileSize.y, world);
+                                       DOTProjectileSize.x, DOTProjectileSize.y, world, DOTTower.size.y + 2 / FinalStand.PPM);
             Projectile p3 = new DOTGas(projectilePos.x, projectilePos.y, level3leftAngle, level,
-                                       DOTProjectileSize.x, DOTProjectileSize.y, world);
+                                       DOTProjectileSize.x, DOTProjectileSize.y, world, DOTTower.size.y + 2 / FinalStand.PPM);
 
             PlayScreen.projectiles.add(p2);
             PlayScreen.projectiles.add(p3);

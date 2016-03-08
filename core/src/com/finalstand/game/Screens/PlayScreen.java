@@ -3,6 +3,7 @@ package com.finalstand.game.Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -83,6 +84,8 @@ public class PlayScreen implements Screen {
         public static UI ui;
         public static OptionTexture optionTexture;
         public static boolean optionChosen;
+
+        Music backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("backgroundMusic.wav"));
 
         public enum State {
             EXIT_GAME_CONFIRMATION,
@@ -197,12 +200,12 @@ public class PlayScreen implements Screen {
             optionChosen = false;
 
             traps = new ArrayList<Trap>();
-
-
     }
 
     @Override
     public void show() {
+        backgroundMusic.play();
+        backgroundMusic.setLooping(true);
         mapLoader = new TmxMapLoader();
         map = mapLoader.load(mapFileName);
         renderer = new OrthogonalTiledMapRenderer(map, 1 / FinalStand.PPM);
@@ -307,6 +310,7 @@ public class PlayScreen implements Screen {
     public void dispose() {
         map.dispose();
         background.dispose();
+        backgroundMusic.dispose();
     }
 
     public Texture getBackground() {
@@ -432,7 +436,6 @@ public class PlayScreen implements Screen {
         }
     }
 
-
     public void update() {
         handleInput();
 
@@ -474,7 +477,7 @@ public class PlayScreen implements Screen {
         world.step(1 / 60f, 6, 2);
         gameCam.update();
         renderer.setView(gameCam);
-
+        b2dr.render(world, gameCam.combined);
         game.batch.begin();
         game.batch.draw(play.getTexture(), play.getX(), play.getY(), play.getWidth(), play.getHeight());
         game.batch.draw(pause.getTexture(), pause.getX(), pause.getY(), pause.getWidth(), pause.getHeight());
@@ -522,6 +525,15 @@ public class PlayScreen implements Screen {
         game.batch.draw(ui.getOption6Texture(), ui.getOption6Pos().x, ui.getOption6Pos().y, Trap.trapSize.x * 2, Trap.trapSize.y * 2);
         game.batch.draw(ui.getOption7Texture(), ui.getOption7Pos().x, ui.getOption7Pos().y, Trap.trapSize.x * 2, Trap.trapSize.y * 2);
         game.batch.draw(ui.getOption8Texture(), ui.getOption8Pos().x, ui.getOption8Pos().y, Trap.trapSize.x * 2, Trap.trapSize.y * 2);
+
+        game.batch.draw(ui.getTag100(), ui.getBoundsWidth() * 0, 0, ui.getBoundsWidth(), ui.getTagHeight());
+        game.batch.draw(ui.getTag200(), ui.getBoundsWidth() * 1, 0, ui.getBoundsWidth(), ui.getTagHeight());
+        game.batch.draw(ui.getTag250(), ui.getBoundsWidth() * 2, 0, ui.getBoundsWidth(), ui.getTagHeight());
+        game.batch.draw(ui.getTag400(), ui.getBoundsWidth() * 3, 0, ui.getBoundsWidth(), ui.getTagHeight());
+        game.batch.draw(ui.getTag50(), ui.getBoundsWidth() * 4, 0, ui.getBoundsWidth(), ui.getTagHeight());
+        game.batch.draw(ui.getTag100(), ui.getBoundsWidth() * 5, 0, ui.getBoundsWidth(), ui.getTagHeight());
+        game.batch.draw(ui.getTag100(), ui.getBoundsWidth() * 6, 0, ui.getBoundsWidth(), ui.getTagHeight());
+        game.batch.draw(ui.getTag150(), ui.getBoundsWidth() * 7, 0, ui.getBoundsWidth(), ui.getTagHeight());
 
         if(displayButtons == true)
         {

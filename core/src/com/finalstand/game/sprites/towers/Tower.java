@@ -27,12 +27,16 @@ public class Tower {
     protected Texture currentTexture;
     protected Sprite towerSprite;
 
+    //box2d for checking if tower can be placed
     protected Body b2Body;
     protected World world;
 
+    //the position where the towers projectile will spawn
     protected Vector2 projectilePos;
     protected float towerAngle;
     protected float towerRange;
+
+    //keep track of time between projectiles being fired
     protected float elapsedTime;
     protected float maxTime;
 
@@ -41,25 +45,28 @@ public class Tower {
         position = new Vector2(x, y);
         level = 1;
         maxTime = 40.0f;
-        elapsedTime = maxTime / 2.0f;
-        towerAngle = angle;
+        elapsedTime = maxTime / 2.0f;   //starts at half so that the second a tower is placed
+        towerAngle = angle;             //it doesnt wait too long before firing
 
         this.world = world;
     }
 
     public void update(){
+        //fire projectile
         if(targetCreep() && elapsedTime == maxTime)
         {
             createProjectile();
         }
 
         elapsedTime++;
+        //reset timer
         if(elapsedTime > maxTime)
         {
             elapsedTime = 0;
         }
     }
 
+    //getters
     public Texture getCurrentTexture(){return currentTexture;}
     public Vector2 getPosition(){return position;}
     public Sprite getTowerSprite() {
@@ -69,23 +76,28 @@ public class Tower {
         return towerAngle;
     }
 
+    //tower upgrade
     public void upgrade()
     {
         if(level < 3)
         {
             level++;
         }
+        //if it leveled up to level 2
         if(level == 2)
         {
             currentTexture = level2;
         }
+        //if it leveled up to level 3
         if(level == 3)
         {
             currentTexture = level3;
         }
+        //set the tower's texture
         towerSprite.setTexture(currentTexture);
     }
 
+    //creating the box2d
     public void defineTower() {
         BodyDef bdef = new BodyDef();
         bdef.position.set(position.x, position.y);
@@ -111,6 +123,7 @@ public class Tower {
     {
     }
 
+    //displaying options when a tower is clicked
     public void TowerOptions()
     {
         PlayScreen.upgradeButton = new UpgradeButton(100, this);
@@ -118,6 +131,7 @@ public class Tower {
         PlayScreen.displayButtons = true;
     }
 
+    //check if a creep is near enough to starting firing projectiles
     public boolean targetCreep()
     {
         for(int counter = 0; counter < PlayScreen.creeps.size(); counter++) {

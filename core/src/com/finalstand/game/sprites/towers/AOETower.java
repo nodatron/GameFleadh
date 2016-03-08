@@ -16,12 +16,15 @@ import com.finalstand.game.sprites.projectiles.Projectile;
  */
 public class AOETower extends Tower{
 
+    //default size of area of effect tower
     public static Vector2 size = new Vector2(32 / FinalStand.PPM, 32 / FinalStand.PPM);
 
     public AOETower(float x, float y, World world, float angle){
         super(x, y, world, angle);
+        //set the time between firing projectile
         maxTime = 100.0f;
 
+        //loading in the different textures for the different levels
         level1 = new Texture("towers/aoe_level1.png");
         level2 = new Texture("towers/aoe_level2.png");
         level3 = new Texture("towers/aoe_level3.png");

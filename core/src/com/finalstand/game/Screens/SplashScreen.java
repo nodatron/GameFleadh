@@ -2,6 +2,7 @@ package com.finalstand.game.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -32,6 +33,8 @@ public class SplashScreen implements Screen{
     private static boolean controlButtonPressed;
     private static boolean quitButtonPressed;
 
+    Music backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("backgroundMusic.wav"));
+
     public SplashScreen(FinalStand game) {
         this.game = game;
         gameCam = new OrthographicCamera();
@@ -53,7 +56,8 @@ public class SplashScreen implements Screen{
 
     @Override
     public void show() {
-
+        backgroundMusic.play();
+        backgroundMusic.setLooping(true);
     }
 
     @Override
@@ -106,16 +110,15 @@ public class SplashScreen implements Screen{
     @Override
     public void dispose() {
         background.dispose();
+        backgroundMusic.dispose();
     }
 
     public static void playButtonPressed() {
         playButtonPressed = true;
-        System.out.println("here");
     }
 
     public static void controlButtonPressed() {
         controlButtonPressed = true;
-        System.out.println("here");
     }
 
     public static void quitButtonPressed() {

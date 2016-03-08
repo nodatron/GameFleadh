@@ -78,6 +78,9 @@ public class Creep extends Sprite{
     public void setSlowedTimer(int getSlowedTimer) {
         this.slowedTimer = getSlowedTimer;
     }
+    protected boolean DOTActive;
+    protected float DOTTimer;
+    protected int DOTDamage;
 
     public int getBombTimer() {
         return bombTimer;
@@ -119,6 +122,12 @@ public class Creep extends Sprite{
         this.slowed = slowed;
     }
 
+    public void setDOTActive(int time, int DOTDamage) {
+        this.DOTActive = true;
+        DOTTimer = time;
+        this.DOTDamage = DOTDamage;
+    }
+
     public Creep(World world) {
         this.world = world;
         movement = new boolean[4];
@@ -147,6 +156,8 @@ public class Creep extends Sprite{
         speed = 1;
         initSpeed = speed;
         bombTimer = 120;
+        DOTActive = false;
+        DOTTimer = 0;
     }
 
     /**
@@ -281,6 +292,22 @@ public class Creep extends Sprite{
 //        this.b2Body.applyLinearImpulse(direction, this.b2Body.getWorldCenter(), true);
         this.b2Body.setLinearVelocity(direction);
 //        timeElapsed++;
+
+        //if a damage over time effect is present on the creep, damage it
+        if(DOTActive)
+        {
+            if(DOTTimer % 20 == 0)
+            {
+                setHealth(getHealth() - DOTDamage);
+            }
+            this.DOTTimer--;
+            if(DOTTimer <= 0)
+            {
+                this.DOTActive = false;
+                DOTTimer = 0;
+                DOTDamage = 0;
+            }
+        }
     }
 
 //    public void render(SpriteBatch batch) {

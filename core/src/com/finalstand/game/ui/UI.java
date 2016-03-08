@@ -11,6 +11,7 @@ import com.finalstand.game.sprites.towers.LaserTower;
 import com.finalstand.game.sprites.towers.SingleShotTower;
 import com.finalstand.game.sprites.traps.Trap;
 
+
 /**
  * Created by Keith on 16/02/2016.
  */
@@ -25,6 +26,7 @@ public class UI {
     private float height, width;
 
     private Texture background;
+    //textures for each option
     private Texture option1Texture;
     private Texture option2Texture;
     private Texture option3Texture;
@@ -34,6 +36,7 @@ public class UI {
     private Texture option7Texture;
     private Texture option8Texture;
 
+    //the positions where to place the option textures
     private Vector2 option1Pos;
     private Vector2 option2Pos;
     private Vector2 option3Pos;
@@ -43,6 +46,16 @@ public class UI {
     private Vector2 option7Pos;
     private Vector2 option8Pos;
 
+    //pricetag textures
+    private Texture tag50;
+    private Texture tag100;
+    private Texture tag150;
+    private Texture tag200;
+    private Texture tag250;
+    private Texture tag400;
+    private float tagHeight;
+
+    //the bounds size around each option
     private float boundsHeight;
     private float boundsWidth;
 
@@ -52,6 +65,7 @@ public class UI {
         height = h;
         width = w;
 
+        //loading option textures
         background = new Texture("background.jpg");
         option1Texture = new Texture("towers/singleshot_level1.png");
         option2Texture = new Texture("towers/aoe_level1.png");
@@ -65,18 +79,30 @@ public class UI {
         boundsWidth = width / NUM_OF_BOUNDS;
         boundsHeight = height;
 
-        option1Pos = new Vector2(boundsWidth / 4, boundsHeight / 6);
-        option2Pos = new Vector2((boundsWidth / 6) + boundsWidth, boundsHeight / 6);
-        option3Pos = new Vector2((boundsWidth / 6) + (boundsWidth * 2), boundsHeight / 6);
-        option4Pos = new Vector2((boundsWidth / 6) + (boundsWidth * 3), boundsHeight / 6);
-        option5Pos = new Vector2((boundsWidth / 6) + (boundsWidth * 4), boundsHeight / 6);
-        option6Pos = new Vector2((boundsWidth / 6) + (boundsWidth * 5), boundsHeight / 6);
-        option7Pos = new Vector2((boundsWidth / 6) + (boundsWidth * 6), boundsHeight / 6);
-        option8Pos = new Vector2((boundsWidth / 6) + (boundsWidth * 7), boundsHeight / 6);
+        //setting option positions
+        option1Pos = new Vector2(boundsWidth / 4, boundsHeight / 3);
+        option2Pos = new Vector2((boundsWidth / 6) + boundsWidth, boundsHeight / 3);
+        option3Pos = new Vector2((boundsWidth / 6) + (boundsWidth * 2), boundsHeight / 3);
+        option4Pos = new Vector2((boundsWidth / 6) + (boundsWidth * 3), boundsHeight / 3);
+        option5Pos = new Vector2((boundsWidth / 6) + (boundsWidth * 4), boundsHeight / 3);
+        option6Pos = new Vector2((boundsWidth / 6) + (boundsWidth * 5), boundsHeight / 3);
+        option7Pos = new Vector2((boundsWidth / 6) + (boundsWidth * 6), boundsHeight / 3);
+        option8Pos = new Vector2((boundsWidth / 6) + (boundsWidth * 7), boundsHeight / 3);
+
+        //pricetag textures
+        tag50 = new Texture("price_tags/50tag.png");
+        tag100 = new Texture("price_tags/100tag.png");
+        tag150 = new Texture("price_tags/150tag.png");
+        tag200 = new Texture("price_tags/200tag.png");
+        tag250 = new Texture("price_tags/250tag.png");
+        tag400 = new Texture("price_tags/400tag.png");
+        tagHeight = boundsHeight / 4;
     }
 
+    //when a option is clicked
     public void optionClicked(Vector3 mousePos)
     {
+        //find which option was pressed
         for(int counter = 0; counter < NUM_OF_BOUNDS; counter++)
         {
             if(mousePos.x < boundsWidth * (counter + 1) && mousePos.x > boundsWidth * counter && mousePos.y >= position.y && mousePos.y <= position.y + boundsHeight)
@@ -92,6 +118,7 @@ public class UI {
         PlayScreen.optionTexture.setTowerOption(optionNum);
         PlayScreen.optionTexture.setRotation(0.0f);
 
+        //change the texture that follows the mouse depending on the option pressed
         switch(optionNum)
         {
             case 0: {PlayScreen.optionTexture.setTexture(option1Texture, SingleShotTower.size.x, SingleShotTower.size.y); break;}
@@ -105,6 +132,7 @@ public class UI {
         }
     }
 
+    //getters and setters
     public Texture getBackground()
     {
         return background;
@@ -192,5 +220,33 @@ public class UI {
 
     public float getBoundsWidth() {
         return boundsWidth;
+    }
+
+    public Texture getTag50() {
+        return tag50;
+    }
+
+    public Texture getTag100() {
+        return tag100;
+    }
+
+    public Texture getTag150() {
+        return tag150;
+    }
+
+    public Texture getTag200() {
+        return tag200;
+    }
+
+    public Texture getTag250() {
+        return tag250;
+    }
+
+    public Texture getTag400() {
+        return tag400;
+    }
+
+    public float getTagHeight() {
+        return tagHeight;
     }
 }
