@@ -38,6 +38,17 @@ public class SingleShotTower extends Tower{
         towerSprite.setPosition(x, y);
         towerSprite.setSize(size.x, size.y);
 
+        level1cost = 100;
+        level2cost = 100;
+        level3cost = 150;
+        upgradeCost = level2cost;
+        sellPrice = level1cost / 2;
+        if(FinalStand.score >= level1cost) {
+            FinalStand.score -= level1cost;
+        } else {
+            isDead = true;
+        }
+
         //setting the different projectile positions
         midProjectilePos = new Vector2(x + ((getTowerSprite().getWidth() / 2.6f)),
                                        y + ((getTowerSprite().getHeight() / 2.5f)));

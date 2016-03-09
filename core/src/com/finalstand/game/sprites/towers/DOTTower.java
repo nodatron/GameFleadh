@@ -41,6 +41,17 @@ public class DOTTower extends Tower{
         towerSprite.setPosition(x, y);
         towerSprite.setSize(size.x, size.y);
 
+        level1cost = 250;
+        level2cost = 200;
+        level3cost = 300;
+        upgradeCost = level2cost;
+        sellPrice = level1cost / 2;
+        if(FinalStand.score >= level1cost) {
+            FinalStand.score -= level1cost;
+        } else {
+            isDead = true;
+        }
+
         projectilePos = new Vector2(x, y);
         DOTProjectileSize = new Vector2(towerSprite.getWidth(), towerSprite.getHeight());
         towerRange = (getCurrentTexture().getHeight() * 2.0f) / FinalStand.PPM;

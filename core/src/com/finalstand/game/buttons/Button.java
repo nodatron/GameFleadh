@@ -34,22 +34,16 @@ public class Button {
         buttonSprite.setSize(w / FinalStand.PPM, h / FinalStand.PPM);
     }
 
-    public Button(float x, float y, float w, float h, String text, Tower tower)
+    public Button(float x, float y, float w, float h, String text, Texture texture, Tower tower)
     {
         position = new Vector2(x, y);
         width = w;
         height = h;
         buttonText = new String(text);
-        buttonTexture = new Texture("background.jpg");
+        buttonTexture = texture;
         buttonSprite = new Sprite(buttonTexture);
         buttonSprite.setPosition(x, y);
         buttonSprite.setSize(width, height);
-
-//        buttonLabel = new Label(buttonText, new Label.LabelStyle(new BitmapFont(), Color.RED));
-//        buttonLabel.setPosition(x, y);
-
-//        bitmapFonttext = new BitmapFont(Gdx.files.internal());
-//        bitmapFonttext.setColor(Color.RED);
 
         this.tower = tower;
     }

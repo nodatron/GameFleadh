@@ -22,7 +22,12 @@ public class Glue extends Trap
         image = new Sprite(texture);
         image.setSize(trapSize.x, trapSize.y);
         image.setPosition(x, y);
-        cost = 20;
+        cost = 100;
+        if(FinalStand.score >= cost) {
+            FinalStand.score -= cost;
+        } else {
+            isDead = true;
+        }
         this.world = world;
 
         defineTrap();
@@ -72,7 +77,7 @@ public class Glue extends Trap
     public void update()
     {
         //checkCollisions();
-        if(hits > 5)
+        if(hits >= 5)
         {
             setIsDead(true);
         }
@@ -88,8 +93,12 @@ public class Glue extends Trap
     @Override
     public void onCreepHit(Creep creep)
     {
+//        creep.setIsNeeded(true);
         creep.setInitSpeed(creep.getSpeed());
         creep.setSpeed(creep.getSpeed() / 2);
         setHits(getHits() + 1);
+        creep.setSlowed(true);
+//        creep.setSlowed(true);
+
     }
 }

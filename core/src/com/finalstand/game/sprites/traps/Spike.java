@@ -22,7 +22,12 @@ public class Spike extends Trap
         image = new Sprite(texture);
         image.setSize(trapSize.x, trapSize.y);
         image.setPosition(x, y);
-        cost = 10;
+        cost = 150;
+        if(FinalStand.score >= cost) {
+            FinalStand.score -= cost;
+        } else {
+            isDead = true;
+        }
         this.world = world;
         damage = 100;
 

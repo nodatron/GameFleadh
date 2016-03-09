@@ -24,7 +24,12 @@ public class Barricade extends Trap
         image.setSize(trapSize.x, trapSize.y);
         image.setPosition(x, y);
         health = 120; // should last for two seconds
-        cost = 10;
+        cost = 50;
+        if(FinalStand.score >= cost) {
+            FinalStand.score -= cost;
+        } else {
+            isDead = true;
+        }
         this.world = world;
         defineTrap();
     }
@@ -71,16 +76,17 @@ public class Barricade extends Trap
     @Override
     public void onCreepHit(Creep creep)
     {
-        System.out.println("Hitting barricade");
         creep.setInitSpeed(creep.getSpeed());
         creep.setSpeed(0);
         setIsHit(true);
+
     }
 
     @Override
     public void onCreepRelease(Creep creep)
     {
         creep.setSpeed(creep.getInitSpeed());
+        creep.setIsNeeded(true);
     }
 
     public void render()

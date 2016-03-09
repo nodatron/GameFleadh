@@ -233,8 +233,6 @@ public class PlayScreen implements Screen {
             game.setScreen(new FailureScreen(game));
         }
 
-
-
         switch (state) {
             case RUN: {
                 renderGame();
@@ -337,13 +335,13 @@ public class PlayScreen implements Screen {
                 state == State.PAUSE) {
             if (Gdx.input.justTouched()) {
                 if (mouse.x > play.getX() && mouse.x < play.getX() + play.getWidth() &&
-                        mouse.y > play.getY() && mouse.y < play.getY() + play.getHeight()) {
+                        mouse.y > play.getY() + play.getHeight() && mouse.y < play.getY() + (play.getHeight() * 3)) {
                     plannignPhaseCounter = 1000;
                     run = true;
                 }
 
                 if (mouse.x > pause.getX() && mouse.x < pause.getX() + 20 / FinalStand.PPM &&
-                        mouse.y > pause.getY() && mouse.y < pause.getY() + 10 / FinalStand.PPM) {
+                        mouse.y > pause.getY() + pause.getHeight() && mouse.y < pause.getY() + (pause.getHeight() * 3)) {
                     setGameState(State.PAUSE);
                 }
             }
@@ -507,12 +505,19 @@ public class PlayScreen implements Screen {
         }
 
         //rendering towers
-        for(Tower tower: towers)
+        for(int counter = 0; counter < towers.size(); counter++)
         {
-            tower.update();
-            tower.getTowerSprite().setOriginCenter();
-            tower.getTowerSprite().setRotation(tower.getTowerAngle() - 180);
-            tower.getTowerSprite().draw(game.batch);
+            if(!towers.get(counter).isDead()) {
+                towers.get(counter).update();
+                towers.get(counter).getTowerSprite().setOriginCenter();
+                towers.get(counter).getTowerSprite().setRotation(towers.get(counter).getTowerAngle() - 180);
+                towers.get(counter).getTowerSprite().draw(game.batch);
+            }
+            else
+            {
+                world.destroyBody(towers.get(counter).getB2Body());
+                towers.remove(counter);
+            }
         }
 
         //render UI
@@ -539,7 +544,6 @@ public class PlayScreen implements Screen {
         {
             upgradeButton.update();
             sellButton.update();
-
             upgradeButton.getButtonSprite().draw(game.batch);
             sellButton.getButtonSprite().draw(game.batch);
         }

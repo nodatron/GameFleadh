@@ -95,24 +95,17 @@ public class WorldContactListener implements ContactListener {
 
             case FinalStand.CREEP_BIT | FinalStand.SPIKE_BIT: {
                 if(fixA.getFilterData().categoryBits == FinalStand.CREEP_BIT) {
-                    System.out.println(fixA.getUserData());
-                    System.out.println(fixB.getUserData());
                     ((Spike) fixB.getUserData()).onCreepHit((Creep) fixA.getUserData());
                 } else {
-                    System.out.println(fixA.getUserData());
-                    System.out.println(fixB.getUserData());
                     ((Spike) fixA.getUserData()).onCreepHit((Creep) fixB.getUserData());
                 }
             } break;
 
             case FinalStand.CREEP_BIT | FinalStand.GLUE_BIT: {
+                System.out.println("fsaifsinsisnainfndoasisad");
                 if(fixA.getFilterData().categoryBits == FinalStand.CREEP_BIT) {
-                    System.out.println(fixA.getUserData());
-                    System.out.println(fixB.getUserData());
                     ((Glue) fixB.getUserData()).onCreepHit((Creep) fixA.getUserData());
                 } else {
-                    System.out.println(fixA.getUserData());
-                    System.out.println(fixB.getUserData());
                     ((Glue) fixA.getUserData()).onCreepHit((Creep) fixB.getUserData());
                 }
             } break;

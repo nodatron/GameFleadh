@@ -282,13 +282,18 @@ public class Creep extends Sprite{
         if(isSlowed()) {
             setSpeed(getSpeed());
             setSlowedTimer(getSlowedTimer() + 1);
+            setIsNeeded(true);
         }
 
-        if(getSlowedTimer() > 180) {
+        if(getSlowedTimer() > 300) {
             setSpeed(getInitSpeed());
             setSlowed(false);
+            setIsNeeded(true);
         }
+
         direction.scl(speed);
+        System.out.println("Speed" + speed);
+        System.out.println("Speed of the creep" + direction);
 //        this.b2Body.applyLinearImpulse(direction, this.b2Body.getWorldCenter(), true);
         this.b2Body.setLinearVelocity(direction);
 //        timeElapsed++;

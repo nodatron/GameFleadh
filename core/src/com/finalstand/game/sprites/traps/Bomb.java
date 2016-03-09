@@ -30,7 +30,12 @@ public class Bomb extends Trap
         image = new Sprite(texture);
         image.setSize(trapSize.x, trapSize.y);
         image.setPosition(x, y);
-        cost = 10;
+        cost = 100;
+        if(FinalStand.score >= cost) {
+            FinalStand.score -= cost;
+        } else {
+            isDead = true;
+        }
         this.world = world;
         bombActive = false;
         delay = 60; // two seconds @ 60fps
