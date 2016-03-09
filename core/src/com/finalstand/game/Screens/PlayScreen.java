@@ -244,6 +244,7 @@ public class PlayScreen implements Screen {
                 for (int i = 0 ; i < creepsSpawned ; i ++) {
                     if(creeps.get(i).isDead()) {
                         world.destroyBody(creeps.get(i).getB2Body());
+                        FinalStand.score += creeps.get(i).getScore();
                         creeps.remove(i);
                         creepsSpawned --;
                     } else {
@@ -276,6 +277,8 @@ public class PlayScreen implements Screen {
                 renderGame();
                 if(bossCreep.isDead()) {
                     world.destroyBody(bossCreep.getB2Body());
+                    FinalStand.score += bossCreep.getScore();
+                    game.setScreen(new VictoryScreen(game));
                 } else {
                     bossCreep.update();
                 }
@@ -464,7 +467,7 @@ public class PlayScreen implements Screen {
             randomCreeps(challengerRating);
             keepSpawning = true;
             plannignPhaseCounter = 0;
-
+            FinalStand.score += 100;
             setGameState(State.PLANNING_PHASE);
         }
     }
@@ -475,7 +478,7 @@ public class PlayScreen implements Screen {
         world.step(1 / 60f, 6, 2);
         gameCam.update();
         renderer.setView(gameCam);
-        b2dr.render(world, gameCam.combined);
+//        b2dr.render(world, gameCam.combined);
         game.batch.begin();
         game.batch.draw(play.getTexture(), play.getX(), play.getY(), play.getWidth(), play.getHeight());
         game.batch.draw(pause.getTexture(), pause.getX(), pause.getY(), pause.getWidth(), pause.getHeight());

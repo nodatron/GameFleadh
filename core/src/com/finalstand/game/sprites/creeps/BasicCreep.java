@@ -25,6 +25,8 @@ public class BasicCreep extends Creep {
 //        setMovement();
 
         health = 100;
+
+        score = 10;
     }
 
     public void dispose() {

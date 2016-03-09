@@ -22,7 +22,8 @@ public class HeavyCreep extends Creep {
 //        movement = new boolean[8];
 //        setMovement();
 
-        health = 100;
+        health = 200;
+        score = 30;
     }
 
     public void dispose() {

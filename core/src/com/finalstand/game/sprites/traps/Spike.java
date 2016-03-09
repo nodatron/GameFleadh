@@ -29,7 +29,7 @@ public class Spike extends Trap
             isDead = true;
         }
         this.world = world;
-        damage = 100;
+        damage = 20;
 
         defineTrap();
     }

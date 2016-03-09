@@ -24,9 +24,10 @@ public class BossCreep extends Creep {
 
         defineCreep();
 
-        health = 1000;
+        health = 10000;
         speed = 0.5f;
 
+        score = 100;
     }
 
     @Override

@@ -26,6 +26,16 @@ public class Creep extends Sprite{
 
     protected Vector2 position;
 
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    protected int score;
+
     protected int health;
     protected float speed;
 

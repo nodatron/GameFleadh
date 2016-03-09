@@ -28,18 +28,18 @@ public class Laser extends Projectile{
             maxCreepHits = 3;
             if(level == 1)
             {
-                damage = 1;
+                damage = 20;
             }
             //if level 2
             else
             {
-                damage = 2;
+                damage = 40;
             }
         }
         else {
             projectileSprite = new Sprite(new Texture("projectiles/laser_projectile_level3.png"));
             maxCreepHits = 6;
-            damage = 2;
+            damage = 40;
         }
         projectileSprite.setSize(w, h);
         projectileSprite.setPosition(x, y);

@@ -18,7 +18,7 @@ public class Bullet extends Projectile{
         projectileSprite = new Sprite(new Texture("projectiles/singleshot_projectile.png"));
         projectileSprite.setSize(w, h);
         projectileSprite.setPosition(x, y);
-        damage = 1;
+        damage = 20;
     }
 
     public void onCreepProjHit(Creep creep)

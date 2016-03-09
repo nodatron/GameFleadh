@@ -30,19 +30,19 @@ public class AOERing extends Projectile{
             flameActive = false;
             if(level == 1)
             {
-                damage = 1;
+                damage = 20;
             }
             //if level 2
             else
             {
-                damage = 2;
+                damage = 40;
             }
         }
         else {
             projectileSprite = new Sprite(new Texture("projectiles/aoe_projectile_level3.png"));
             flameActive = true;
-            damage = 2;
-            fireDamage = 1;
+            damage = 40;
+            fireDamage = 10;
             DOTTime = 100;
         }
         projectileSprite.setSize(1, 1);

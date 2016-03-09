@@ -41,6 +41,7 @@ public class Bomb extends Trap
         delay = 60; // two seconds @ 60fps
         blastRadius = 128.0f;
         explosionDuration = 0;
+        damage = 200;
         defineTrap();
     }
 

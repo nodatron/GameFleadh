@@ -23,7 +23,7 @@ public class Barricade extends Trap
         image = new Sprite(texture);
         image.setSize(trapSize.x, trapSize.y);
         image.setPosition(x, y);
-        health = 120; // should last for two seconds
+        health = 240;
         cost = 50;
         if(FinalStand.score >= cost) {
             FinalStand.score -= cost;

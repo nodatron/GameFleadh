@@ -22,7 +22,8 @@ public class MediumCreep extends Creep {
 //        movement = new boolean[8];
 //        setMovement();
 
-        health = 100;
+        health = 150;
+        score = 20;
     }
 
     public void dispose() {
