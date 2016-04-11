@@ -20,10 +20,6 @@ import java.util.ArrayList;
  * Created by Niall PC on 07/03/2016.
  */
 public class Controls {
-    private ArrayList<String> controls;
-    private float fontX;
-    private float fontY;
-
     public Stage stage;
     private Viewport viewport;
 
@@ -35,10 +31,6 @@ public class Controls {
         labels = new ArrayList<Label>();
         stage = new Stage();
         viewport = new FitViewport(FinalStand.V_WIDTH / FinalStand.PPM, FinalStand.V_HEIGHT / FinalStand.PPM, new OrthographicCamera());
-//        font = new BitmapFont();
-//        fontX = 1;
-//        fontY = 2;
-//        font.getData().setScale(fontX, fontY);
 
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("OpenSans-Regular.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();

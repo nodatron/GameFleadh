@@ -1,5 +1,6 @@
 package com.finalstand.game.sprites.creeps;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -15,13 +16,9 @@ public class HeavyCreep extends Creep {
     public HeavyCreep(float x, float y, World world) {
         super(world);
         position = new Vector2(x, y);
-        texture = new Texture("creeps/heavycreep3.png");
+        texture = new Texture(Gdx.files.internal("creeps/heavycreep3.png"));
         sprite = new Sprite(texture);
-
         defineCreep();
-//        movement = new boolean[8];
-//        setMovement();
-
         health = 200;
         score = 30;
     }

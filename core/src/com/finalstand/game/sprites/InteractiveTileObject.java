@@ -50,10 +50,6 @@ public abstract class InteractiveTileObject {
     public abstract void onLeftHit(Creep creep);
     public abstract void onTopHit(Creep creep);
     public abstract void onBottomHit(Creep creep);
-    public abstract void onRightRelease(Creep creep);
-    public abstract void onLeftRelease(Creep creep);
-    public abstract void onTopRelease(Creep creep);
-    public abstract void onBottomRelease(Creep creep);
 
     public void setCategoryFilter(short filterBit) {
         Filter filter = new Filter();

@@ -1,5 +1,6 @@
 package com.finalstand.game.sprites.creeps;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
@@ -19,14 +20,11 @@ public class BossCreep extends Creep {
     public BossCreep(float x, float y, World world) {
         super(world);
         position = new Vector2(x, y);
-        texture = new Texture("creeps/BossCreep.png");
+        texture = new Texture(Gdx.files.internal("creeps/BossCreep.png"));
         sprite = new Sprite(texture);
-
         defineCreep();
-
         health = 10000;
         speed = 0.5f;
-
         score = 100;
     }
 

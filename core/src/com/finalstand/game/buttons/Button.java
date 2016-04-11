@@ -1,5 +1,6 @@
 package com.finalstand.game.buttons;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -28,7 +29,7 @@ public class Button {
         position = new Vector2(x, y);
         width = w;
         height = h;
-        buttonTexture = new Texture(filename);
+        buttonTexture = new Texture(Gdx.files.internal(filename));
         buttonSprite = new Sprite(buttonTexture);
         buttonSprite.setPosition(x / FinalStand.PPM, y / FinalStand.PPM);
         buttonSprite.setSize(w / FinalStand.PPM, h / FinalStand.PPM);

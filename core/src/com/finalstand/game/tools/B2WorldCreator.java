@@ -18,10 +18,6 @@ import com.finalstand.game.sprites.RoadBounds;
 public class B2WorldCreator {
 
     public B2WorldCreator(World world, TiledMap map) {
-        BodyDef bdef = new BodyDef();
-        PolygonShape shape = new PolygonShape();
-        FixtureDef fdef = new FixtureDef();
-        Body body;
 
         //Creating all the hit boxes or the bounds of the road
         for(MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)) {
@@ -32,16 +28,7 @@ public class B2WorldCreator {
 
         for(MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
-
             new Waypoint(world, map, rect);
-//            bdef.type = BodyDef.BodyType.StaticBody;
-//            bdef.position.set(rect.getX() + rect.getWidth() / 2, rect.getY() + rect.getHeight() / 2);
-//
-//            body = world.createBody(bdef);
-//
-//            shape.setAsBox(rect.getWidth() / 2, rect.getHeight() / 2);
-//            fdef.shape = shape;
-//            body.createFixture(fdef);
         }
     }
 }
