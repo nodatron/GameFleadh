@@ -1,5 +1,6 @@
 package com.finalstand.game.sprites.projectiles;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
@@ -30,7 +31,7 @@ public class DOTGas extends Projectile{
         this.angle = angle;
         position.x = x;
         position.y = y;
-        projectileSprite = new Sprite(new Texture("projectiles/dot_projectile.png"));
+        projectileSprite = new Sprite(new Texture(Gdx.files.internal("projectiles/dot_projectile.png")));
         projectileSprite.setSize(w, h);
         projectileSprite.setPosition(x, y);
         initialPos = new Vector2(x, y);

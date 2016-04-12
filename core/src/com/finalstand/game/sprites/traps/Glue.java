@@ -1,5 +1,6 @@
 package com.finalstand.game.sprites.traps;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -18,7 +19,7 @@ public class Glue extends Trap
     public Glue(float x, float y, World world)
     {
         super(x, y);
-        texture = new Texture("traps/glue2.png");
+        texture = new Texture(Gdx.files.internal("traps/glue2.png"));
         image = new Sprite(texture);
         image.setSize(trapSize.x, trapSize.y);
         image.setPosition(x, y);
@@ -63,17 +64,6 @@ public class Glue extends Trap
         getImage();
     }
 
-    protected void checkCollisions()
-    {
-        /*for(Creep c : creep)
-        {
-            if(Point2D.distance(position.x, position.y, c.position.x, c.position.y) < radius + c.radius)
-            {
-                creep.speed = creep.speed / 2;
-            }
-        }*/
-    }
-
     public void update()
     {
         //checkCollisions();
@@ -93,12 +83,9 @@ public class Glue extends Trap
     @Override
     public void onCreepHit(Creep creep)
     {
-//        creep.setIsNeeded(true);
         creep.setInitSpeed(creep.getSpeed());
         creep.setSpeed(creep.getSpeed() / 2);
         setHits(getHits() + 1);
         creep.setSlowed(true);
-//        creep.setSlowed(true);
-
     }
 }

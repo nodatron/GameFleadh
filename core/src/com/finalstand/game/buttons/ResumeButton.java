@@ -23,7 +23,6 @@ public class ResumeButton extends Button {
             if(mouse.x > position.x && mouse.x < position.x + width &&
                     mouse.y > position.y && mouse.y < position.y + height) {
                 MenuScreen.resumeButtonPressed();
-                System.out.println("here");
             }
         }
     }

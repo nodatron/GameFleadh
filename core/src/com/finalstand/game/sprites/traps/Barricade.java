@@ -1,5 +1,6 @@
 package com.finalstand.game.sprites.traps;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -19,7 +20,7 @@ public class Barricade extends Trap
     public Barricade(float x, float y, World world)
     {
         super(x, y);
-        texture = new Texture("traps/barricade2.png");
+        texture = new Texture(Gdx.files.internal("traps/barricade2.png"));
         image = new Sprite(texture);
         image.setSize(trapSize.x, trapSize.y);
         image.setPosition(x, y);
@@ -92,22 +93,5 @@ public class Barricade extends Trap
     public void render()
     {
         getImage();
-    }
-
-    protected void checkCollisions()
-    {
-        /*for(Creep c : PlayScreen.spawnableCreeps)
-        {
-            if(Point2D.distance(position.x, position.y, c.position.x, c.position.y) < radius + c.radius)
-            {
-                c.direction.x = c.direction.x * 0;
-                c.direction.y = c.direction.y * 0;
-                health--;
-                if(health <= 0)
-                {
-                    PlayScreen.traps.remove(this);
-                }
-            }
-        }*/
     }
 }

@@ -1,5 +1,6 @@
 package com.finalstand.game.sprites.projectiles;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.World;
@@ -26,7 +27,7 @@ public class AOERing extends Projectile{
         super(x, y, angle, level, 6 / FinalStand.PPM, world, 1, 1);
         //if shot from a level 1 or 2 tower
         if(level < 3) {
-            projectileSprite = new Sprite(new Texture("projectiles/aoe_projectile_level1.png"));
+            projectileSprite = new Sprite(new Texture(Gdx.files.internal("projectiles/aoe_projectile_level1.png")));
             flameActive = false;
             if(level == 1)
             {
@@ -39,7 +40,7 @@ public class AOERing extends Projectile{
             }
         }
         else {
-            projectileSprite = new Sprite(new Texture("projectiles/aoe_projectile_level3.png"));
+            projectileSprite = new Sprite(new Texture(Gdx.files.internal("projectiles/aoe_projectile_level3.png")));
             flameActive = true;
             damage = 40;
             fireDamage = 10;

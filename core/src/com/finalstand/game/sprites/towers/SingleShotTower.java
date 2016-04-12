@@ -29,9 +29,9 @@ public class SingleShotTower extends Tower{
         super(x, y, world, angle);
 
         //loading in the different textures for the different levels
-        level1 = new Texture("towers/singleshot_level1.png");
-        level2 = new Texture("towers/singleshot_level2.png");
-        level3 = new Texture("towers/singleshot_level3.png");
+        level1 = new Texture(Gdx.files.internal("towers/singleshot_level1.png"));
+        level2 = new Texture(Gdx.files.internal("towers/singleshot_level2.png"));
+        level3 = new Texture(Gdx.files.internal("towers/singleshot_level3.png"));
         currentTexture = level1;
         //creating the tower sprite
         towerSprite = new Sprite(currentTexture);

@@ -66,6 +66,7 @@ public class Controls {
 
         } catch (IOException e) {
             System.out.println(e);
+            e.printStackTrace();
         }
     }
 }

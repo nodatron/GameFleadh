@@ -80,7 +80,6 @@ public class SplashScreen implements Screen{
 
         game.batch.setProjectionMatrix(gameCam.combined);
         game.batch.begin();
-//        playButton.getButtonSprite().draw(game.batch);
         game.batch.draw(background, 0, 0, 800 / FinalStand.PPM, 400 / FinalStand.PPM);
         game.batch.draw(playButton.getButtonTexture(), playButton.getPosition().x, playButton.getPosition().y, playButton.getWidth(), playButton.getHeight());
         game.batch.draw(controlButton.getButtonTexture(), controlButton.getPosition().x, controlButton.getPosition().y, controlButton.getWidth(), controlButton.getHeight());
@@ -130,9 +129,6 @@ public class SplashScreen implements Screen{
         controlButtonPressed = true;
     }
 
-    public static void quitButtonPressed() {
-        quitButtonPressed = true;
-    }
 
     public static Vector3 getWorldMousePos() {
         return gameCam.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));

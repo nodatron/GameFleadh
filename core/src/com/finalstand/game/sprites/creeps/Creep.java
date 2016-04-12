@@ -144,7 +144,6 @@ public class Creep extends Sprite{
         movement[0] = true;
         setDirection = false;
         timeElapsed = 0;
-        System.out.println(FinalStand.mapNumber);
         switch(FinalStand.mapNumber) {
             case 1: {
                 dir = Waypoint.readWaypoints("map1.txt");
@@ -251,7 +250,6 @@ public class Creep extends Sprite{
     }
 
     public void update() {
-//        System.out.println(getHealth());
         if(getHealth() <= 0) {
             setIsDead(true);
         }
@@ -302,11 +300,7 @@ public class Creep extends Sprite{
         }
 
         direction.scl(speed);
-        System.out.println("Speed" + speed);
-        System.out.println("Speed of the creep" + direction);
-//        this.b2Body.applyLinearImpulse(direction, this.b2Body.getWorldCenter(), true);
         this.b2Body.setLinearVelocity(direction);
-//        timeElapsed++;
 
         //if a damage over time effect is present on the creep, damage it
         if(DOTActive)

@@ -138,7 +138,7 @@ public class PlayScreen implements Screen {
             viewport = new FitViewport(FinalStand.V_WIDTH / FinalStand.PPM, FinalStand.V_HEIGHT / FinalStand.PPM, gameCam);
             mapLoader = new TmxMapLoader();
             map = mapLoader.load(mapFileName);
-            System.out.println(FinalStand.mapNumber);
+
             renderer = new OrthogonalTiledMapRenderer(map, 1 / FinalStand.PPM);
             // centers the camera
             gameCam.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
@@ -172,7 +172,7 @@ public class PlayScreen implements Screen {
             towers = new ArrayList<Tower>();
             displayButtons = false;
 
-            background = new Texture("screens/menu.png");
+            background = new Texture(Gdx.files.internal("screens/menu.png"));
             exitConfPosition = new Vector2((FinalStand.V_WIDTH / 2) / FinalStand.PPM, (FinalStand.V_HEIGHT / 2) / FinalStand.PPM);
             resumeButton = new ResumeButton("screens/resume.png", exitConfPosition.x, exitConfPosition.y, 50 / FinalStand.PPM, 25 / FinalStand.PPM);
             exitButton = new ExitButton("screens/exit.png", exitConfPosition.x, exitConfPosition.y + (50 / FinalStand.PPM), 50 / FinalStand.PPM, 25 / FinalStand.PPM);
@@ -180,8 +180,8 @@ public class PlayScreen implements Screen {
             elapsed = 0;
             plannignPhaseCounter = 0;
 
-            play = new Sprite(new Texture("screens/play.png"));
-            pause = new Sprite(new Texture("screens/pause.png"));
+            play = new Sprite(new Texture(Gdx.files.internal("screens/play.png")));
+            pause = new Sprite(new Texture(Gdx.files.internal("screens/pause.png")));
 
             play.setPosition(((FinalStand.V_WIDTH / 2) + 20) / FinalStand.PPM, (FinalStand.V_HEIGHT / 10) / FinalStand.PPM);
             play.setSize(20 / FinalStand.PPM, 10 / FinalStand.PPM);
@@ -189,7 +189,7 @@ public class PlayScreen implements Screen {
             pause.setSize(20 / FinalStand.PPM, 10 / FinalStand.PPM);
 
 
-            base = new Texture("base.png");
+            base = new Texture(Gdx.files.internal("base.png"));
             basePos = waypoints.get(waypoints.size - 1).getPos();
             baseDimensions = waypoints.get(waypoints.size - 1).getBaseDimensions();
 
@@ -456,9 +456,7 @@ public class PlayScreen implements Screen {
         }
 
         if(creeps.size() == 0) {
-            System.out.println(game.round);
             game.round ++;
-            System.out.println(game.round);
             elapsed = 0;
             creeps.clear();
             projectiles.clear();

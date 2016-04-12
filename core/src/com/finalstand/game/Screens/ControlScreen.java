@@ -38,7 +38,7 @@ public class ControlScreen implements Screen {
         gameCam = new OrthographicCamera();
         viewport = new FitViewport(FinalStand.V_WIDTH / FinalStand.PPM, FinalStand.V_HEIGHT / FinalStand.PPM, gameCam);
         gameCam.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
-        background = new Texture("screens/menu.png");
+        background = new Texture(Gdx.files.internal("screens/menu.png"));
 
         playButton = new PlayButton("screens/playbutton.png", (FinalStand.V_WIDTH / FinalStand.PPM) * 0.3f, (FinalStand.V_HEIGHT / FinalStand.PPM) *0.04f,
                 (FinalStand.V_WIDTH / FinalStand.PPM) *0.1f, (FinalStand.V_HEIGHT / FinalStand.PPM) *0.1f);
@@ -65,10 +65,17 @@ public class ControlScreen implements Screen {
 
         game.batch.setProjectionMatrix(gameCam.combined);
         game.batch.begin();
-//        playButton.getButtonSprite().draw(game.batch);
         game.batch.draw(background, 0, 0, 800 / FinalStand.PPM, 400 / FinalStand.PPM);
-        game.batch.draw(playButton.getButtonTexture(), playButton.getPosition().x, playButton.getPosition().y, playButton.getWidth(), playButton.getHeight());
-        game.batch.draw(backButton.getButtonTexture(), backButton.getPosition().x, backButton.getPosition().y, backButton.getWidth(), backButton.getHeight());
+        game.batch.draw(playButton.getButtonTexture(),
+                        playButton.getPosition().x,
+                        playButton.getPosition().y,
+                        playButton.getWidth(),
+                        playButton.getHeight());
+        game.batch.draw(backButton.getButtonTexture(),
+                        backButton.getPosition().x,
+                        backButton.getPosition().y,
+                        backButton.getWidth(),
+                        backButton.getHeight());
         game.batch.end();
 
         game.batch.setProjectionMatrix(controls.stage.getCamera().combined);
@@ -110,12 +117,10 @@ public class ControlScreen implements Screen {
 
     public static void playButtonPressed() {
         playButtonPressed = true;
-        System.out.println("here");
     }
 
     public static void backButtonPressed() {
         backButtonPressed = true;
-        System.out.println("Here");
     }
 
     public static Vector3 getWorldMousePos() {

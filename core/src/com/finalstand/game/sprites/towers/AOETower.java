@@ -25,9 +25,9 @@ public class AOETower extends Tower{
         maxTime = 100.0f;
 
         //loading in the different textures for the different levels
-        level1 = new Texture("towers/aoe_level1.png");
-        level2 = new Texture("towers/aoe_level2.png");
-        level3 = new Texture("towers/aoe_level3.png");
+        level1 = new Texture(Gdx.files.internal("towers/aoe_level1.png"));
+        level2 = new Texture(Gdx.files.internal("towers/aoe_level2.png"));
+        level3 = new Texture(Gdx.files.internal("towers/aoe_level3.png"));
         currentTexture = level1;
         towerSprite = new Sprite(currentTexture);
         towerSprite.setPosition(x, y);

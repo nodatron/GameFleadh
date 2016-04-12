@@ -21,9 +21,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Cell;
  */
 public class Hud {
 
-    private Integer health;
-    private Integer score;
-    private Integer round;
     private Integer map;
     public Stage stage;
     private Viewport viewport;
@@ -32,8 +29,6 @@ public class Hud {
     private Label scoreLabel;
     private Label mapLabel;
     private Label roundLabel;
-    private Label healthLabelHeading;
-    private Label MapRoundLabelHeading;
     private Table table;
 
     private BitmapFont font;

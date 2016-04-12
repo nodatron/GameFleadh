@@ -1,5 +1,6 @@
 package com.finalstand.game.sprites.traps;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -25,8 +26,8 @@ public class Bomb extends Trap
     public Bomb(float x, float y, World world)
     {
         super(x, y);
-        texture = new Texture("traps/bomb.png");
-        texture2 = new Texture("traps/explosion.png");
+        texture = new Texture(Gdx.files.internal("traps/bomb.png"));
+        texture2 = new Texture(Gdx.files.internal("traps/explosion.png"));
         image = new Sprite(texture);
         image.setSize(trapSize.x, trapSize.y);
         image.setPosition(x, y);
@@ -137,26 +138,10 @@ public class Bomb extends Trap
         return image;
     }
 
-    protected void checkCollisions()
-    {
-        /*
-        if(!bombActive)
-        {
-            for(Creep c : creep)
-            {
-                if(Point2D.distance(position.x, position.y, c.position.x, c.position.y) < radius)
-                {
-                    bombActive = true;
-                }
-            }
-        }
-        */
-    }
 
     @Override
     public void onCreepHit(Creep creep)
     {
-        System.out.println("in creep hit bomb");
         setBombActive(true);
         creep.setBombTriggered(true);
     }

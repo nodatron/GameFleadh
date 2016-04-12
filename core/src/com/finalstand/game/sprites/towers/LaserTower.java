@@ -31,10 +31,10 @@ public class LaserTower extends Tower{
         maxTime = 80.0f;
 
         //loading in the different textures for the different levels
-        level1 = new Texture("towers/laserTower_level1.png");
-        level2 = new Texture("towers/laserTower_level2.png");
-        level3 = new Texture("towers/laserTower_level3_notFiring.png");
-        level3Firing = new Texture("towers/laserTower_level3_firing.png");
+        level1 = new Texture(Gdx.files.internal("towers/laserTower_level1.png"));
+        level2 = new Texture(Gdx.files.internal("towers/laserTower_level2.png"));
+        level3 = new Texture(Gdx.files.internal("towers/laserTower_level3_notFiring.png"));
+        level3Firing = new Texture(Gdx.files.internal("towers/laserTower_level3_firing.png"));
         currentTexture = level1;
         towerSprite = new Sprite(currentTexture);
         towerSprite.setPosition(x, y);

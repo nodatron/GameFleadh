@@ -66,35 +66,55 @@ public class MenuScreen implements Screen {
         this.game = game;
         this.play = play;
         gameCam = new OrthographicCamera();
-        background = new Texture("screens/menu.png");
+        background = new Texture(Gdx.files.internal("screens/menu.png"));
         backgroundPos = new Vector2(0, 0);
         viewport = new FitViewport(FinalStand.V_WIDTH / FinalStand.PPM, FinalStand.V_HEIGHT / FinalStand.PPM, gameCam);
         gameCam.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
 
-        resumeButton = new ResumeButton("screens/resume.png", (FinalStand.V_WIDTH / FinalStand.PPM) * 0.3f, (FinalStand.V_HEIGHT / FinalStand.PPM) *0.7f,
-                (FinalStand.V_WIDTH / FinalStand.PPM) *0.4f, (FinalStand.V_HEIGHT / FinalStand.PPM) *0.2f);
-        controlButton = new ControlButton("screens/controlbutton.png", (FinalStand.V_WIDTH / FinalStand.PPM) * 0.3f, (FinalStand.V_HEIGHT / FinalStand.PPM) *0.4f,
-                (FinalStand.V_WIDTH / FinalStand.PPM) *0.4f, (FinalStand.V_HEIGHT / FinalStand.PPM) * 0.2f);
-        exitButton = new ExitButton("screens/exit.png", (FinalStand.V_WIDTH / FinalStand.PPM) * 0.3f, (FinalStand.V_HEIGHT / FinalStand.PPM) *0.1f,
-                (FinalStand.V_WIDTH / FinalStand.PPM) *0.4f, (FinalStand.V_HEIGHT / FinalStand.PPM) *0.2f);
+        resumeButton = new ResumeButton("screens/resume.png",
+                                        (FinalStand.V_WIDTH / FinalStand.PPM) * 0.3f,
+                                        (FinalStand.V_HEIGHT / FinalStand.PPM) *0.7f,
+                                        (FinalStand.V_WIDTH / FinalStand.PPM) *0.4f,
+                                        (FinalStand.V_HEIGHT / FinalStand.PPM) *0.2f);
+        controlButton = new ControlButton("screens/controlbutton.png",
+                                        (FinalStand.V_WIDTH / FinalStand.PPM) * 0.3f,
+                                        (FinalStand.V_HEIGHT / FinalStand.PPM) *0.4f,
+                                        (FinalStand.V_WIDTH / FinalStand.PPM) *0.4f,
+                                        (FinalStand.V_HEIGHT / FinalStand.PPM) * 0.2f);
+        exitButton = new ExitButton("screens/exit.png",
+                                    (FinalStand.V_WIDTH / FinalStand.PPM) * 0.3f,
+                                    (FinalStand.V_HEIGHT / FinalStand.PPM) *0.1f,
+                                    (FinalStand.V_WIDTH / FinalStand.PPM) *0.4f,
+                                    (FinalStand.V_HEIGHT / FinalStand.PPM) *0.2f);
 
         exitButtonPressed = false;
         resumeButtonPressed = false;
         controlButtonPressed = false;
 
         state = State.MENU;
-        background = new Texture("screens/menu.png");
-        exitConfPosition = new Vector2((FinalStand.V_WIDTH / FinalStand.PPM) * 0.35f, (FinalStand.V_HEIGHT / FinalStand.PPM) * 0.35f);
-        exitConfResumeButton = new ResumeButton("screens/backbutton.png", exitConfPosition.x + ((FinalStand.V_WIDTH / FinalStand.PPM) * 0.1f), exitConfPosition.y + ((FinalStand.V_HEIGHT / FinalStand.PPM) * 0.3f),
-                (FinalStand.V_HEIGHT / FinalStand.PPM) * 0.2f, (FinalStand.V_HEIGHT / FinalStand.PPM) * 0.1f);
-        toMainMenu = new ExitButton("screens/mainmenu.png", exitConfPosition.x + ((FinalStand.V_WIDTH / FinalStand.PPM) * 0.1f) , exitConfPosition.y + ((FinalStand.V_HEIGHT / FinalStand.PPM) * 0.15f),
-                (FinalStand.V_HEIGHT / FinalStand.PPM) * 0.2f, (FinalStand.V_HEIGHT / FinalStand.PPM) * 0.1f);
-        toDesktop = new ExitButton("screens/desktop.png", exitConfPosition.x + ((FinalStand.V_WIDTH / FinalStand.PPM) * 0.1f), exitConfPosition.y,
-                (FinalStand.V_HEIGHT / FinalStand.PPM) * 0.2f, (FinalStand.V_HEIGHT / FinalStand.PPM) * 0.1f);
+        background = new Texture(Gdx.files.internal("screens/menu.png"));
+        exitConfPosition = new Vector2((FinalStand.V_WIDTH / FinalStand.PPM) * 0.35f,
+                                        (FinalStand.V_HEIGHT / FinalStand.PPM) * 0.35f);
+        exitConfResumeButton = new ResumeButton("screens/backbutton.png",
+                                                exitConfPosition.x + ((FinalStand.V_WIDTH / FinalStand.PPM) * 0.1f),
+                                                exitConfPosition.y + ((FinalStand.V_HEIGHT / FinalStand.PPM) * 0.3f),
+                                                (FinalStand.V_HEIGHT / FinalStand.PPM) * 0.2f,
+                                                (FinalStand.V_HEIGHT / FinalStand.PPM) * 0.1f);
+        toMainMenu = new ExitButton("screens/mainmenu.png",
+                                    exitConfPosition.x + ((FinalStand.V_WIDTH / FinalStand.PPM) * 0.1f) ,
+                                    exitConfPosition.y + ((FinalStand.V_HEIGHT / FinalStand.PPM) * 0.15f),
+                                    (FinalStand.V_HEIGHT / FinalStand.PPM) * 0.2f,
+                                    (FinalStand.V_HEIGHT / FinalStand.PPM) * 0.1f);
+        toDesktop = new ExitButton("screens/desktop.png",
+                                    exitConfPosition.x + ((FinalStand.V_WIDTH / FinalStand.PPM) * 0.1f),
+                                    exitConfPosition.y,
+                                    (FinalStand.V_HEIGHT / FinalStand.PPM) * 0.2f,
+                                    (FinalStand.V_HEIGHT / FinalStand.PPM) * 0.1f);
 
 
-        backToMenu = new Texture("screens/backbutton.png");
-        backToMenuPos = new Vector2((FinalStand.V_WIDTH / FinalStand.PPM) * 0.85f, (FinalStand.V_HEIGHT / FinalStand.PPM) * 0.005f);
+        backToMenu = new Texture(Gdx.files.internal("screens/backbutton.png"));
+        backToMenuPos = new Vector2((FinalStand.V_WIDTH / FinalStand.PPM) * 0.85f,
+                                    (FinalStand.V_HEIGHT / FinalStand.PPM) * 0.005f);
         width = (FinalStand.V_WIDTH / FinalStand.PPM) * 0.1f;
         height = (FinalStand.V_WIDTH / FinalStand.PPM) * 0.05f;
 
@@ -283,9 +303,5 @@ public class MenuScreen implements Screen {
 
     public static void controlButtonPressed() {
         controlButtonPressed = true;
-    }
-
-    public static void exitButtonPressed() {
-//        setGameState(State.EXIT_CONFIRMATION);
     }
 }

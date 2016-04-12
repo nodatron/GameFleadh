@@ -1,5 +1,6 @@
 package com.finalstand.game.sprites.projectiles;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.World;
@@ -24,7 +25,7 @@ public class Laser extends Projectile{
         position.y = y;
         //if shot from a level 1 or 2 tower
         if(level < 3) {
-            projectileSprite = new Sprite(new Texture("projectiles/laser_projectile_level1.png"));
+            projectileSprite = new Sprite(new Texture(Gdx.files.internal("projectiles/laser_projectile_level1.png")));
             maxCreepHits = 3;
             if(level == 1)
             {
@@ -37,7 +38,7 @@ public class Laser extends Projectile{
             }
         }
         else {
-            projectileSprite = new Sprite(new Texture("projectiles/laser_projectile_level3.png"));
+            projectileSprite = new Sprite(new Texture(Gdx.files.internal("projectiles/laser_projectile_level3.png")));
             maxCreepHits = 6;
             damage = 40;
         }

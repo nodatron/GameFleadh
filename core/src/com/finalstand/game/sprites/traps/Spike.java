@@ -1,5 +1,6 @@
 package com.finalstand.game.sprites.traps;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -18,7 +19,7 @@ public class Spike extends Trap
     public Spike(float x, float y, World world)
     {
         super(x, y);
-        texture = new Texture("traps/spikes3.png");
+        texture = new Texture(Gdx.files.internal("traps/spikes3.png"));
         image = new Sprite(texture);
         image.setSize(trapSize.x, trapSize.y);
         image.setPosition(x, y);
@@ -62,17 +63,6 @@ public class Spike extends Trap
     public void render()
     {
         getImage();
-    }
-
-    protected void checkCollisions()
-    {
-        /*for(Creep c : creep)
-        {
-            if(Point2D.distance(position.x, position.y, c.position.x, c.position.y) < radius + c.radius)
-            {
-                creep.health--;
-            }
-        }*/
     }
 
     public void update()
