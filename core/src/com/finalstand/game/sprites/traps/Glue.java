@@ -72,6 +72,13 @@ public class Glue extends Trap
             setIsDead(true);
         }
 
+        if(isOneLoop()) {
+            if (!getRoadboundsHit()) {
+                setIsDead(true);
+            }
+        }
+
+        setOneLoop(true);
     }
 
     @Override

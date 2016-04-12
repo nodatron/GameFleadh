@@ -49,7 +49,7 @@ public class Barricade extends Trap
 
         FixtureDef fdef = new FixtureDef(); // Needed for collision detection
         CircleShape shape = new CircleShape();
-        shape.setRadius(5/ FinalStand.PPM);
+        shape.setRadius(8/ FinalStand.PPM);
 
         fdef.filter.categoryBits = FinalStand.BARRICADE_BIT;
         fdef.filter.maskBits = FinalStand.DEFAULT | FinalStand.CREEP_BIT | FinalStand.ROADBOUNDS_BIT;
@@ -71,6 +71,14 @@ public class Barricade extends Trap
                 setIsDead(true);
             }
         }
+
+        if(isOneLoop()) {
+            if (!getRoadboundsHit()) {
+                setIsDead(true);
+            }
+        }
+
+        setOneLoop(true);
     }
 
     //Written by Niall

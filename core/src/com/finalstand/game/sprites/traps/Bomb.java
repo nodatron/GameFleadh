@@ -116,6 +116,14 @@ public class Bomb extends Trap
         if(getExplosionDuration() > 10) {
             setIsDead(true);
         }
+
+        if(isOneLoop()) {
+            if (!getRoadboundsHit()) {
+                setIsDead(true);
+            }
+        }
+
+        setOneLoop(true);
     }
 
     protected void explode()

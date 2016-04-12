@@ -7,6 +7,10 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.finalstand.game.FinalStand;
 import com.finalstand.game.sprites.creeps.Creep;
 import com.finalstand.game.sprites.towers.Tower;
+import com.finalstand.game.sprites.traps.Barricade;
+import com.finalstand.game.sprites.traps.Bomb;
+import com.finalstand.game.sprites.traps.Glue;
+import com.finalstand.game.sprites.traps.Spike;
 
 
 /**
@@ -37,5 +41,21 @@ public class RoadBounds extends InteractiveTileObject{
 
     @Override
     public void onBottomHit(Creep creep) {
+    }
+
+    public void onBarricadeHit(Barricade barricade) {
+        barricade.setRoadboundsHit(true);
+    }
+
+    public void onGlueHit(Glue glue) {
+        glue.setRoadboundsHit(true);
+    }
+
+    public void onBombHit(Bomb bomb) {
+        bomb.setRoadboundsHit(true);
+    }
+
+    public void onSpikeHit(Spike spike) {
+        spike.setRoadboundsHit(true);
     }
 }

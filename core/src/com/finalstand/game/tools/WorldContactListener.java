@@ -105,7 +105,6 @@ public class WorldContactListener implements ContactListener {
             } break;
 
             case FinalStand.CREEP_BIT | FinalStand.GLUE_BIT: {
-                System.out.println("fsaifsinsisnainfndoasisad");
                 if(fixA.getFilterData().categoryBits == FinalStand.CREEP_BIT) {
                     ((Glue) fixB.getUserData()).onCreepHit((Creep) fixA.getUserData());
                 } else {
@@ -113,6 +112,37 @@ public class WorldContactListener implements ContactListener {
                 }
             } break;
 
+            case FinalStand.BARRICADE_BIT | FinalStand.ROADBOUNDS_BIT: {
+                if(fixA.getFilterData().categoryBits == FinalStand.BARRICADE_BIT) {
+                    ((RoadBounds) fixB.getUserData()).onBarricadeHit((Barricade) fixA.getUserData());
+                } else {
+                    ((RoadBounds) fixA.getUserData()).onBarricadeHit((Barricade) fixB.getUserData());
+                }
+            } break;
+
+            case FinalStand.GLUE_BIT | FinalStand.ROADBOUNDS_BIT: {
+                if(fixA.getFilterData().categoryBits == FinalStand.GLUE_BIT) {
+                    ((RoadBounds) fixB.getUserData()).onGlueHit((Glue) fixA.getUserData());
+                } else {
+                    ((RoadBounds) fixA.getUserData()).onGlueHit((Glue) fixB.getUserData());
+                }
+            } break;
+
+            case FinalStand.BOMB_BIT | FinalStand.ROADBOUNDS_BIT: {
+                if(fixA.getFilterData().categoryBits == FinalStand.BOMB_BIT) {
+                    ((RoadBounds) fixB.getUserData()).onBombHit((Bomb) fixA.getUserData());
+                } else {
+                    ((RoadBounds) fixA.getUserData()).onBombHit((Bomb) fixB.getUserData());
+                }
+            } break;
+
+            case FinalStand.SPIKE_BIT | FinalStand.ROADBOUNDS_BIT: {
+                if(fixA.getFilterData().categoryBits == FinalStand.SPIKE_BIT) {
+                    ((RoadBounds) fixB.getUserData()).onSpikeHit((Spike) fixA.getUserData());
+                } else {
+                    ((RoadBounds) fixA.getUserData()).onSpikeHit((Spike) fixB.getUserData());
+                }
+            } break;
         }
     }
 

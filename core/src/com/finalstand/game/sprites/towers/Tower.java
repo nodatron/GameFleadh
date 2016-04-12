@@ -168,7 +168,7 @@ public class Tower {
     //creating the box2d
     public void defineTower() {
         BodyDef bdef = new BodyDef();
-        bdef.position.set(position.x, position.y);
+        bdef.position.set(position.x + (towerSprite.getWidth() / 2), position.y + (towerSprite.getHeight() / 2));
         bdef.type = BodyDef.BodyType.DynamicBody;
 
         b2Body = world.createBody(bdef);

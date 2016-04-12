@@ -31,6 +31,34 @@ public abstract class Trap extends Sprite
 
     protected static int damage;
 
+    protected boolean roadboundsHit;
+    protected boolean oneLoop;
+
+    public int getCost() {
+        return cost;
+    }
+
+    public void setCost(int cost) {
+        this.cost = cost;
+    }
+
+    public boolean isOneLoop() {
+
+        return oneLoop;
+    }
+
+    public void setOneLoop(boolean oneLoop) {
+        this.oneLoop = oneLoop;
+    }
+
+    public boolean getRoadboundsHit() {
+        return roadboundsHit;
+    }
+
+    public void setRoadboundsHit(boolean roadboundsHit) {
+        this.roadboundsHit = roadboundsHit;
+    }
+
     public static int getDamage() {
         return damage;
     }
@@ -97,6 +125,8 @@ public abstract class Trap extends Sprite
         radius = 32.0f; // diameter is 64px
         cost = 0;
         hits = 0;
+
+        roadboundsHit = false;
     }
 
     public abstract void defineTrap();

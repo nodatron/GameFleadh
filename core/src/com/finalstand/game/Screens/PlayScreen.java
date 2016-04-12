@@ -498,8 +498,7 @@ public class PlayScreen implements Screen {
                 projectiles.get(counter).getSprite().setRotation(projectiles.get(counter).getAngle() - 180);
                 projectiles.get(counter).getSprite().draw(game.batch);
                 projectiles.get(counter).update();
-            } else
-            {
+            } else {
                 world.destroyBody(projectiles.get(counter).getB2Body());
                 projectiles.remove(counter);
             }
@@ -572,6 +571,9 @@ public class PlayScreen implements Screen {
 
         for(int i = 0 ; i < traps.size() ; i ++) {
             if(traps.get(i).isDead()) {
+                if(!traps.get(i).getRoadboundsHit()) {
+                    FinalStand.score += traps.get(i).getCost();
+                }
                 world.destroyBody(traps.get(i).getB2Body());
                 traps.remove(i);
             } else {
