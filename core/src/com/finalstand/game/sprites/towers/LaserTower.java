@@ -88,6 +88,26 @@ public class LaserTower extends Tower{
             towerSprite.setPosition(towerSprite.getX() - 16 / FinalStand.PPM, towerSprite.getY());
             adjustlevel3 = true;
         }
+
+        if(getRoadboundsHit()) {
+//            setIsDead(true);
+            //TODO make a counter that will display a 'X' to show that the placement was invalid
+            // Make a counter variable, make it go up by one every loop, after a certain time make it trigger a if
+            // this if will then set the tower to dead
+            //TODO make the same kind of code for the traps except that the traps have to be touching the roadbounds
+
+            placementErrorCounter ++;
+
+            if(!getSpriteChanged()) {
+                towerSprite.getTexture().dispose();
+                towerSprite.setTexture(new Texture(Gdx.files.internal("buttons/Sell.png")));
+                setSpriteChanged(true);
+            }
+            if(getPlacementErrorCounter() == 30) {
+                setIsDead(true);
+            }
+
+        }
     }
 
     @Override

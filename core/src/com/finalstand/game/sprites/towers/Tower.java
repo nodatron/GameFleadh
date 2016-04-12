@@ -1,6 +1,7 @@
 package com.finalstand.game.sprites.towers;
 
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
@@ -58,6 +59,10 @@ public class Tower {
         towerAngle = angle;             //it doesnt wait too long before firing
 
         this.world = world;
+
+        roadboundsHit = false;
+        spriteChanged = false;
+        placementErrorCounter = 0;
     }
 
     public void update(){
@@ -73,6 +78,40 @@ public class Tower {
         {
             elapsedTime = 0;
         }
+
+        if(getRoadboundsHit()) {
+//            setIsDead(true);
+            //TODO make a counter that will display a 'X' to show that the placement was invalid
+            // Make a counter variable, make it go up by one every loop, after a certain time make it trigger a if
+            // this if will then set the tower to dead
+            //TODO make the same kind of code for the traps except that the traps have to be touching the roadbounds
+
+            placementErrorCounter ++;
+
+            if(!getSpriteChanged()) {
+                towerSprite.getTexture().dispose();
+                towerSprite.setTexture(new Texture(Gdx.files.internal("buttons/Sell.png")));
+                setSpriteChanged(true);
+            }
+            if(getPlacementErrorCounter() == 30) {
+                setIsDead(true);
+            }
+
+        }
+    }
+
+    protected short placementErrorCounter;
+    protected boolean spriteChanged;
+
+    public short getPlacementErrorCounter() { return placementErrorCounter; }
+    public void setPlacementErrorCounter(short placementErrorCounter) {
+        this.placementErrorCounter = placementErrorCounter;
+    }
+    public boolean getSpriteChanged() {
+        return spriteChanged;
+    }
+    public void setSpriteChanged(boolean spriteChanged) {
+        this.spriteChanged = spriteChanged;
     }
 
     //getters
@@ -97,6 +136,7 @@ public class Tower {
     public boolean isDead() {
         return isDead;
     }
+    public void setIsDead(boolean isDead) { this.isDead = isDead; }
 
     public Body getB2Body() {
         return b2Body;
@@ -141,7 +181,7 @@ public class Tower {
 
         fdef.isSensor = true;
         fdef.shape = shape;
-        b2Body.createFixture(fdef);
+        b2Body.createFixture(fdef).setUserData(this);
     }
 
     public void createProjectile()
@@ -170,4 +210,15 @@ public class Tower {
         }
         return false;
     }
+
+    protected boolean roadboundsHit;
+
+    public boolean getRoadboundsHit() {
+        return roadboundsHit;
+    }
+
+    public void setRoadboundsHit(boolean roadboundsHit) {
+        this.roadboundsHit = roadboundsHit;
+    }
+
 }

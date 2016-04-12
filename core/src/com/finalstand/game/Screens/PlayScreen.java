@@ -476,7 +476,7 @@ public class PlayScreen implements Screen {
         world.step(1 / 60f, 6, 2);
         gameCam.update();
         renderer.setView(gameCam);
-//        b2dr.render(world, gameCam.combined);
+        b2dr.render(world, gameCam.combined);
         game.batch.begin();
         game.batch.draw(play.getTexture(), play.getX(), play.getY(), play.getWidth(), play.getHeight());
         game.batch.draw(pause.getTexture(), pause.getX(), pause.getY(), pause.getWidth(), pause.getHeight());
@@ -516,6 +516,9 @@ public class PlayScreen implements Screen {
             }
             else
             {
+                if(towers.get(counter).getRoadboundsHit()) {
+                    FinalStand.score += (towers.get(counter).getSellPrice() * 2);
+                }
                 world.destroyBody(towers.get(counter).getB2Body());
                 towers.remove(counter);
             }

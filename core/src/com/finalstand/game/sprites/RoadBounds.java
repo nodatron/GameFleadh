@@ -27,9 +27,8 @@ public class RoadBounds extends InteractiveTileObject{
     public void onLeftHit(Creep creep) {
     }
 
-    public void onTowerHit(Tower tower)
-    {
-        Gdx.app.log("Collision", "Tower Right Road Bounds");
+    public void onTowerHit(Tower tower) {
+        tower.setRoadboundsHit(true);
     }
 
     @Override

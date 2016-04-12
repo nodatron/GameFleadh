@@ -141,6 +141,8 @@ public class DOTGas extends Projectile{
                 break;
             }
         }
+
+
     }
 
     //when a creep gets hit by the projectile

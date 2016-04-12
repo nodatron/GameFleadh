@@ -62,8 +62,12 @@ public class WorldContactListener implements ContactListener {
 
             case FinalStand.TOWER_BIT | FinalStand.ROADBOUNDS_BIT:{
                 if(fixA.getFilterData().categoryBits == FinalStand.TOWER_BIT) {
+                    System.out.println(fixA.getUserData());
+                    System.out.println(fixB.getUserData());
                     ((RoadBounds) fixB.getUserData()).onTowerHit((Tower) fixA.getUserData());
                 } else {
+                    System.out.println(fixA.getUserData());
+                    System.out.println(fixB.getUserData());
                     ((RoadBounds) fixA.getUserData()).onTowerHit((Tower) fixB.getUserData());
                 }
             } break;
