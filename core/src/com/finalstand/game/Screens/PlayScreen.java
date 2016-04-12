@@ -200,6 +200,9 @@ public class PlayScreen implements Screen {
             optionChosen = false;
 
             traps = new ArrayList<Trap>();
+
+            game.round = 1;
+            game.mapNumber = 1;
     }
 
     @Override
