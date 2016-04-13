@@ -8,12 +8,14 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.finalstand.game.FinalStand;
+import com.finalstand.game.buttons.BackButton;
 
 /**
  * Created by Niall PC on 29/02/2016.
@@ -22,11 +24,15 @@ public class FailureScreen implements Screen {
 
     private final FinalStand game;
     private Texture texture;
-    private OrthographicCamera gameCam;
+    private static OrthographicCamera gameCam;
     private Viewport viewport;
     private BitmapFont font48;
 
+    private BackButton backButton;
+
     private Stage stage;
+
+    public static boolean backButtonPressed;
 
     public FailureScreen(FinalStand game) {
         this.game = game;
@@ -49,6 +55,15 @@ public class FailureScreen implements Screen {
 
         stage.addActor(table);
         generator.dispose();
+
+        backButton = new BackButton("screens/backbutton.png",
+                (FinalStand.V_WIDTH / FinalStand.PPM) * 0.85f,
+                (FinalStand.V_HEIGHT / FinalStand.PPM) * 0.005f,
+                (FinalStand.V_WIDTH / FinalStand.PPM) * 0.1f,
+                (FinalStand.V_WIDTH / FinalStand.PPM) * 0.05f,
+                "Fail");
+
+        backButtonPressed = false;
     }
 
     @Override
@@ -64,9 +79,23 @@ public class FailureScreen implements Screen {
         game.batch.setProjectionMatrix(gameCam.combined);
         game.batch.begin();
         game.batch.draw(texture, 0, 0, 800 / FinalStand.PPM, 400 / FinalStand.PPM);
+        game.batch.draw(backButton.getButtonTexture(),
+                        backButton.getPosition().x,
+                        backButton.getPosition().y,
+                        backButton.getWidth(),
+                        backButton.getHeight());
         game.batch.end();
+        backButton.update();
 
         stage.draw();
+
+        update();
+    }
+
+    private void update() {
+        if(backButtonPressed) {
+            game.setScreen(new SplashScreen(game));
+        }
     }
 
     @Override
@@ -92,5 +121,13 @@ public class FailureScreen implements Screen {
     @Override
     public void dispose() {
         texture.dispose();
+    }
+
+    public static void backButtonPressed() {
+        backButtonPressed = true;
+    }
+
+    public static Vector3 getWorldMousePos() {
+        return gameCam.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
     }
 }

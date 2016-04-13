@@ -8,6 +8,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.finalstand.game.Screens.FailureScreen;
 import com.finalstand.game.Screens.SplashScreen;
+import com.finalstand.game.Screens.VictoryScreen;
 
 
 public class FinalStand extends Game {
@@ -30,7 +31,7 @@ public class FinalStand extends Game {
 	public SpriteBatch batch;
 
 	public static Integer round = 1;
-	public static Integer mapNumber = 1;
+	public static Integer mapNumber = 4;
 	public static final int roundsPerMap = 11;
 
 	public static boolean gameOver = false;
@@ -59,7 +60,7 @@ public class FinalStand extends Game {
 	public void create () {
 		batch = new SpriteBatch(30);
 
-		setScreen(new SplashScreen(this));
+		setScreen(new VictoryScreen(this));
 //		System.out.println(Gdx.graphics.isGL30Available());
 	}
 

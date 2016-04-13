@@ -155,7 +155,8 @@ public class Creep extends Sprite{
                 direction = new Vector2(0, - 50 / FinalStand.PPM);
             } break;
 
-            case 3: {
+            case 3:
+            case 4: {
                 dir = Waypoint.readWaypoints("map3.txt");
                 direction = new Vector2(0, - 50 / FinalStand.PPM);
             } break;

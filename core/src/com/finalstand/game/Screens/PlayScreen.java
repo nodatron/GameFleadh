@@ -201,9 +201,9 @@ public class PlayScreen implements Screen {
 
             traps = new ArrayList<Trap>();
 
-            game.round = 1;
-            game.mapNumber = 1;
-            game.score = 1000;
+//            game.round = 1;
+//            game.mapNumber = 1;
+//            game.score = 1000;
     }
 
     @Override
@@ -606,7 +606,8 @@ public class PlayScreen implements Screen {
         switch(mapNumber) {
             case 1: { mapFileName =  "map1c.tmx"; } break;
             case 2: { mapFileName =  "map2.tmx"; } break;
-            case 3: { mapFileName =  "map3.tmx"; } break;
+            case 3:
+            case 4: { mapFileName =  "map3.tmx"; } break;
         }
         return mapFileName;
     }
@@ -616,7 +617,8 @@ public class PlayScreen implements Screen {
         switch(mapNumber) {
             case 1: { pos = new Vector2(10, 360); } break;
             case 2: { pos = new Vector2(648, 392); } break;
-            case 3: { pos = new Vector2(552, 392); } break;
+            case 3:
+            case 4: { pos = new Vector2(552, 392); } break;
         }
         return pos;
     }
