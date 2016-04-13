@@ -104,10 +104,10 @@ public class DOTTower extends Tower{
 
             if(!getSpriteChanged()) {
                 towerSprite.getTexture().dispose();
-                towerSprite.setTexture(new Texture(Gdx.files.internal("buttons/Sell.png")));
+                towerSprite.setTexture(new Texture(Gdx.files.internal("x.png")));
                 setSpriteChanged(true);
             }
-            if(getPlacementErrorCounter() == 30) {
+            if(getPlacementErrorCounter() == 15) {
                 setIsDead(true);
             }
 

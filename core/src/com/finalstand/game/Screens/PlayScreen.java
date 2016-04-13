@@ -203,6 +203,7 @@ public class PlayScreen implements Screen {
 
             game.round = 1;
             game.mapNumber = 1;
+            game.score = 1000;
     }
 
     @Override
@@ -479,7 +480,7 @@ public class PlayScreen implements Screen {
         world.step(1 / 60f, 6, 2);
         gameCam.update();
         renderer.setView(gameCam);
-        b2dr.render(world, gameCam.combined);
+//        b2dr.render(world, gameCam.combined);
         game.batch.begin();
         game.batch.draw(play.getTexture(), play.getX(), play.getY(), play.getWidth(), play.getHeight());
         game.batch.draw(pause.getTexture(), pause.getX(), pause.getY(), pause.getWidth(), pause.getHeight());
@@ -496,7 +497,7 @@ public class PlayScreen implements Screen {
 
         //rendering projectiles
         for (int counter = 0; counter < projectiles.size(); counter++) {
-            if(!projectiles.get(counter).isDead()) {
+            if(!projectiles.get(counter).isDead() && state != State.PLANNING_PHASE) {
                 projectiles.get(counter).getSprite().setOriginCenter();
                 projectiles.get(counter).getSprite().setRotation(projectiles.get(counter).getAngle() - 180);
                 projectiles.get(counter).getSprite().draw(game.batch);
