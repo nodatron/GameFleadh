@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.finalstand.game.FinalStand;
+import com.finalstand.game.sprites.traps.Bomb;
 
 
 /**
@@ -23,9 +24,104 @@ public class BossCreep extends Creep {
         texture = new Texture(Gdx.files.internal("creeps/BossCreep.png"));
         sprite = new Sprite(texture);
         defineCreep();
-        health = 10000;
-        speed = 0.5f;
+        health = 5000;
+        speed = 1;
         score = 100;
+    }
+
+    @Override
+    public void update() {
+        if(getHealth() <= 0) {
+            setIsDead(true);
+        }
+
+        if(isBombTriggered()) {
+            setBombTimer(getBombTimer() - 1);
+            if(getBombTimer() <= 0) {
+                setHealth(getHealth() - Bomb.getDamage());
+                setDamaged(true);
+                setBombTriggered(false);
+            }
+        } else {
+            setBombTimer(120);
+        }
+
+        if(isNeeded()) {
+            checkDir();
+            //set the way to go
+            if (movement[0]) {
+                // go right
+                direction.x = 20 / FinalStand.PPM;
+                direction.y = 0;
+            } else if (movement[1]) {
+                // go left
+                direction.x = -20 / FinalStand.PPM;
+                direction.y = 0;
+            } else if (movement[2]) {
+                // go up
+                direction.x = 0;
+                direction.y = 20 / FinalStand.PPM;
+            } else if (movement[3]) {
+                //go down
+                direction.x = 0;
+                direction.y = -20 / FinalStand.PPM;
+            }
+            setIsNeeded(false);
+        }
+
+
+        if(isSlowed()) {
+            setSpeed(getSpeed());
+            setSlowedTimer(getSlowedTimer() + 1);
+            setIsNeeded(true);
+        }
+
+        if(getSlowedTimer() > 300) {
+            setSpeed(getInitSpeed());
+            setSlowed(false);
+            setIsNeeded(true);
+        }
+
+        direction.scl(speed);
+        this.b2Body.setLinearVelocity(direction);
+
+        if(isDamaged()) {
+            if(elapsed == 0) {
+                changeDmgSprite();
+            }
+            if(elapsed > 10) {
+                setDamaged(false);
+                setChanged(false);
+            }
+//            System.out.println("Changing the sprite dmg");
+            elapsed++;
+        }
+
+        if(!isDamaged() && !isChanged()) {
+            changeNormalSprite();
+//            System.out.println("Changing the sprite normal");
+            setChanged(true);
+            elapsed = 0;
+        }
+
+        //if a damage over time effect is present on the creep, damage it
+        if(DOTActive)
+        {
+            if(DOTTimer % 20 == 0)
+            {
+                setHealth(getHealth() - DOTDamage);
+                setDamaged(true);
+            }
+            this.DOTTimer--;
+            if(DOTTimer <= 0)
+            {
+                this.DOTActive = false;
+                DOTTimer = 0;
+                DOTDamage = 0;
+                setDamaged(false);
+            }
+        }
+        System.out.println(speed);
     }
 
     @Override
@@ -39,7 +135,7 @@ public class BossCreep extends Creep {
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(7 / FinalStand.PPM);
+        shape.setRadius(24 / FinalStand.PPM);
 
         //setting what a creep can collide with and what bit it is
         fdef.filter.categoryBits = FinalStand.CREEP_BIT;

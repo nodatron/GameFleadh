@@ -129,6 +129,9 @@ public class PlayScreen implements Screen {
 
         public PlayScreen(FinalStand game) {
             this.game = game;
+//            game.round = 1;
+//            game.mapNumber = 1;
+//            game.score = 1000;
             run = false;
             mapFileName = findMapFile(FinalStand.mapNumber);
             state = State.PLANNING_PHASE;
@@ -165,6 +168,7 @@ public class PlayScreen implements Screen {
                 bossCreep = new BossCreep(startingPos.x, startingPos.y, world);
             }
             creeps = new ArrayList<Creep>();
+            creeps.add(bossCreep);
             randomCreeps(challengerRating);
             creepsSpawned = 0;
             keepSpawning = true;
@@ -201,10 +205,8 @@ public class PlayScreen implements Screen {
 
             traps = new ArrayList<Trap>();
 
-            game.round = 1;
-            game.mapNumber = 1;
-            game.score = 1000;
-    }
+
+        }
 
     @Override
     public void show() {
@@ -224,6 +226,9 @@ public class PlayScreen implements Screen {
             if(game.mapNumber == 4) {
                 setGameState(State.BOSS);
                 plannignPhaseCounter = 0;
+            } else if(game.mapNumber == 4){
+                plannignPhaseCounter = 0;
+                setGameState(State.BOSS);
             } else {
                 plannignPhaseCounter = 0;
                 setGameState(State.RUN);
@@ -252,7 +257,9 @@ public class PlayScreen implements Screen {
                         creeps.remove(i);
                         creepsSpawned --;
                     } else {
-                        creeps.get(i).update();
+                        if(!(creeps.get(i) instanceof BossCreep)) {
+                            creeps.get(i).update();
+                        }
                     }
                 }
             } break;
@@ -274,7 +281,11 @@ public class PlayScreen implements Screen {
 
             case PAUSE: {
                 game.setScreen(new MenuScreen(game, this));
-                setGameState(State.RUN);
+                if(game.mapNumber == 4) {
+                    setGameState(State.BOSS);
+                } else {
+                    setGameState(State.RUN);
+                }
             } break;
 
             case BOSS: {
@@ -286,7 +297,6 @@ public class PlayScreen implements Screen {
                 } else {
                     bossCreep.update();
                 }
-
             } break;
         }
     }
@@ -358,7 +368,11 @@ public class PlayScreen implements Screen {
             if(Gdx.input.justTouched()) {
                 if (mouse.x > resumeButton.getPosition().x && mouse.x < resumeButton.getPosition().x + resumeButton.getPosition().x &&
                         mouse.y > resumeButton.getPosition().y && mouse.y < resumeButton.getPosition().y + resumeButton.getHeight()) {
-                    setGameState(State.RUN);
+                    if(game.mapNumber == 4) {
+                        setGameState(State.BOSS);
+                    } else {
+                        setGameState(State.RUN);
+                    }
                     run = true;
                 }
             }
@@ -459,7 +473,7 @@ public class PlayScreen implements Screen {
             baseDimensions = waypoints.get(waypoints.size - 1).getBaseDimensions();
         }
 
-        if(creeps.size() == 0) {
+        if(creeps.size() == 0 && game.mapNumber != 4) {
             game.round ++;
             elapsed = 0;
             creeps.clear();
@@ -471,6 +485,23 @@ public class PlayScreen implements Screen {
             plannignPhaseCounter = 0;
             FinalStand.score += 100;
             setGameState(State.PLANNING_PHASE);
+        }
+
+        if(game.mapNumber == 4) {
+            for (Creep c :
+                    creeps) {
+                if(!(c instanceof BossCreep)) {
+                    world.destroyBody(c.getB2Body());
+                }
+            }
+            creeps.clear();
+            creeps.add(bossCreep);
+//            for(Creep c : creeps) {
+//                if(!(c instanceof BossCreep)) {
+//                    c.setIsDead(true);
+//                }
+//            }
+//            state = State.BOSS;
         }
     }
 
