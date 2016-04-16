@@ -60,6 +60,7 @@ public class Creep extends Sprite{
 
     protected boolean damaged;
     protected boolean changed;
+    protected int elapsed;
 
     public Creep(World world) {
         this.world = world;
@@ -92,6 +93,8 @@ public class Creep extends Sprite{
         DOTActive = false;
         DOTTimer = 0;
         damaged = false;
+        changed = true;
+        elapsed = 0;
     }
 
     /**
@@ -183,6 +186,8 @@ public class Creep extends Sprite{
             setBombTimer(getBombTimer() - 1);
             if(getBombTimer() <= 0) {
                 setHealth(getHealth() - Bomb.getDamage());
+                setDamaged(true);
+                setBombTriggered(false);
             }
         } else {
             setBombTimer(120);
@@ -227,7 +232,24 @@ public class Creep extends Sprite{
         direction.scl(speed);
         this.b2Body.setLinearVelocity(direction);
 
-        if(isDamaged()) changeSprite("creeps/basiccreepdmg.png");
+        if(isDamaged()) {
+            if(elapsed == 0) {
+                changeDmgSprite();
+            }
+            if(elapsed > 10) {
+                setDamaged(false);
+                setChanged(false);
+            }
+//            System.out.println("Changing the sprite dmg");
+            elapsed++;
+        }
+
+        if(!isDamaged() && !isChanged()) {
+            changeNormalSprite();
+//            System.out.println("Changing the sprite normal");
+            setChanged(true);
+            elapsed = 0;
+        }
 
         //if a damage over time effect is present on the creep, damage it
         if(DOTActive)
@@ -235,6 +257,7 @@ public class Creep extends Sprite{
             if(DOTTimer % 20 == 0)
             {
                 setHealth(getHealth() - DOTDamage);
+                setDamaged(true);
             }
             this.DOTTimer--;
             if(DOTTimer <= 0)
@@ -242,11 +265,17 @@ public class Creep extends Sprite{
                 this.DOTActive = false;
                 DOTTimer = 0;
                 DOTDamage = 0;
+                setDamaged(false);
             }
         }
+
     }
 
-    public void changeSprite(String filename) {
+    public void changeDmgSprite() {
+
+    }
+
+    public void changeNormalSprite() {
 
     }
 

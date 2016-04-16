@@ -85,6 +85,7 @@ public class Spike extends Trap
     public void onCreepHit(Creep creep)
     {
         creep.setHealth(creep.getHealth() - getDamage());
+        creep.setDamaged(true);
         hits++;
     }
 

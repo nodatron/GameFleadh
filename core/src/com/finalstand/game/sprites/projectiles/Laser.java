@@ -50,6 +50,7 @@ public class Laser extends Projectile{
     public void onCreepProjHit(Creep creep)
     {
         creep.setHealth(creep.getHealth() - damage);
+        creep.setDamaged(true);
         creepHits++;
         //when max number of creeps have been hit, remove the projectile
         if(creepHits >= maxCreepHits) {

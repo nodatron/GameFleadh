@@ -23,6 +23,21 @@ public class HeavyCreep extends Creep {
         score = 30;
     }
 
+    @Override
+    public void changeDmgSprite() {
+        sprite.getTexture().dispose();
+        sprite.setTexture(new Texture(Gdx.files.internal("creeps/heavycreepdmg.png")));
+//        setDamaged(false);
+    }
+
+    @Override
+    public void changeNormalSprite() {
+        sprite.getTexture().dispose();
+        sprite.setTexture(new Texture(Gdx.files.internal("creeps/heavycreep3.png")));
+//        setChanged(true);
+    }
+
+    @Override
     public void dispose() {
         sprite.getTexture().dispose();
     }

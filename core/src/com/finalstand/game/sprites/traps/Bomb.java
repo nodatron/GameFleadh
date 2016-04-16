@@ -42,7 +42,7 @@ public class Bomb extends Trap
         delay = 60; // two seconds @ 60fps
         blastRadius = 128.0f;
         explosionDuration = 0;
-        damage = 200;
+        damage = 50;
         defineTrap();
     }
 
@@ -152,6 +152,7 @@ public class Bomb extends Trap
     {
         setBombActive(true);
         creep.setBombTriggered(true);
+        creep.setBombTimer(delay);
     }
 
     @Override

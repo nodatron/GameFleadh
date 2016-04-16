@@ -201,9 +201,9 @@ public class PlayScreen implements Screen {
 
             traps = new ArrayList<Trap>();
 
-//            game.round = 1;
-//            game.mapNumber = 1;
-//            game.score = 1000;
+            game.round = 1;
+            game.mapNumber = 1;
+            game.score = 1000;
     }
 
     @Override

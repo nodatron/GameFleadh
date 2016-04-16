@@ -23,6 +23,20 @@ public class MediumCreep extends Creep {
         score = 20;
     }
 
+    @Override
+    public void changeDmgSprite() {
+        sprite.getTexture().dispose();
+        sprite.setTexture(new Texture(Gdx.files.internal("creeps/medcreepdmg.png")));
+//        setDamaged(false);
+    }
+
+    @Override
+    public void changeNormalSprite() {
+        sprite.getTexture().dispose();
+        sprite.setTexture(new Texture(Gdx.files.internal("creeps/mediumcreep3.png")));
+//        setChanged(true);
+    }
+
     public void dispose() {
         sprite.getTexture().dispose();
     }

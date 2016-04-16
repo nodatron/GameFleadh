@@ -132,6 +132,21 @@ public class BossCreep extends Creep {
         }
     }
 
+    @Override
+    public void changeDmgSprite() {
+        sprite.getTexture().dispose();
+        sprite.setTexture(new Texture(Gdx.files.internal("creeps/bosscrrepdmg.png")));
+//        setDamaged(false);
+    }
+
+    @Override
+    public void changeNormalSprite() {
+        sprite.getTexture().dispose();
+        sprite.setTexture(new Texture(Gdx.files.internal("creeps/BossCreep.png")));
+//        setChanged(true);
+    }
+
+    @Override
     public void dispose() {
         sprite.getTexture().dispose();
     }

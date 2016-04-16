@@ -76,5 +76,6 @@ public class AOERing extends Projectile{
         {
             creep.setDOTActive(DOTTime, fireDamage);
         }
+        creep.setDamaged(true);
     }
 }
