@@ -26,6 +26,7 @@ public class Bullet extends Projectile{
     {
         //damage creep
         creep.setHealth(creep.getHealth() - damage);
+        creep.setDamaged(true);
         //remove projectile
         isDead = true;
     }

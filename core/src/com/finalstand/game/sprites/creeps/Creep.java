@@ -1,5 +1,6 @@
 package com.finalstand.game.sprites.creeps;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -25,14 +26,6 @@ public class Creep extends Sprite{
     protected Sprite sprite;
 
     protected Vector2 position;
-
-    public int getScore() {
-        return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
-    }
 
     protected int score;
 
@@ -65,78 +58,8 @@ public class Creep extends Sprite{
     protected boolean isDead = false;
     protected boolean isNeeded = false;
 
-    public boolean isNeeded() {
-        return isNeeded;
-    }
-
-    public void setIsNeeded(boolean isNeeded) {
-        this.isNeeded = isNeeded;
-    }
-
-    public boolean isDead() {
-        return isDead;
-    }
-
-    public void setIsDead(boolean isDead) {
-        this.isDead = isDead;
-    }
-
-    public int getSlowedTimer() {
-        return slowedTimer;
-    }
-
-    public void setSlowedTimer(int getSlowedTimer) {
-        this.slowedTimer = getSlowedTimer;
-    }
-    protected boolean DOTActive;
-    protected float DOTTimer;
-    protected int DOTDamage;
-
-    public int getBombTimer() {
-        return bombTimer;
-    }
-
-    public void setBombTimer(int bombTimer) {
-        this.bombTimer = bombTimer;
-    }
-
-    public boolean isBombTriggered() {
-        return bombTriggered;
-    }
-
-    public void setBombTriggered(boolean bombTriggered) {
-        this.bombTriggered = bombTriggered;
-    }
-
-    public float getInitSpeed() {
-        return initSpeed;
-    }
-
-    public void setInitSpeed(float initSpeed) {
-        this.initSpeed = initSpeed;
-    }
-
-    public int getTimer() {
-        return timer;
-    }
-
-    public void setTimer(int timer) {
-        this.timer = timer;
-    }
-
-    public boolean isSlowed() {
-        return slowed;
-    }
-
-    public void setSlowed(boolean slowed) {
-        this.slowed = slowed;
-    }
-
-    public void setDOTActive(int time, int DOTDamage) {
-        this.DOTActive = true;
-        DOTTimer = time;
-        this.DOTDamage = DOTDamage;
-    }
+    protected boolean damaged;
+    protected boolean changed;
 
     public Creep(World world) {
         this.world = world;
@@ -168,6 +91,7 @@ public class Creep extends Sprite{
         bombTimer = 120;
         DOTActive = false;
         DOTTimer = 0;
+        damaged = false;
     }
 
     /**
@@ -303,6 +227,8 @@ public class Creep extends Sprite{
         direction.scl(speed);
         this.b2Body.setLinearVelocity(direction);
 
+        if(isDamaged()) changeSprite("creeps/basiccreepdmg.png");
+
         //if a damage over time effect is present on the creep, damage it
         if(DOTActive)
         {
@@ -320,21 +246,11 @@ public class Creep extends Sprite{
         }
     }
 
+    public void changeSprite(String filename) {
+
+    }
+
 //    public void render(SpriteBatch batch) {
-//
-//    }
-
-    public void setMovement(int index) {
-        movement[index] = true;
-    }
-
-    public void unsetMovement(int index) {
-        movement[index] = false;
-    }
-
-    public void setWaypointHit() { waypointHit++; }
-
-    public int getWaypointHit() { return waypointHit; }
 
     public void checkDir() {
         if(getWaypointHit() == dir.size) {
@@ -364,6 +280,9 @@ public class Creep extends Sprite{
         }
     }
 
+    void dispose() {
+        sprite.getTexture().dispose();
+    }
 
     public void reachedEnd() {
 //        PlayScreen.creeps.remove(this);
@@ -371,12 +290,101 @@ public class Creep extends Sprite{
         FinalStand.setHealth(FinalStand.getHealth() - 1);
     }
 
-    public Body getB2Body() {
-        return b2Body;
+    public int getScore() {
+        return score;
     }
 
-    void dispose() {
-        sprite.getTexture().dispose();
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public boolean isNeeded() {
+        return isNeeded;
+    }
+
+    public void setIsNeeded(boolean isNeeded) {
+        this.isNeeded = isNeeded;
+    }
+
+    public boolean isDead() {
+        return isDead;
+    }
+
+    public void setIsDead(boolean isDead) {
+        this.isDead = isDead;
+    }
+
+    public int getSlowedTimer() {
+        return slowedTimer;
+    }
+
+    public void setSlowedTimer(int getSlowedTimer) {
+        this.slowedTimer = getSlowedTimer;
+    }
+    protected boolean DOTActive;
+    protected float DOTTimer;
+    protected int DOTDamage;
+
+    public int getBombTimer() {
+        return bombTimer;
+    }
+
+    public void setBombTimer(int bombTimer) {
+        this.bombTimer = bombTimer;
+    }
+
+    public boolean isBombTriggered() {
+        return bombTriggered;
+    }
+
+    public void setBombTriggered(boolean bombTriggered) {
+        this.bombTriggered = bombTriggered;
+    }
+
+    public float getInitSpeed() {
+        return initSpeed;
+    }
+
+    public void setInitSpeed(float initSpeed) {
+        this.initSpeed = initSpeed;
+    }
+
+    public int getTimer() {
+        return timer;
+    }
+
+    public void setTimer(int timer) {
+        this.timer = timer;
+    }
+
+    public boolean isSlowed() {
+        return slowed;
+    }
+
+    public void setSlowed(boolean slowed) {
+        this.slowed = slowed;
+    }
+
+    public void setDOTActive(int time, int DOTDamage) {
+        this.DOTActive = true;
+        DOTTimer = time;
+        this.DOTDamage = DOTDamage;
+    }
+
+    public void setMovement(int index) {
+        movement[index] = true;
+    }
+
+    public void unsetMovement(int index) {
+        movement[index] = false;
+    }
+
+    public void setWaypointHit() { waypointHit++; }
+
+    public int getWaypointHit() { return waypointHit; }
+
+    public Body getB2Body() {
+        return b2Body;
     }
 
     public Sprite getSprite() {
@@ -398,4 +406,9 @@ public class Creep extends Sprite{
     public void setHealth(int health) {
         this.health = health;
     }
+
+    public void setDamaged(boolean damaged) { this.damaged = damaged; }
+    public boolean isDamaged() { return damaged; }
+    public void setChanged(boolean changed) { this.changed = changed; }
+    public boolean isChanged() { return changed;}
 }
