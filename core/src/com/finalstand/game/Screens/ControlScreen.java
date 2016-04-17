@@ -38,11 +38,11 @@ public class ControlScreen implements Screen {
         gameCam = new OrthographicCamera();
         viewport = new FitViewport(FinalStand.V_WIDTH / FinalStand.PPM, FinalStand.V_HEIGHT / FinalStand.PPM, gameCam);
         gameCam.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
-        background = new Texture(Gdx.files.internal("screens/menu.png"));
+        background = new Texture(Gdx.files.internal("screens/menu2.png"));
 
-        playButton = new PlayButton("screens/playbutton.png", (FinalStand.V_WIDTH / FinalStand.PPM) * 0.3f, (FinalStand.V_HEIGHT / FinalStand.PPM) *0.04f,
+        playButton = new PlayButton("screens/playbutton.png", (FinalStand.V_WIDTH / FinalStand.PPM) * 0.3f, (FinalStand.V_HEIGHT / FinalStand.PPM) *0.01f,
                 (FinalStand.V_WIDTH / FinalStand.PPM) *0.1f, (FinalStand.V_HEIGHT / FinalStand.PPM) *0.1f);
-        backButton = new BackButton("screens/backbutton.png", (FinalStand.V_WIDTH / FinalStand.PPM) * 0.6f, (FinalStand.V_HEIGHT / FinalStand.PPM) *0.04f,
+        backButton = new BackButton("screens/backbutton.png", (FinalStand.V_WIDTH / FinalStand.PPM) * 0.6f, (FinalStand.V_HEIGHT / FinalStand.PPM) *0.01f,
                 (FinalStand.V_WIDTH / FinalStand.PPM) *0.1f, (FinalStand.V_HEIGHT / FinalStand.PPM) *0.1f,
                 "Control");
         controls = new Controls("controls.txt");
@@ -61,7 +61,7 @@ public class ControlScreen implements Screen {
         playButton.update();
         backButton.update();
 
-        Gdx.gl.glClearColor(1, 0, 0, 1);
+        Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         game.batch.setProjectionMatrix(gameCam.combined);
@@ -83,7 +83,7 @@ public class ControlScreen implements Screen {
         controls.stage.draw();
 
         if(playButtonPressed) {
-            game.setScreen(new PlayScreen(game));
+            game.setScreen(new SelectScreen(game));
         }
 
         if(backButtonPressed) {

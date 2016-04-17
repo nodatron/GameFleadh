@@ -121,7 +121,7 @@ public class BossCreep extends Creep {
                 setDamaged(false);
             }
         }
-        System.out.println(speed);
+//        System.out.println(speed);
     }
 
     @Override

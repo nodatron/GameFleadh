@@ -224,6 +224,7 @@ public class Creep extends Sprite{
         }
 
         if(getSlowedTimer() > 300) {
+            System.out.println("Does this get used");
             setSpeed(getInitSpeed());
             setSlowed(false);
             setIsNeeded(true);

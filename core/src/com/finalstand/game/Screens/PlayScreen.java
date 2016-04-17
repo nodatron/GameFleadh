@@ -16,6 +16,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -127,10 +128,10 @@ public class PlayScreen implements Screen {
         private String mapFileName;
 
 
-        public PlayScreen(FinalStand game) {
+        public PlayScreen(FinalStand game, int round, int mapNumber) {
             this.game = game;
-//            game.round = 1;
-//            game.mapNumber = 1;
+            game.round = round;
+            game.mapNumber = mapNumber;
 //            game.score = 1000;
             run = false;
             mapFileName = findMapFile(FinalStand.mapNumber);
@@ -462,22 +463,35 @@ public class PlayScreen implements Screen {
         if(game.round == game.roundsPerMap) {
             game.mapNumber ++;
             game.round = 1;
-            firstRoundDone = false;
-            waypoints.clear(); //TODO add in code to destroy box2d stuff
-            towers.clear();
-            creeps.clear();
-
-            mapFileName = findMapFile(game.mapNumber);
-            startingPos = findCreepStartingPos(game.mapNumber);
-            basePos = waypoints.get(waypoints.size - 1).getPos();
-            baseDimensions = waypoints.get(waypoints.size - 1).getBaseDimensions();
+            game.setScreen(new SelectScreen(game));
+//            firstRoundDone = false;
+//            waypoints.clear(); //TODO add in code to destroy box2d stuff
+//            towers.clear();
+//            creeps.clear();
+//
+//            mapFileName = findMapFile(game.mapNumber);
+//            System.out.println("This is the last line");
+//            startingPos = findCreepStartingPos(game.mapNumber);
+//            System.out.println("Or is it this");
+//
+////            world.dispose();
+////            world = new
+////            map.dispose();
+//            map = mapLoader.load(mapFileName);
+//            new B2WorldCreator(world, map);
+//
+//            basePos = waypoints.get(waypoints.size - 1).getPos();
+//            baseDimensions = waypoints.get(waypoints.size - 1).getBaseDimensions();
         }
 
-        if(creeps.size() == 0 && game.mapNumber != 4) {
+        if(creeps.size() == 1 && game.mapNumber != 4) {
             game.round ++;
             elapsed = 0;
             creeps.clear();
-            projectiles.clear();
+            for(Projectile p : projectiles) {
+                p.setIsDead(true);
+            }
+//            projectiles.clear();
             challengerRating = game.mapNumber * 10 + game.round;
 
             randomCreeps(challengerRating);
@@ -511,7 +525,7 @@ public class PlayScreen implements Screen {
         world.step(1 / 60f, 6, 2);
         gameCam.update();
         renderer.setView(gameCam);
-//        b2dr.render(world, gameCam.combined);
+        b2dr.render(world, gameCam.combined);
         game.batch.begin();
         game.batch.draw(play.getTexture(), play.getX(), play.getY(), play.getWidth(), play.getHeight());
         game.batch.draw(pause.getTexture(), pause.getX(), pause.getY(), pause.getWidth(), pause.getHeight());
@@ -602,7 +616,6 @@ public class PlayScreen implements Screen {
 
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
-
 
         for(int i = 0 ; i < traps.size() ; i ++) {
             if(traps.get(i).isDead()) {

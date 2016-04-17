@@ -45,7 +45,7 @@ public class Hud {
         font = generator.generateFont(parameter);
 
         table = new Table();
-        table.top();
+        table.right();
         table.setFillParent(true);
 
         scoreLabel = new Label(String.format("Score: %06d", FinalStand.score), new Label.LabelStyle(font, Color.BLUE));
@@ -53,10 +53,13 @@ public class Hud {
         roundLabel = new Label(String.format("Round: %02d", FinalStand.round), new Label.LabelStyle(font, Color.BLUE));
         mapLabel = new Label(String.format("Map: %03d", FinalStand.mapNumber), new Label.LabelStyle(font, Color.BLUE));
 
-        table.add(mapLabel).expandX().padTop(5);
-        table.add(roundLabel).expandX().padTop(5);
-        table.add(healthLabel).expandX().padTop(5);
-        table.add(scoreLabel).expandX().padTop(5);
+        table.add(mapLabel).expandX();
+        table.row();
+        table.add(roundLabel).expandX();
+        table.row();
+        table.add(healthLabel).expandX();
+        table.row();
+        table.add(scoreLabel).expandX();
         stage.addActor(table);
     }
 
@@ -78,6 +81,7 @@ public class Hud {
 //            ((Label) c.getActor()).setText("newTexthere");
 //            ((Table)t.get(0)).invalidate();
         }
+
     }
 
 }

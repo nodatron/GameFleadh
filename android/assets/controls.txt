@@ -1,4 +1,17 @@
-Controls for the game Final Stand
-Click on UI images then click where you want to place them
-Press M in the game to go to the menu screen
-Click on the buttons in the menu to go to the option clicked
+Instructions
+Tower Defense Game.  Use the towers and traps availible to stop
+the creeps hitting your base
+Click on one of the 8 images at the bottom to get that tower or
+trap.
+Towers are the first 4 and the other four are traps.
+Click again on the map to place the trap or tower.  The cost
+is written below the image
+Be careful where you place the traps or towers as some spots
+aren't allowed.
+Click on the placed tower to upgrade or sell the tower.
+The play button is used to skip the pause in between rounds
+The pause button brings you to the menu, the 'M' key will
+also do this
+Your current score(which is also the money of the game),
+round, map and health are in blue
+We hope you enjoy the game and save the planet

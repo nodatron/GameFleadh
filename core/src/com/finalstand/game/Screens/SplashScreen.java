@@ -87,7 +87,7 @@ public class SplashScreen implements Screen{
         game.batch.end();
 
         if(playButtonPressed) {
-            game.setScreen(new PlayScreen(game));
+            game.setScreen(new SelectScreen(game));
         }
 
         if(controlButtonPressed) {

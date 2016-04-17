@@ -47,7 +47,7 @@ public class MenuScreen implements Screen {
         EXIT_CONFIRMATION
     }
     private State state;
-    private Texture exitConfBackground;
+    private Texture backgroundControl;
     private ExitButton toMainMenu;
     private ExitButton toDesktop;
     private ResumeButton exitConfResumeButton;
@@ -117,6 +117,8 @@ public class MenuScreen implements Screen {
                                     (FinalStand.V_HEIGHT / FinalStand.PPM) * 0.005f);
         width = (FinalStand.V_WIDTH / FinalStand.PPM) * 0.1f;
         height = (FinalStand.V_WIDTH / FinalStand.PPM) * 0.05f;
+
+        backgroundControl = new Texture(Gdx.files.internal("screens/menu2.png"));
 
         controls = new Controls("controls.txt");
     }
@@ -228,7 +230,7 @@ public class MenuScreen implements Screen {
                 game.batch.setProjectionMatrix(gameCam.combined);
                 game.batch.begin();
 //        playButton.getButtonSprite().draw(game.batch);
-                game.batch.draw(background, 0, 0, 800 / FinalStand.PPM, 400 / FinalStand.PPM);
+                game.batch.draw(backgroundControl, 0, 0, 800 / FinalStand.PPM, 400 / FinalStand.PPM);
                 game.batch.draw(backToMenu, backToMenuPos.x, backToMenuPos.y, width, height);
                 game.batch.end();
 
