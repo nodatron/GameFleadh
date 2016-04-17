@@ -4,6 +4,7 @@ package com.finalstand.game.Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -30,6 +31,8 @@ public class SelectScreen implements Screen {
     private Stage stage;
     private BitmapFont font32;
 
+    Music backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("backgroundMusic.wav"));
+
     public SelectScreen(FinalStand game) {
         this.game = game;
         gameCam = new OrthographicCamera();
@@ -51,13 +54,15 @@ public class SelectScreen implements Screen {
         Label map1 = new Label("Map 1:   Press the '1' key", new Label.LabelStyle(font32, Color.BLACK));
         Label map2 = new Label("Map 2:   Press the '2' key", new Label.LabelStyle(font32, Color.BLACK));
         Label map3 = new Label("Map 3:   Press the '3' key", new Label.LabelStyle(font32, Color.BLACK));
+        Label boss = new Label("Boss:    Press the '4' key", new Label.LabelStyle(font32, Color.BLACK));
 
         table.add(map1).expandX();
         table.row();
-
         table.add(map2).expandX();
         table.row();
         table.add(map3).expandX();
+        table.row();
+        table.add(boss).expandX();
 
         stage.addActor(table);
         generator.dispose();
@@ -65,7 +70,8 @@ public class SelectScreen implements Screen {
 
     @Override
     public void show() {
-
+        backgroundMusic.play();
+        backgroundMusic.setLooping(true);
     }
 
     @Override
@@ -98,6 +104,11 @@ public class SelectScreen implements Screen {
                 Gdx.input.isKeyPressed(Input.Keys.NUMPAD_3)) {
             game.setScreen(new PlayScreen(game, 1, 3));
         }
+
+        if(Gdx.input.isKeyPressed(Input.Keys.NUM_4) ||
+                Gdx.input.isKeyPressed(Input.Keys.NUMPAD_3)) {
+            game.setScreen(new PlayScreen(game, 1, 4));
+        }
     }
 
     @Override
@@ -123,5 +134,6 @@ public class SelectScreen implements Screen {
     @Override
     public void dispose() {
         background.dispose();
+        backgroundMusic.dispose();
     }
 }

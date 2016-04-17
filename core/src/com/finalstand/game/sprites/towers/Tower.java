@@ -14,6 +14,7 @@ import com.finalstand.game.FinalStand;
 import com.finalstand.game.Screens.PlayScreen;
 import com.finalstand.game.buttons.SellButton;
 import com.finalstand.game.buttons.UpgradeButton;
+import com.finalstand.game.sprites.creeps.BossCreep;
 
 /**
  * Created by Keith on 09/02/2016.
@@ -49,6 +50,7 @@ public class Tower {
     protected float maxTime;
 
     protected boolean isDead = false;
+    protected boolean canFireAtBoss = false;
 
     public Tower(float x, float y, World world, float angle)
     {
@@ -198,10 +200,24 @@ public class Tower {
             Vector2 creepPos = new Vector2(PlayScreen.creeps.get(counter).getSprite().getX(),
                     PlayScreen.creeps.get(counter).getSprite().getY());
 
-            if (position.dst(creepPos) < towerRange) {
-
-                return true;
+            if(FinalStand.mapNumber == 4) {
+                canFireAtBoss = true;
             }
+
+            if(canFireAtBoss) {
+                if (position.dst(creepPos) < towerRange) {
+
+                    return true;
+                }
+            } else {
+                if(!(PlayScreen.creeps.get(counter) instanceof BossCreep)) {
+                    if (position.dst(creepPos) < towerRange) {
+
+                        return true;
+                    }
+                }
+            }
+
         }
         return false;
     }

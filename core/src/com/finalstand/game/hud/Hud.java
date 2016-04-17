@@ -53,13 +53,13 @@ public class Hud {
         roundLabel = new Label(String.format("Round: %02d", FinalStand.round), new Label.LabelStyle(font, Color.BLUE));
         mapLabel = new Label(String.format("Map: %03d", FinalStand.mapNumber), new Label.LabelStyle(font, Color.BLUE));
 
-        table.add(mapLabel).expandX();
+        table.add(mapLabel);
         table.row();
-        table.add(roundLabel).expandX();
+        table.add(roundLabel);
         table.row();
-        table.add(healthLabel).expandX();
+        table.add(healthLabel);
         table.row();
-        table.add(scoreLabel).expandX();
+        table.add(scoreLabel);
         stage.addActor(table);
     }
 

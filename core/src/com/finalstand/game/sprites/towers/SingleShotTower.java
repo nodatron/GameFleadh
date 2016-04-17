@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.finalstand.game.FinalStand;
 import com.finalstand.game.Screens.PlayScreen;
+import com.finalstand.game.sprites.creeps.BossCreep;
 import com.finalstand.game.sprites.projectiles.Bullet;
 import com.finalstand.game.sprites.projectiles.Projectile;
 
@@ -98,19 +99,39 @@ public class SingleShotTower extends Tower{
             Vector2 creepPos = new Vector2(PlayScreen.creeps.get(counter).getSprite().getX(),
                                             PlayScreen.creeps.get(counter).getSprite().getY());
 
-            //if the creep is close enough
-            if (position.dst(creepPos) < towerRange) {
-                //calculate the angle between the creep and the tower
-                towerAngle = (float)Math.atan2(creepPos.y - position.y, creepPos.x - position.x );
-                //converting the angle to degrees
-                towerAngle *= (180/Math.PI);
-                //converting the angle to be between 0 and 360
-                if(towerAngle < 0)
-                {
-                    towerAngle = 360 - (-towerAngle);
+            if(FinalStand.mapNumber == 4) {
+                canFireAtBoss = true;
+            }
+
+            if(canFireAtBoss) {
+                if (position.dst(creepPos) < towerRange) {
+                    //calculate the angle between the creep and the tower
+                    towerAngle = (float) Math.atan2(creepPos.y - position.y, creepPos.x - position.x);
+                    //converting the angle to degrees
+                    towerAngle *= (180 / Math.PI);
+                    //converting the angle to be between 0 and 360
+                    if (towerAngle < 0) {
+                        towerAngle = 360 - (-towerAngle);
+                    }
+                    towerAngle += 90;
+                    return true;
                 }
-                towerAngle += 90;
-                return true;
+            } else {
+                if (!(PlayScreen.creeps.get(counter) instanceof BossCreep)) {
+                    //if the creep is close enough
+                    if (position.dst(creepPos) < towerRange) {
+                        //calculate the angle between the creep and the tower
+                        towerAngle = (float) Math.atan2(creepPos.y - position.y, creepPos.x - position.x);
+                        //converting the angle to degrees
+                        towerAngle *= (180 / Math.PI);
+                        //converting the angle to be between 0 and 360
+                        if (towerAngle < 0) {
+                            towerAngle = 360 - (-towerAngle);
+                        }
+                        towerAngle += 90;
+                        return true;
+                    }
+                }
             }
         }
         return false;
