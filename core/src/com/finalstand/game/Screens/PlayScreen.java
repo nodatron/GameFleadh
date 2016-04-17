@@ -132,6 +132,13 @@ public class PlayScreen implements Screen {
             this.game = game;
             game.round = round;
             game.mapNumber = mapNumber;
+            switch(game.mapNumber) {
+                case 1: { game.score = 600; } break;
+                case 2: { game.score = 1000; } break;
+                case 3: { game.score = 1500; } break;
+                case 4: { game.score = 2500; } break;
+            }
+            game.health = 10;
 //            game.score = 1000;
             run = false;
             mapFileName = findMapFile(FinalStand.mapNumber);
