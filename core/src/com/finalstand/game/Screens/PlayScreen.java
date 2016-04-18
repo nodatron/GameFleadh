@@ -16,7 +16,6 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -65,7 +64,6 @@ public class PlayScreen implements Screen {
         private OrthogonalTiledMapRenderer renderer;
 
         public static ArrayList<Creep> creeps;
-        public static ArrayList<Creep> spawnableCreeps;
         private boolean keepSpawning;
         private int creepsSpawned;
         private int elapsed;
@@ -468,33 +466,13 @@ public class PlayScreen implements Screen {
 
         // there is no more creeps in the wave
         if(game.round == game.roundsPerMap) {
-            game.mapNumber ++;
-            game.round = 1;
             game.setScreen(new SelectScreen(game));
-//            firstRoundDone = false;
-//            waypoints.clear(); //TODO add in code to destroy box2d stuff
-//            towers.clear();
-//            creeps.clear();
-//
-//            mapFileName = findMapFile(game.mapNumber);
-//            System.out.println("This is the last line");
-//            startingPos = findCreepStartingPos(game.mapNumber);
-//            System.out.println("Or is it this");
-//
-////            world.dispose();
-////            world = new
-////            map.dispose();
-//            map = mapLoader.load(mapFileName);
-//            new B2WorldCreator(world, map);
-//
-//            basePos = waypoints.get(waypoints.size - 1).getPos();
-//            baseDimensions = waypoints.get(waypoints.size - 1).getBaseDimensions();
         }
 
-        if(creeps.size() == 1 && game.mapNumber != 4) {
+        if(creeps.size() == 1) {
             game.round ++;
             elapsed = 0;
-            creeps.clear();
+//            creeps.clear();
             for(Projectile p : projectiles) {
                 p.setIsDead(true);
             }
@@ -505,24 +483,8 @@ public class PlayScreen implements Screen {
             keepSpawning = true;
             plannignPhaseCounter = 0;
             FinalStand.score += 100;
+            creepsSpawned = 0;
             setGameState(State.PLANNING_PHASE);
-        }
-
-        if(game.mapNumber == 4) {
-            for (Creep c :
-                    creeps) {
-                if(!(c instanceof BossCreep)) {
-                    world.destroyBody(c.getB2Body());
-                }
-            }
-            creeps.clear();
-            creeps.add(bossCreep);
-//            for(Creep c : creeps) {
-//                if(!(c instanceof BossCreep)) {
-//                    c.setIsDead(true);
-//                }
-//            }
-//            state = State.BOSS;
         }
     }
 
