@@ -21,6 +21,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.finalstand.game.FinalStand;
 import com.finalstand.game.buttons.Button;
+import com.finalstand.game.buttons.CancelButton;
 import com.finalstand.game.buttons.ExitButton;
 import com.finalstand.game.buttons.ResumeButton;
 import com.finalstand.game.hud.Hud;
@@ -76,6 +77,7 @@ public class PlayScreen implements Screen {
         public static ArrayList<Tower> towers;
         public static Button upgradeButton;
         public static Button sellButton;
+        public static Button cancelButton;
         public static boolean displayButtons;
 
         public static ArrayList<Projectile> projectiles;
@@ -208,9 +210,9 @@ public class PlayScreen implements Screen {
             ui = new UI(0, 0, (FinalStand.V_WIDTH / 2)/ FinalStand.PPM, (FinalStand.V_HEIGHT / 6) / FinalStand.PPM);
             optionTexture = new OptionTexture(world);
             optionChosen = false;
+            cancelButton = new CancelButton();
 
             traps = new ArrayList<Trap>();
-
 
         }
 
@@ -494,7 +496,7 @@ public class PlayScreen implements Screen {
         world.step(1 / 60f, 6, 2);
         gameCam.update();
         renderer.setView(gameCam);
-        b2dr.render(world, gameCam.combined);
+        //b2dr.render(world, gameCam.combined);
         game.batch.begin();
         game.batch.draw(play.getTexture(), play.getX(), play.getY(), play.getWidth(), play.getHeight());
         game.batch.draw(pause.getTexture(), pause.getX(), pause.getY(), pause.getWidth(), pause.getHeight());
@@ -574,6 +576,9 @@ public class PlayScreen implements Screen {
         {
             optionTexture.update();
             optionTexture.getSprite().draw(game.batch);
+//            System.out.println(cancelButton.getPosition());
+            game.batch.draw(cancelButton.getButtonTexture(), cancelButton.getPosition().x, cancelButton.getPosition().y,
+                            cancelButton.getWidth(), cancelButton.getHeight());
         }
 
         game.batch.end();

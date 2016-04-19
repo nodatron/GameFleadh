@@ -59,6 +59,15 @@ public class OptionTexture {
         {
             PlayScreen.optionChosen = false;
 
+            //change the tower option to break so that the tower purchase is cancelled
+            if(position.x > PlayScreen.cancelButton.getPosition().x &&
+               position.x < PlayScreen.cancelButton.getPosition().x + PlayScreen.cancelButton.getWidth() &&
+               position.y > PlayScreen.cancelButton.getPosition().y &&
+               position.y < PlayScreen.cancelButton.getPosition().y + PlayScreen.cancelButton.getHeight())
+            {
+                towerOption = 10;
+            }
+
             //create an instance of the class in relation to the option chosen
             switch (towerOption) {
                 case 0: {
@@ -91,6 +100,9 @@ public class OptionTexture {
                 }
                 case 7: {
                     PlayScreen.traps.add(new Spike(position.x, position.y, world));
+                    break;
+                }
+                case 10: {
                     break;
                 }
             }
