@@ -26,21 +26,21 @@ public class Laser extends Projectile{
         //if shot from a level 1 or 2 tower
         if(level < 3) {
             projectileSprite = new Sprite(new Texture(Gdx.files.internal("projectiles/laser_projectile_level1.png")));
-            maxCreepHits = 3;
+            maxCreepHits = 6;
             if(level == 1)
             {
-                damage = 20;
+                damage = 40;
             }
             //if level 2
             else
             {
-                damage = 40;
+                damage = 50;
             }
         }
         else {
             projectileSprite = new Sprite(new Texture(Gdx.files.internal("projectiles/laser_projectile_level3.png")));
-            maxCreepHits = 6;
-            damage = 40;
+            maxCreepHits = 9;
+            damage = 60;
         }
         projectileSprite.setSize(w, h);
         projectileSprite.setPosition(x, y);

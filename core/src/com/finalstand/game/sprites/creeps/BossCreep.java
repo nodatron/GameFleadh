@@ -24,7 +24,7 @@ public class BossCreep extends Creep {
         texture = new Texture(Gdx.files.internal("creeps/BossCreep.png"));
         sprite = new Sprite(texture);
         defineCreep();
-        health = 5000;
+        health = 3000;
         speed = 1;
         score = 100;
     }

@@ -19,7 +19,7 @@ public class Bullet extends Projectile{
         projectileSprite = new Sprite(new Texture(Gdx.files.internal("projectiles/singleshot_projectile.png")));
         projectileSprite.setSize(w, h);
         projectileSprite.setPosition(x, y);
-        damage = 20;
+        damage = 13;
     }
 
     public void onCreepProjHit(Creep creep)

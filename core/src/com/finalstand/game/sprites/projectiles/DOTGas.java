@@ -47,11 +47,11 @@ public class DOTGas extends Projectile{
         } else if(level == 2)
         {
             DOTTime = 100;
-            damage = 5;
+            damage = 7;
         } else
         {
             DOTTime = 140;
-            damage = 10;
+            damage = 15;
         }
     }
 

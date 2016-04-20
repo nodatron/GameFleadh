@@ -19,7 +19,7 @@ public class HeavyCreep extends Creep {
         texture = new Texture(Gdx.files.internal("creeps/heavycreep3.png"));
         sprite = new Sprite(texture);
         defineCreep();
-        health = 200;
+        health = 300;
         score = 30;
     }
 

@@ -31,12 +31,12 @@ public class AOERing extends Projectile{
             flameActive = false;
             if(level == 1)
             {
-                damage = 20;
+                damage = 15;
             }
             //if level 2
             else
             {
-                damage = 40;
+                damage = 30;
             }
         }
         else {

@@ -61,7 +61,7 @@ public class FinalStand extends Game {
 	public void create () {
 		batch = new SpriteBatch(30);
 
-		setScreen(new VictoryScreen(this));
+		setScreen(new SplashScreen(this));
 //		System.out.println(Gdx.graphics.isGL30Available());
 	}
 
