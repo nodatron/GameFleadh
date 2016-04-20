@@ -40,8 +40,10 @@ public class BackButton extends Button {
                     mouse.y > position.y && mouse.y < position.y + height) {
                 if(getWhatScreenOn().equals("Fail")) {
                     FailureScreen.backButtonPressed();
-                } else {
+                } else if(getWhatScreenOn().equals("Control")) {
                     ControlScreen.backButtonPressed();
+                } else if(getWhatScreenOn().equals("Victory")) {
+                    VictoryScreen.backButtonPressed();
                 }
             }
         }

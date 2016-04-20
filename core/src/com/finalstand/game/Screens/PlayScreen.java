@@ -381,11 +381,6 @@ public class PlayScreen implements Screen {
 //            dispose();
         }
 
-        if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
-            setGameState(State.EXIT_GAME_CONFIRMATION);
-//            game.setScreen(new MenuScreen(game, this));
-        }
-
         if(state == State.RUN || state == State.PLANNING_PHASE || state == State.BOSS ||
                 state == State.PAUSE) {
             if (Gdx.input.justTouched()) {
