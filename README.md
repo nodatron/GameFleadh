@@ -7,8 +7,8 @@ Keith Mc Loughlin : https://www.youtube.com/watch?v=kU0kDljCKRY
 
 ### Compile and Run
 - Be in the first folder of the project, you should be able to see README.md
-- In the commandline type gradlew desktop:dist, this creates the runnable jar file
-- When that is done you then type gradlew desktop:run and the game should start
+- In the commandline type *gradlew desktop:dist*, this creates the runnable jar file
+- When that is done you then type *gradlew desktop:run* and the game should start
 
 ### Assignment
 We are making a tower defense game for Games Fleadh which we hope to take part in.
