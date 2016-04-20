@@ -23,7 +23,6 @@ public class ControlButton extends Button {
                     mouse.y > position.y && mouse.y < position.y + height) {
                 SplashScreen.controlButtonPressed();
                 MenuScreen.controlButtonPressed();
-                System.out.println("here");
             }
         }
     }

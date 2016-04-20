@@ -33,6 +33,7 @@ public class Hud {
 
     private BitmapFont font;
 
+    // making the scene2d for the hud of the game
     public Hud(Integer round, Integer map, Integer health, Integer score) {
         stage = new Stage();
         this.map = map;
@@ -63,7 +64,7 @@ public class Hud {
         stage.addActor(table);
     }
 
-    //updates the hud
+    //updates the hud based on the value of the game
     public void update() {
         Array<Actor> t = stage.getActors();
         Array<Label> l = new Array<Label>();

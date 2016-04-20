@@ -27,6 +27,7 @@ public class Controls {
     private BitmapFont font32;
 
 
+    //creating the scene2d stuff for the text
     public Controls(String filename) {
         labels = new ArrayList<Label>();
         stage = new Stage();
@@ -52,6 +53,7 @@ public class Controls {
         generator.dispose();
     }
 
+    //reading in the instructions from the file
     public void readControls(String filename) {
         try {
             BufferedReader br = new BufferedReader(new FileReader(filename));

@@ -25,6 +25,7 @@ public abstract class InteractiveTileObject {
 
     protected Fixture fixture;
 
+    //creates box2d for the interactive tiles of the map
     public InteractiveTileObject(World world, TiledMap map, Rectangle bounds) {
         this.world = world;
         this. map = map;

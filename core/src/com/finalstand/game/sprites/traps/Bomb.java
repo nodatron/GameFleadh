@@ -62,6 +62,7 @@ public class Bomb extends Trap
         this.explosionDuration = explosionDuration;
     }
 
+    // making the trap in box2d
     public void defineTrap()
     {
         BodyDef bdef = new BodyDef();
@@ -99,6 +100,7 @@ public class Bomb extends Trap
     {
         // checkCollisions();
 
+        //checking for when the bomb should be destroyed
         if(isBombActive())
         {
             delay--;
@@ -150,6 +152,7 @@ public class Bomb extends Trap
     @Override
     public void onCreepHit(Creep creep)
     {
+        //sets stuff in creep when they enter the radius
         setBombActive(true);
         creep.setBombTriggered(true);
         creep.setBombTimer(delay);
@@ -158,6 +161,7 @@ public class Bomb extends Trap
     @Override
     public void onCreepRelease(Creep creep)
     {
+        //sets stuff if the creep leaves the radius
         if(creep.getBombTimer() > 0) {
             creep.setBombTriggered(false);
         }

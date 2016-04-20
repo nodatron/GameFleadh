@@ -1,4 +1,7 @@
-/// Make a new contol screen for the menu control screen
+/**
+ * Instructions for the game
+ * Created by Niall
+ */
 
 package com.finalstand.game.Screens;
 
@@ -7,7 +10,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -21,12 +23,14 @@ import com.finalstand.game.hud.Controls;
  */
 public class ControlScreen implements Screen {
 
+    // camera stuff
     private final FinalStand game;
     private Viewport viewport;
     private static OrthographicCamera gameCam;
     private Texture background;
     private Controls controls;
 
+    //buttons for the screen
     private PlayButton playButton;
     private BackButton backButton;
 
@@ -35,16 +39,19 @@ public class ControlScreen implements Screen {
 
     public ControlScreen(FinalStand game) {
         this.game = game;
+        // making the camera and the viewport for the camera
         gameCam = new OrthographicCamera();
         viewport = new FitViewport(FinalStand.V_WIDTH / FinalStand.PPM, FinalStand.V_HEIGHT / FinalStand.PPM, gameCam);
         gameCam.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
         background = new Texture(Gdx.files.internal("screens/menu2.png"));
 
+        //creating the buttons for the screen
         playButton = new PlayButton("screens/playbutton.png", (FinalStand.V_WIDTH / FinalStand.PPM) * 0.3f, (FinalStand.V_HEIGHT / FinalStand.PPM) *0.01f,
                 (FinalStand.V_WIDTH / FinalStand.PPM) *0.1f, (FinalStand.V_HEIGHT / FinalStand.PPM) *0.1f);
         backButton = new BackButton("screens/backbutton.png", (FinalStand.V_WIDTH / FinalStand.PPM) * 0.6f, (FinalStand.V_HEIGHT / FinalStand.PPM) *0.01f,
                 (FinalStand.V_WIDTH / FinalStand.PPM) *0.1f, (FinalStand.V_HEIGHT / FinalStand.PPM) *0.1f,
                 "Control");
+        //getting the controls for the game
         controls = new Controls("controls.txt");
 
         playButtonPressed = false;
@@ -58,9 +65,11 @@ public class ControlScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        //checking if a button was pressed
         playButton.update();
         backButton.update();
 
+        //clearing the screen and drawing the textures
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -79,9 +88,11 @@ public class ControlScreen implements Screen {
                         backButton.getHeight());
         game.batch.end();
 
+        //drawing the controls to the screen
         game.batch.setProjectionMatrix(controls.stage.getCamera().combined);
         controls.stage.draw();
 
+        //chaning screen if a button is pressed
         if(playButtonPressed) {
             game.setScreen(new SelectScreen(game));
         }
@@ -91,6 +102,7 @@ public class ControlScreen implements Screen {
         }
     }
 
+    // changing the size of the viewport if the window size is changed
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height);

@@ -64,39 +64,44 @@ public class PlayScreen implements Screen {
         private TiledMap map;
         private OrthogonalTiledMapRenderer renderer;
 
+        //variables for the creeps
         public static ArrayList<Creep> creeps;
         private boolean keepSpawning;
         private int creepsSpawned;
         private int elapsed;
-
+        // hud for the game
         private Hud hud;
-
-
+        // arraylist of the position of the waypoints
         public static Array<Waypoint> waypoints;
 
+        // towers arraylist
         public static ArrayList<Tower> towers;
+        // buttons for the playscreem
         public static Button upgradeButton;
         public static Button sellButton;
         public static Button cancelButton;
         public static boolean displayButtons;
 
+        // projectiles for the game
         public static ArrayList<Projectile> projectiles;
 
+        // UI for the game and variables on how to place the towers or traps
         public static UI ui;
         public static OptionTexture optionTexture;
         public static boolean optionChosen;
-
+        // Music for the game
         Music backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("backgroundMusic.wav"));
 
+        //states of the game
         public enum State {
             EXIT_GAME_CONFIRMATION,
             RUN,
             BOSS,
             PAUSE,
-            PLANNING_PHASE,
-            VICTORY
+            PLANNING_PHASE
         }
         private State state;
+
 
         private Texture background;
         private ExitButton exitButton;
@@ -114,22 +119,27 @@ public class PlayScreen implements Screen {
 
         private BossCreep bossCreep;
 
+        //base variables
         private Texture base;
         private Vector2 basePos;
         private Vector2 baseDimensions;
 
         private boolean run;
 
+        //used to draw certain sprites
         private Array<Body> bodies = new Array<Body>();
-
+        // arraylist for the traps
         public static ArrayList<Trap> traps;
 
+        // Starting position of the creeps
         private Vector2 startingPos;
+        // filename for the map
         private String mapFileName;
 
 
         public PlayScreen(FinalStand game, int round, int mapNumber) {
             this.game = game;
+            // making sure the static variables are reset
             game.round = round;
             game.mapNumber = mapNumber;
             switch(game.mapNumber) {
@@ -139,32 +149,36 @@ public class PlayScreen implements Screen {
                 case 4: { game.score = 2500; } break;
             }
             game.health = 10;
-//            game.score = 1000;
+
             run = false;
+            // getting the map
             mapFileName = findMapFile(FinalStand.mapNumber);
+            // starts off in the planning state of the game
             state = State.PLANNING_PHASE;
             firstRoundDone = false;
+            // creating a new Box2d world
             world = new World(new Vector2(0, 0), true);
+            //camera stuff
             gameCam = new OrthographicCamera();
             viewport = new FitViewport(FinalStand.V_WIDTH / FinalStand.PPM, FinalStand.V_HEIGHT / FinalStand.PPM, gameCam);
+            // loading the map
             mapLoader = new TmxMapLoader();
             map = mapLoader.load(mapFileName);
-
             renderer = new OrthogonalTiledMapRenderer(map, 1 / FinalStand.PPM);
             // centers the camera
             gameCam.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
 
             waypoints = new Array<Waypoint>();
-
-
+            //debug renderer for the game
             b2dr = new Box2DDebugRenderer();
-
+            //used to make box2d bodies for the road and waypoints
             new B2WorldCreator(world, map);
-
+            // collision detection
             world.setContactListener(new WorldContactListener());
-
+            // hud for the game
             hud = new Hud(game.round, game.mapNumber, game.health, game.score);
 
+            // getting the creeps set up
             challengerRating = game.mapNumber * 10 + game.round;
             startingPos = findCreepStartingPos(FinalStand.mapNumber);
             if(FinalStand.mapNumber == 1) {
@@ -177,13 +191,15 @@ public class PlayScreen implements Screen {
             }
             creeps = new ArrayList<Creep>();
             creeps.add(bossCreep);
-            randomCreeps(challengerRating);
-            creepsSpawned = 0;
-            keepSpawning = true;
+            if(game.mapNumber != 4) {
+                randomCreeps(challengerRating);
+                creepsSpawned = 0;
+                keepSpawning = true;
+            }
 
             towers = new ArrayList<Tower>();
             displayButtons = false;
-
+            //buttons and menu for the game
             background = new Texture(Gdx.files.internal("screens/menu.png"));
             exitConfPosition = new Vector2((FinalStand.V_WIDTH / 2) / FinalStand.PPM, (FinalStand.V_HEIGHT / 2) / FinalStand.PPM);
             resumeButton = new ResumeButton("screens/resume.png", exitConfPosition.x, exitConfPosition.y, 50 / FinalStand.PPM, 25 / FinalStand.PPM);
@@ -192,6 +208,7 @@ public class PlayScreen implements Screen {
             elapsed = 0;
             plannignPhaseCounter = 0;
 
+            //play and pause button for the game
             play = new Sprite(new Texture(Gdx.files.internal("screens/play.png")));
             pause = new Sprite(new Texture(Gdx.files.internal("screens/pause.png")));
 
@@ -200,13 +217,14 @@ public class PlayScreen implements Screen {
             pause.setPosition(((FinalStand.V_WIDTH / 2) + 40) / FinalStand.PPM, (FinalStand.V_HEIGHT / 10) / FinalStand.PPM);
             pause.setSize(20 / FinalStand.PPM, 10 / FinalStand.PPM);
 
-
+            // base variables
             base = new Texture(Gdx.files.internal("base.png"));
             basePos = waypoints.get(waypoints.size - 1).getPos();
             baseDimensions = waypoints.get(waypoints.size - 1).getBaseDimensions();
 
             projectiles = new ArrayList<Projectile>();
 
+            // UI variables
             ui = new UI(0, 0, (FinalStand.V_WIDTH / 2)/ FinalStand.PPM, (FinalStand.V_HEIGHT / 6) / FinalStand.PPM);
             optionTexture = new OptionTexture(world);
             optionChosen = false;
@@ -216,8 +234,10 @@ public class PlayScreen implements Screen {
 
         }
 
+    //called when the screen is shown
     @Override
     public void show() {
+        // music reset and map reset
         backgroundMusic.play();
         backgroundMusic.setLooping(true);
         mapLoader = new TmxMapLoader();
@@ -225,11 +245,14 @@ public class PlayScreen implements Screen {
         renderer = new OrthogonalTiledMapRenderer(map, 1 / FinalStand.PPM);
     }
 
+    // main game loop
     @Override
     public void render(float delta) {
+        // Clearing the screen to a certain colour
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        // counter for the planning phase
         if(plannignPhaseCounter >= 1000) {
             if(game.mapNumber == 4) {
                 setGameState(State.BOSS);
@@ -242,22 +265,25 @@ public class PlayScreen implements Screen {
                 setGameState(State.RUN);
             }
         }
-
+        // checking user input
         update();
 
-
+        // checking if the game is over
         if(game.health <= 0) {
             game.setScreen(new FailureScreen(game));
         }
 
         switch (state) {
             case RUN: {
+                // renders most of the game stuff
                 renderGame();
+                //keep spanning creeps
                 if (keepSpawning && elapsed > 40) {
                     spawnNewCreep();
                     elapsed = 0;
                 }
 
+                //update for the creeps
                 for (int i = 0 ; i < creepsSpawned ; i ++) {
                     if(creeps.get(i).isDead()) {
                         world.destroyBody(creeps.get(i).getB2Body());
@@ -272,6 +298,7 @@ public class PlayScreen implements Screen {
                 }
             } break;
 
+            // when the user clicks to exit the game
             case EXIT_GAME_CONFIRMATION: {
                 game.batch.setProjectionMatrix(gameCam.combined);
                 game.batch.begin();
@@ -287,6 +314,7 @@ public class PlayScreen implements Screen {
                 plannignPhaseCounter++;
             } break;
 
+            // when the user presses the pause button
             case PAUSE: {
                 game.setScreen(new MenuScreen(game, this));
                 if(game.mapNumber == 4) {
@@ -296,6 +324,7 @@ public class PlayScreen implements Screen {
                 }
             } break;
 
+            //boss round
             case BOSS: {
                 renderGame();
                 if(bossCreep.isDead()) {
@@ -344,6 +373,7 @@ public class PlayScreen implements Screen {
         return exitConfPosition;
     }
 
+    //  checking if certain button where pressed
     public void handleInput() {
         Vector3 mouse = getWorldMousePos();
         if(Gdx.input.isKeyPressed(Input.Keys.M)) {
@@ -388,6 +418,7 @@ public class PlayScreen implements Screen {
         }
     }
 
+    // spawns a new creep in the array of creeps
     public void spawnNewCreep() {
         if(creepsSpawned == creeps.size()) {
             keepSpawning = false;
@@ -396,11 +427,13 @@ public class PlayScreen implements Screen {
         creepsSpawned++;
     }
 
+    //change the state of the game
     public void setGameState(State s) {
         this.state = s;
     }
 
 
+    // randomly create the list of creeps in the game
     public void randomCreeps(float challengeRating) {
         int randomNumber = 0;
         float currentChallengeRating = 0;
@@ -432,7 +465,6 @@ public class PlayScreen implements Screen {
             }
         }
     }
-
     public int randomWithinRange(int min, int max) {
         int range = Math.abs(max - min) + 1;
         return (int)(Math.random() * range) + min;
@@ -442,6 +474,7 @@ public class PlayScreen implements Screen {
         return gameCam.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
     }
 
+    // checks if a placed tower has been clicked
     public void checkTowerPressed()
     {
         if(Gdx.input.justTouched())
@@ -471,6 +504,7 @@ public class PlayScreen implements Screen {
             game.setScreen(new SelectScreen(game));
         }
 
+        // go to next round if the size of the creep array is 1
         if(creeps.size() == 1) {
             game.round ++;
             elapsed = 0;
@@ -490,6 +524,7 @@ public class PlayScreen implements Screen {
         }
     }
 
+    //does all the rendering of the textures for the game
     public void renderGame() {
         renderer.render();
         game.batch.setProjectionMatrix(gameCam.combined);
@@ -619,6 +654,7 @@ public class PlayScreen implements Screen {
         hud.update();
     }
 
+    //finds the name of the map file
     public String findMapFile(int mapNumber) {
         String mapFileName = "";
         switch(mapNumber) {
@@ -630,6 +666,7 @@ public class PlayScreen implements Screen {
         return mapFileName;
     }
 
+    //gets the starting position of the creeps
     public Vector2 findCreepStartingPos(int mapNumber) {
         Vector2 pos = null;
         switch(mapNumber) {

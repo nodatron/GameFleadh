@@ -29,6 +29,7 @@ public class BossCreep extends Creep {
         score = 100;
     }
 
+    // does the same as the super class except for the movement is done differently
     @Override
     public void update() {
         if(getHealth() <= 0) {
@@ -124,6 +125,7 @@ public class BossCreep extends Creep {
 //        System.out.println(speed);
     }
 
+    // making the dox2d body and fixture for the boss creep
     @Override
     public void defineCreep() {
         BodyDef bdef = new BodyDef();

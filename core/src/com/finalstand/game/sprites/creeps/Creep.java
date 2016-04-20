@@ -20,36 +20,41 @@ import com.finalstand.game.tools.Waypoint;
 /**
  * Created by Niall on 09/02/2016.
  */
-public class Creep extends Sprite{
+public class Creep {
 
+    //look of the creep
     protected Texture texture;
     protected Sprite sprite;
-
+    //position of creep
     protected Vector2 position;
 
+    //points given when dead
     protected int score;
 
     protected int health;
     protected float speed;
 
+    //box2d stuff
     protected World world;
     protected Body b2Body;
 
-    protected Array<Body> bodies = new Array<Body>();
-
+    //for checking which direction to go
     protected boolean[] movement;
 
     protected short timeElapsed;
     protected boolean setDirection;
     protected Vector2 direction;
 
+    // gets the direction the creeps need to go when they have hit a waypoint
     protected Array<String> dir;
     protected int waypointHit;
 
+    // for glue interaction
     protected boolean slowed;
     protected int timer;
     protected float initSpeed;
 
+    // for bomb interaction
     protected boolean bombTriggered;
     protected int bombTimer;
 
@@ -97,9 +102,7 @@ public class Creep extends Sprite{
         elapsed = 0;
     }
 
-    /**
-     * Creates box2d fiture for the creep
-     */
+    //creates the box2d fiture for the creep
     public void defineCreep() {
         BodyDef bdef = new BodyDef();
         // this is temporary
@@ -178,10 +181,12 @@ public class Creep extends Sprite{
     }
 
     public void update() {
+        //if the creep has no health they are dead
         if(getHealth() <= 0) {
             setIsDead(true);
         }
 
+        //checks if the creep needs to be damaged by the bomb
         if(isBombTriggered()) {
             setBombTimer(getBombTimer() - 1);
             if(getBombTimer() <= 0) {
@@ -193,6 +198,7 @@ public class Creep extends Sprite{
             setBombTimer(120);
         }
 
+        //checks if the direction that the creep moves needs to be updated
         if(isNeeded()) {
             checkDir();
             //set the way to go
@@ -216,7 +222,7 @@ public class Creep extends Sprite{
             setIsNeeded(false);
         }
 
-
+        // slow if it is hit by glue
         if(isSlowed()) {
             setSpeed(getSpeed());
             setSlowedTimer(getSlowedTimer() + 1);
@@ -233,6 +239,7 @@ public class Creep extends Sprite{
         direction.scl(speed);
         this.b2Body.setLinearVelocity(direction);
 
+        // animation if the sprite is damaged
         if(isDamaged()) {
             if(elapsed == 0) {
                 changeDmgSprite();
@@ -282,6 +289,7 @@ public class Creep extends Sprite{
 
 //    public void render(SpriteBatch batch) {
 
+    //checks the direction the creep should travel
     public void checkDir() {
         if(getWaypointHit() == dir.size) {
             reachedEnd();
@@ -314,6 +322,7 @@ public class Creep extends Sprite{
         sprite.getTexture().dispose();
     }
 
+    // reached the end of the map
     public void reachedEnd() {
 //        PlayScreen.creeps.remove(this);
         setIsDead(true);

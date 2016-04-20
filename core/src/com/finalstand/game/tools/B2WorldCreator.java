@@ -25,7 +25,7 @@ public class B2WorldCreator {
 
             new RoadBounds(world, map, rect);
         }
-
+        //Creating all the hit boxes or the bounds of the waypoints
         for(MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             new Waypoint(world, map, rect);

@@ -37,6 +37,7 @@ public class Waypoint extends InteractiveTileObject{
     public Vector2 getPos() { return pos; }
     public Vector2 getBaseDimensions() { return baseDimensions; }
 
+    //interactions which creeps
     @Override
     public void onRightHit(Creep creep) {
         creep.setWaypointHit();
@@ -61,6 +62,7 @@ public class Waypoint extends InteractiveTileObject{
         creep.setIsNeeded(true);
     }
 
+    //reading in the waypoints from a file
     public static Array<String> readWaypoints(String filename) {
         Array<String> direction = new Array<String>();
 

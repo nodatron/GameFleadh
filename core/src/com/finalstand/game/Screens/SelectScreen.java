@@ -1,3 +1,7 @@
+/**
+ * Select screen gives the user options for which map they want to play
+ * Created by Niall
+ */
 package com.finalstand.game.Screens;
 
 
@@ -18,23 +22,24 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.finalstand.game.FinalStand;
 
-/**
- * Created by Niall PC on 17/04/2016.
- */
 public class SelectScreen implements Screen {
 
+    // Camera stuff for the screen
     private final FinalStand game;
     private Viewport viewport;
     private OrthographicCamera gameCam;
     private Texture background;
 
+    // custom font and stage for the text
     private Stage stage;
     private BitmapFont font32;
 
     Music backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("backgroundMusic.wav"));
 
     public SelectScreen(FinalStand game) {
+
         this.game = game;
+        // stuff for the camera
         gameCam = new OrthographicCamera();
         viewport = new FitViewport(FinalStand.V_WIDTH / FinalStand.PPM, FinalStand.V_HEIGHT / FinalStand.PPM, gameCam);
         gameCam.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
@@ -42,11 +47,13 @@ public class SelectScreen implements Screen {
 
         stage = new Stage();
 
+        // maling the custom font for the labels
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("OpenSans-Regular.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = 32;
         font32 = generator.generateFont(parameter);
 
+        //creating a table and making the labels for the table
         Table table = new Table();
         table.center();
 
@@ -65,6 +72,7 @@ public class SelectScreen implements Screen {
         table.add(boss).expandX();
 
         stage.addActor(table);
+        // memory management
         generator.dispose();
     }
 
@@ -76,7 +84,10 @@ public class SelectScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        // checking for user input
         update();
+
+        //clearing the screen and drawing the textures
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -85,11 +96,13 @@ public class SelectScreen implements Screen {
         game.batch.draw(background, 0, 0, 800 / FinalStand.PPM, 400 / FinalStand.PPM);
         game.batch.end();
 
+        //drawing the text to the screen
         game.batch.setProjectionMatrix(stage.getCamera().combined);
         stage.draw();
     }
 
     private void update() {
+        // Checking for specific input from the user
         if(Gdx.input.isKeyPressed(Input.Keys.NUM_1) ||
                 Gdx.input.isKeyPressed(Input.Keys.NUMPAD_1)) {
             game.setScreen(new PlayScreen(game, 1, 1));
@@ -111,6 +124,7 @@ public class SelectScreen implements Screen {
         }
     }
 
+    // used to resize the window of the camera
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height);
@@ -131,6 +145,7 @@ public class SelectScreen implements Screen {
         dispose();
     }
 
+    //memory management
     @Override
     public void dispose() {
         background.dispose();

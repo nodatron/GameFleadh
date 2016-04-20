@@ -35,6 +35,7 @@ public class Spike extends Trap
         defineTrap();
     }
 
+    // make the creep in box2d
     public void defineTrap()
     {
         BodyDef bdef = new BodyDef();
@@ -67,6 +68,7 @@ public class Spike extends Trap
 
     public void update()
     {
+        // checks if the trap shoiuld be destroyed
         if(hits >= 5)
         {
             setIsDead(true);
@@ -84,6 +86,7 @@ public class Spike extends Trap
     @Override
     public void onCreepHit(Creep creep)
     {
+        //does damage to the creep if it hits a creep
         creep.setHealth(creep.getHealth() - getDamage());
         creep.setDamaged(true);
         hits++;

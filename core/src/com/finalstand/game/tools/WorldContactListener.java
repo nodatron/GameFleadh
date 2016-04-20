@@ -20,6 +20,7 @@ import com.finalstand.game.sprites.traps.Spike;
  */
 public class WorldContactListener implements ContactListener {
 
+    //checks for contact with other box2d fixtures and calls methods appropriatly
     @Override
     public void beginContact(Contact contact) {
         Fixture fixA = contact.getFixtureA();
@@ -146,6 +147,7 @@ public class WorldContactListener implements ContactListener {
         }
     }
 
+    // checks for the ending of contact with other box2d fixtures
     @Override
     public void endContact(Contact contact) {
         Fixture fixA = contact.getFixtureA();

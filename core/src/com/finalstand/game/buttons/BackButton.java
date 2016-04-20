@@ -23,6 +23,7 @@ public class BackButton extends Button {
         return whatScreenOn;
     }
 
+    // updates based on what button is pressed on what screen
     @Override
     public void update() {
         if(Gdx.input.justTouched()) {

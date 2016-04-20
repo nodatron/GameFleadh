@@ -38,6 +38,7 @@ public class Barricade extends Trap
     //change the categorybit for each one to the classes bit so for Glue change it to GLUE_BIT
     // this one
 
+    // making the trap in box2d
     public void defineTrap()
     {
         BodyDef bdef = new BodyDef();
@@ -65,6 +66,7 @@ public class Barricade extends Trap
 
     public void update()
     {
+        //checking for when the trap should be destroyed
         if(isHit()) {
             setHealth(getHealth() - 10);
             if(getHealth() <= 0) {
@@ -81,10 +83,10 @@ public class Barricade extends Trap
         setOneLoop(true);
     }
 
-    //Written by Niall
     @Override
     public void onCreepHit(Creep creep)
     {
+        //makes the creep stop moving
         creep.setInitSpeed(creep.getSpeed());
         creep.setSpeed(0);
         setIsHit(true);
@@ -94,6 +96,7 @@ public class Barricade extends Trap
     @Override
     public void onCreepRelease(Creep creep)
     {
+        //gets the creep moving again
         creep.setSpeed(creep.getInitSpeed());
         creep.setIsNeeded(true);
     }

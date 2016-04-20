@@ -17,6 +17,7 @@ import com.finalstand.game.sprites.traps.Spike;
  * Created by Niall on 2/15/2016.
  */
 public class RoadBounds extends InteractiveTileObject{
+    //creates the road bounds for the game
     public RoadBounds(World world, TiledMap map, Rectangle bounds) {
         super(world, map, bounds);
         fixture.setUserData(this);

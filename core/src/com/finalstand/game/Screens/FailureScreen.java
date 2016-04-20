@@ -1,3 +1,7 @@
+/**
+ * Shows if the player has lost the game
+ * Created by Niall
+ */
 package com.finalstand.game.Screens;
 
 import com.badlogic.gdx.Gdx;
@@ -17,19 +21,21 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.finalstand.game.FinalStand;
 import com.finalstand.game.buttons.BackButton;
 
-/**
- * Created by Niall PC on 29/02/2016.
- */
+
 public class FailureScreen implements Screen {
 
+    // camera
     private final FinalStand game;
     private Texture texture;
     private static OrthographicCamera gameCam;
     private Viewport viewport;
-    private BitmapFont font48;
 
+    //custom font
+    private BitmapFont font48;
+    // button back to the splash screen
     private BackButton backButton;
 
+    //stage for the text
     private Stage stage;
 
     public static boolean backButtonPressed;
@@ -41,6 +47,7 @@ public class FailureScreen implements Screen {
         gameCam.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
         texture = new Texture(Gdx.files.internal("screens/menu.png"));
 
+        //creating the custom font and then adding it to the stage as a table
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("OpenSans-Regular.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = 48;
@@ -56,6 +63,7 @@ public class FailureScreen implements Screen {
         stage.addActor(table);
         generator.dispose();
 
+        // making the back button
         backButton = new BackButton("screens/backbutton.png",
                 (FinalStand.V_WIDTH / FinalStand.PPM) * 0.85f,
                 (FinalStand.V_HEIGHT / FinalStand.PPM) * 0.005f,
@@ -73,6 +81,7 @@ public class FailureScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        //clearing the screen and drawing the textures
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -85,10 +94,12 @@ public class FailureScreen implements Screen {
                         backButton.getWidth(),
                         backButton.getHeight());
         game.batch.end();
+        // checking if the button is pressed
         backButton.update();
-
+        //drawing the text to the screen
         stage.draw();
 
+        //changing the screen if a button is pressed
         update();
     }
 
@@ -98,6 +109,7 @@ public class FailureScreen implements Screen {
         }
     }
 
+    //resize the screen if the window size is changed
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height);

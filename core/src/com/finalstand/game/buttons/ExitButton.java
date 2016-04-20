@@ -15,7 +15,6 @@ public class ExitButton extends Button {
         super(x, y, w, h, filename);
     }
 
-    //TODO this needs to be improved
     @Override
     public void update() {
         if(Gdx.input.justTouched()) {

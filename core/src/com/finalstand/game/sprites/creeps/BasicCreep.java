@@ -23,18 +23,15 @@ public class BasicCreep extends Creep {
         score = 10;
     }
 
+    // animation for the sprite damage
     public void changeDmgSprite() {
         sprite.getTexture().dispose();
         sprite.setTexture(new Texture(Gdx.files.internal("creeps/basiccreepdmg.png")));
-//        setDamaged(false);
-//        setChanged(false);
     }
 
     public void changeNormalSprite() {
         sprite.getTexture().dispose();
         sprite.setTexture(new Texture(Gdx.files.internal("creeps/basiccreep3.png")));
-//        setChanged(true);
-//        setDamaged(false);
     }
 
     public void dispose() {

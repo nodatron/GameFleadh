@@ -27,14 +27,12 @@ public class HeavyCreep extends Creep {
     public void changeDmgSprite() {
         sprite.getTexture().dispose();
         sprite.setTexture(new Texture(Gdx.files.internal("creeps/heavycreepdmg.png")));
-//        setDamaged(false);
     }
 
     @Override
     public void changeNormalSprite() {
         sprite.getTexture().dispose();
         sprite.setTexture(new Texture(Gdx.files.internal("creeps/heavycreep3.png")));
-//        setChanged(true);
     }
 
     @Override

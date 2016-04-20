@@ -34,6 +34,7 @@ public class Glue extends Trap
         defineTrap();
     }
 
+    // make the box2d for the trap
     public void defineTrap()
     {
         BodyDef bdef = new BodyDef();
@@ -66,7 +67,7 @@ public class Glue extends Trap
 
     public void update()
     {
-        //checkCollisions();
+        // checks if the glue should be dead
         if(hits >= 5)
         {
             setIsDead(true);
@@ -90,6 +91,7 @@ public class Glue extends Trap
     @Override
     public void onCreepHit(Creep creep)
     {
+        //makes the creep slow when it hits the glue
         creep.setInitSpeed(creep.getSpeed());
         creep.setSpeed(creep.getSpeed() / 2);
         setHits(getHits() + 1);

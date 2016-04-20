@@ -21,7 +21,6 @@ public class PlayButton extends Button {
 
             if(mouse.x > position.x && mouse.x < position.x + width &&
                     mouse.y > position.y && mouse.y < position.y + height) {
-                //TODO There should be separate calls for each of these
                 SplashScreen.playButtonPressed();
                 ControlScreen.playButtonPressed();
             }
