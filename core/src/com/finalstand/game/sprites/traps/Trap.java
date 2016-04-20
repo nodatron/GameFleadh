@@ -12,7 +12,7 @@ import com.finalstand.game.sprites.creeps.Creep;
 /**
  * Created by Carl on 16/02/2016.
  */
-public abstract class Trap extends Sprite
+public abstract class Trap
 {
     protected int hits;
     protected Vector2 position;
